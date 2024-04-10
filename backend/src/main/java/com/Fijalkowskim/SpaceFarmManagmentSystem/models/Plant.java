@@ -5,13 +5,17 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "plants")
+@Table(name = "plant")
 public class Plant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    long id;
+    private long id;
 
     @Column(name = "name")
-    String name;
+    private String name;
+
+    @ManyToOne
+    @JoinColumn(name = "cultivationId")
+    private Cultivation cultivation;
 }
