@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,19 +10,16 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "cultivation")
 public class Cultivation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
-    @Column(name = "startDate")
     private Date startDate;
 
-    @Column(name = "type")
+    @OneToOne
+    @JoinColumn(name = "typeId")
     private CultivationType type;
-
 
     @OneToMany(mappedBy = "cultivation")
     private Set<Harvest> harvests;
@@ -32,22 +30,28 @@ public class Cultivation {
     @OneToMany(mappedBy = "cultivation")
     private Set<Stage> stages;
 
-    @Column(name = "stations")
     @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "cultivationId"),
+            inverseJoinColumns = @JoinColumn(name = "stationId")
+    )
     private Set<Station> stations;
 
-    @Column(name = "area")
     private float area;
 
-    @Column(name = "plannedFinishDate")
     private Date plannedFinishDate;
 
-    @Column(name = "realFinishDate")
     private Date realFinishDate;
 
-    @Column(name = "responsibleWorkers")
     @ManyToMany
+    @JoinTable(
+            joinColumns = @JoinColumn(name = "cultivationId"),
+            inverseJoinColumns = @JoinColumn(name = "workerId")
+    )
     private Set<Person> responsibleWorkers;
+
+    @Nullable
+    private String comment;
 
 
 

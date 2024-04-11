@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,20 +10,17 @@ import java.util.Set;
 
 @Data
 @Entity
-@Table(name = "stage")
 public class Stage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
     private long id;
 
-    @Column(name = "stageType")
+    @OneToOne
+    @JoinColumn(name = "typeId")
     private StageType stageType;
 
-    @Column(name = "startStageDate")
     private Date startStageDate;
 
-    @Column(name = "finishStageDate")
     private Date finishStageDate;
 
     @ManyToOne
@@ -31,4 +29,7 @@ public class Stage {
 
     @OneToMany(mappedBy = "stage")
     private Set<Control> controls;
+
+    @Nullable
+    private String comment;
 }
