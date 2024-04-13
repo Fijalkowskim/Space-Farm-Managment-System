@@ -13,7 +13,7 @@ import java.util.Set;
 public class Stage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @OneToOne
     @JoinColumn(name = "typeId")

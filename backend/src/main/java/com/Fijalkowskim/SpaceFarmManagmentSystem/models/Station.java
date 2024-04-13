@@ -11,8 +11,8 @@ public class Station {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    long id;
+    private Long id;
 
     @ManyToMany(mappedBy = "stations")
-    Set<Cultivation> cultivations;
+    private Set<Cultivation> cultivations;
 }

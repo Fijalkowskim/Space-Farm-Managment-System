@@ -13,7 +13,7 @@ import java.util.Set;
 public class Cultivation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private Date startDate;
 

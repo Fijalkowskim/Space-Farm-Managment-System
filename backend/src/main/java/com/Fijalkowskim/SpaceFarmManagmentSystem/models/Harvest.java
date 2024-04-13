@@ -11,7 +11,7 @@ import java.util.Date;
 public class Harvest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     private Date harvestDate;
 

@@ -12,7 +12,7 @@ import java.util.Set;
 public class Control {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "stageId")
