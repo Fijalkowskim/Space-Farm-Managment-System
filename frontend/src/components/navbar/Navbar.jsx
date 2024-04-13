@@ -19,17 +19,14 @@ function Navbar() {
     setDisableScroll(!isMobileMenuOpen);
     setIsMobileMenuOpen((isMobileMenuOpen) => !isMobileMenuOpen);
   };
-  useEffect(() => {
-    if (isMobileMenuOpen) setIsMobileMenuOpen(false);
-  }, [isMobileMenuOpen]);
 
   return (
     <div
-      className={`fixed left-0 top-0 z-20 flex w-screen flex-row items-center justify-center gap-8 bg-background-50 px-5 py-3 text-primary-950 shadow-sm sm:px-24 xl:px-60 text-lg`}
+      className={`fixed left-0 top-0 z-20 flex w-screen flex-row items-center justify-center gap-8 bg-background-950 px-5 py-3 text-text-50 shadow-sm sm:px-24 xl:px-60 text-lg`}
     >
       <div className="flex flex-col items-center justify-center pointer-events-none">
         <p className="text-base -mb-3">Space</p>
-        <p className="text-primary-800">Farm</p>
+        <p className="text-primary-500">Farm</p>
       </div>
 
       <div
@@ -56,7 +53,7 @@ function Navbar() {
               toggleMobileMenu();
             }}
           />
-          <ul className="absolute right-0 top-0 flex h-full w-fit flex-col items-end gap-4 bg-background-50 p-4 px-8 text-right text-2xl shadow-md">
+          <ul className="absolute right-0 top-0 flex h-full w-fit flex-col items-end gap-4 bg-background-950 p-4 px-8 text-right text-2xl shadow-md">
             <button
               className="cursor-pointer text-4xl"
               onClick={toggleMobileMenu}
