@@ -25,11 +25,11 @@ function Navbar() {
 
   return (
     <div
-      className={`fixed left-0 top-0 z-20 flex w-screen flex-row items-center justify-center gap-8 bg-background-50 px-5 py-3 text-primary-950 shadow-sm sm:px-24 xl:px-60 text-lg`}
+      className={`fixed left-0 top-0 z-20 flex w-screen flex-row items-center justify-center gap-8 bg-background-950 px-5 py-3 text-text-50 shadow-sm sm:px-24 xl:px-60 text-lg`}
     >
       <div className="flex flex-col items-center justify-center pointer-events-none">
         <p className="text-base -mb-3">Space</p>
-        <p className="text-primary-800">Farm</p>
+        <p className="text-primary-600">Farm</p>
       </div>
 
       <div

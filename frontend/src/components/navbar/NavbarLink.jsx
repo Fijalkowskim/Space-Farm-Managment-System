@@ -16,8 +16,8 @@ function NavbarLink({ data, className }) {
     <NavLink to={data.to}>
       <button
         className={cn(
-          `group font-light relative w-fit flex-shrink-0 cursor-pointer hover:text-primary-800 transition-all ${
-            active && "text-primary-700"
+          `group font-light relative w-fit flex-shrink-0 cursor-pointer hover:text-primary-600 transition-all ${
+            active && "text-primary-500"
           }  `,
           className
         )}
