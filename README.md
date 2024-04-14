@@ -2,6 +2,8 @@
 
 This project is designed to facilitate real-time monitoring and management of plant cultivation in laboratory environments. The system encompasses both frontend and backend components, with the frontend developed using React and Tailwind CSS, while the backend utilizes Spring Boot, MySQL, and Hibernate to ensure robust functionality and data management.
 
+
+
 ## Getting Started
 
 To run the application locally, follow these steps:
@@ -9,7 +11,7 @@ To run the application locally, follow these steps:
 1. **Clone the Repository**: Use Git to clone this repository to your local machine:
 
     ```bash
-    git clone https://github.com/your_username/space-farm-management-system.git
+    git clone https://github.com/Fijalkowskim/Space-Farm-Managment-System.git
     ```
 
 2. **Navigate to the Project Directory**: Change your current directory to the root directory of the cloned project:
@@ -29,6 +31,8 @@ To run the application locally, follow these steps:
     ```
 
 5. **Access the Application**: Once the application has started, you can access it by navigating to `http://localhost:8080` in your web browser.
+
+
 
 ## Contributing
 
