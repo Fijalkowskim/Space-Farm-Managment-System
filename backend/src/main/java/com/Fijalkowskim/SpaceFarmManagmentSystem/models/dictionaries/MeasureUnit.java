@@ -4,6 +4,8 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.MeasuredValue;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 public class MeasureUnit {
@@ -13,7 +15,7 @@ public class MeasureUnit {
 
     private String name;
 
-    @OneToOne(mappedBy = "measureUnit")
-    private MeasuredValue measuredValue;
+    @OneToMany(mappedBy = "measureUnit")
+    private Set<MeasuredValue> measuredValue;
 
 }

@@ -13,7 +13,7 @@ public class MeasuredValue {
 
     private String name;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "unitId")
     private MeasureUnit measureUnit;
 

@@ -3,6 +3,8 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 public class Plant {
@@ -12,7 +14,6 @@ public class Plant {
 
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "cultivationId")
-    private Cultivation cultivation;
+    @OneToMany(mappedBy = "plant")
+    private Set<Cultivation> cultivation;
 }

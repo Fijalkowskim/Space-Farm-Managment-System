@@ -5,6 +5,8 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 public class CultivationType {
@@ -14,6 +16,6 @@ public class CultivationType {
 
     private String name;
 
-    @OneToOne(mappedBy = "type")
-    private Cultivation cultivation;
+    @OneToMany(mappedBy = "type")
+    private Set<Cultivation> cultivations;
 }

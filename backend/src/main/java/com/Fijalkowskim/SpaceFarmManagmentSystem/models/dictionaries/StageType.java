@@ -4,6 +4,8 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 public class StageType {
@@ -13,6 +15,6 @@ public class StageType {
 
     private String name;
 
-    @OneToOne(mappedBy = "stageType")
-    private Stage stage;
+    @OneToMany(mappedBy = "stageType")
+    private Set<Stage> stage;
 }

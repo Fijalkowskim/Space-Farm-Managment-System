@@ -17,15 +17,16 @@ public class Cultivation {
 
     private Date startDate;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "typeId")
     private CultivationType type;
 
     @OneToMany(mappedBy = "cultivation")
     private Set<Harvest> harvests;
 
-    @OneToMany(mappedBy = "cultivation")
-    private Set<Plant> plants;
+    @ManyToOne
+    @JoinColumn(name = "plantId")
+    private Plant plant;
 
     @OneToMany(mappedBy = "cultivation")
     private Set<Stage> stages;

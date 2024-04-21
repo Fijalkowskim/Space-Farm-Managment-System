@@ -17,6 +17,10 @@ public class Person {
 
     private String surname;
 
+    private String login;
+
+    private String password;
+
     private WorkerType role;
 
     @ManyToMany(mappedBy = "responsibleWorkers")
