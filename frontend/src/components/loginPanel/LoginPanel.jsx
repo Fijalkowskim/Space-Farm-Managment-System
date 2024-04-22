@@ -8,7 +8,7 @@ function LoginPanel(onSubmit) {
   const [showPassword, setShowPassword] = useState(false);
   return (
     <form
-      className="flex flex-col gap-4 justify-center items-center py-6 w-full max-w-[20rem] bg-background-800/50 p-10 rounded-lg shadow-md"
+      className="flex flex-col gap-4 justify-center items-center py-12 md:py-6 w-full max-w-[20rem] bg-background-800/50 p-10 rounded-lg shadow-md"
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(email, password);
