@@ -5,7 +5,7 @@ import { GoX } from "react-icons/go";
 import NavbarLink from "./NavbarLink";
 
 const navlinks = [
-  { name: "Cultivations", to: "/cultivations" },
+  { name: "Cultivations", to: "/" },
   { name: "Stations", to: "/stations" },
   { name: "Resources", to: "/resources" },
   { name: "Workers", to: "/workers", onlyFor: "ADMIN" | "MANAGER" },

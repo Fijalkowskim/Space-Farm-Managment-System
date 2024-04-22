@@ -2,11 +2,16 @@ import * as React from "react";
 
 const UserContext = React.createContext();
 
-function UserContextProvider({ children }) {
-  const [userData, setUserData] = React.useState();
-  return (
-    <CountContext.Provider value={userData}>{children}</CountContext.Provider>
-  );
+export function useUserContext() {
+  return React.useContext(UserContext);
 }
 
-export { CountProvider };
+export function UserContextProvider({ children }) {
+  const [userData, setUserData] = React.useState();
+  const [isLoggedIn, setIsLoggedIn] = React.useState();
+  return (
+    <UserContext.Provider value={{ userData, isLoggedIn }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
