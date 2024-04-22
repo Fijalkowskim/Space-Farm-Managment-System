@@ -7,8 +7,8 @@ import NavbarLink from "./NavbarLink";
 const navlinks = [
   { name: "Cultivations", to: "/" },
   { name: "Stations", to: "/stations" },
-  { name: "Resources", to: "/resources" },
   { name: "Workers", to: "/workers", onlyFor: "ADMIN" | "MANAGER" },
+  { name: "Resources", to: "/resources" },
   { name: "Profile", to: "/profile" },
 ];
 

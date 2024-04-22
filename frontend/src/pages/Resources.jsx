@@ -15,7 +15,7 @@ function Resources() {
       secured={true}
       className="flex items-center justify-center md:mt-0 flex-col gap-6 text-center"
     >
-      <h1 className="text-2xl">Select resources you want to view.</h1>
+      <h1 className="text-2xl">Available resources</h1>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {resourcesList.map((resource) => (
           <ResourceCard
