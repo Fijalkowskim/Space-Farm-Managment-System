@@ -12,8 +12,12 @@ export function UserContextProvider({ children }) {
   const logIn = (email, password) => {
     setIsLoggedIn(true);
   };
+  const logOut = () => {
+    setUserData(null);
+    setIsLoggedIn(false);
+  };
   return (
-    <UserContext.Provider value={{ userData, isLoggedIn, logIn }}>
+    <UserContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
       {children}
     </UserContext.Provider>
   );
