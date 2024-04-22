@@ -9,7 +9,7 @@ function Cultivations() {
       secured={true}
       className="max-h-[90vh] h-screen min-h-0 overflow-hidden flex flex-col items-center justify-start gap-4 p-4"
     >
-      <CustomButton className="text-lg">Create cultivation</CustomButton>
+      <CustomButton className="text-lg">New cultivation</CustomButton>
       <div className="flex flex-row gap-10 items-start justify-center w-full max-w-6xl h-full">
         <CultivationsDisplay
           header="Active cultivations"

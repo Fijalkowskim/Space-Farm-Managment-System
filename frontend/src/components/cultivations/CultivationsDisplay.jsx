@@ -1,5 +1,5 @@
 import React from "react";
-import CultivationCard from "./cultivationCard/CultivationCard";
+import CultivationCard from "./CultivationCard";
 
 function CultivationsDisplay({ header, cultivations }) {
   return (
