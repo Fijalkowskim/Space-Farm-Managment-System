@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import FormInput from "./FormInput";
-function LoginPanel(onSubmit) {
+import { useUserContext } from "../../context/UserContext";
+function LoginPanel() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const { logIn } = useUserContext();
   return (
     <form
       className="flex flex-col gap-4 justify-center items-center py-12 md:py-6 w-full max-w-[20rem] bg-background-800/50 p-10 rounded-lg shadow-md"
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(email, password);
+        logIn(email, password);
       }}
     >
       <div className="relative w-full">

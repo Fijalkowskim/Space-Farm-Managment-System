@@ -2,7 +2,7 @@ import React from "react";
 import PageWrapper from "./PageWrapper";
 
 function Stations() {
-  return <PageWrapper>Stations</PageWrapper>;
+  return <PageWrapper secured={true}>Stations</PageWrapper>;
 }
 
 export default Stations;

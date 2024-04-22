@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { cn } from "../helpers/helpers";
+import { useUserContext } from "../context/UserContext";
+import { useNavigate } from "react-router-dom";
 
-function PageWrapper({ children, className }) {
+function PageWrapper({ children, className, secured }) {
+  const { isLoggedIn } = useUserContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (secured && !isLoggedIn) {
+      navigate("/");
+    }
+  }, [secured, isLoggedIn]);
   return (
     <div
       className={cn(

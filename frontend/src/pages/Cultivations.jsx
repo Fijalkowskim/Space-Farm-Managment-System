@@ -4,7 +4,7 @@ import CultivationsDisplay from "../components/cultivations/CultivationsDisplay"
 
 function Cultivations() {
   return (
-    <PageWrapper>
+    <PageWrapper secured={true}>
       <CultivationsDisplay />
     </PageWrapper>
   );

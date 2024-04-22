@@ -9,8 +9,11 @@ export function useUserContext() {
 export function UserContextProvider({ children }) {
   const [userData, setUserData] = React.useState();
   const [isLoggedIn, setIsLoggedIn] = React.useState();
+  const logIn = (email, password) => {
+    setIsLoggedIn(true);
+  };
   return (
-    <UserContext.Provider value={{ userData, isLoggedIn }}>
+    <UserContext.Provider value={{ userData, isLoggedIn, logIn }}>
       {children}
     </UserContext.Provider>
   );
