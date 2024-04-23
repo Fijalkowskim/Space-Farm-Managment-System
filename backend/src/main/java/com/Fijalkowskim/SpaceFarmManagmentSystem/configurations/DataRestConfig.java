@@ -20,7 +20,7 @@ public class DataRestConfig implements RepositoryRestConfigurer {
         config.exposeIdsFor(Reading.class);
         config.exposeIdsFor(Stage.class);
         config.exposeIdsFor(Station.class);
-        String theAllowedOrigins = "http://localhost:8080";
+        String theAllowedOrigins = "http://localhost:3000";
         cors.addMapping(config.getBasePath() + "/**" ).allowedOrigins(theAllowedOrigins);
     }
 }
