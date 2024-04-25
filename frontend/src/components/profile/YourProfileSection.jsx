@@ -8,8 +8,8 @@ function YourProfileSection() {
     return <div></div>;
   }
   return (
-    <div className="w-full max-w-6xl bg-background-950/50 p-4 rounded-md shadow-md text-text-50 flex flex-col items-center justify-center gap-3">
-      <div className="w-full flex items-center justify-between flex-row">
+    <div className="w-full flex-wrap max-w-6xl bg-background-950/50 p-4 rounded-md shadow-md text-text-50 flex flex-col items-center justify-center gap-3">
+      <div className="w-full flex items-center md:justify-between justify-center gap-3 md:gap-0 flex-row flex-wrap">
         <h1 className="text-4xl">Your profile</h1>
         <div>
           <CustomButton
@@ -22,12 +22,12 @@ function YourProfileSection() {
           </CustomButton>
         </div>
       </div>
-      <div className="w-full flex flex-row items-center justify-start gap-14">
+      <div className="w-full flex-wrap flex flex-row items-center md:justify-start justify-center md:gap-14 gap-3">
         <ProfileAttribute label="Name" value={userData.name} />
         <ProfileAttribute label="Surname" value={userData.surname} />
         <ProfileAttribute label="Role" value={userData.role} />
         <CustomButton
-          className={" w-40 ml-auto leading-5"}
+          className={" w-40 md:ml-auto ml-0 leading-5"}
           variant="action"
           onClick={() => {}}
         >

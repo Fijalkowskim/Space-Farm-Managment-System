@@ -1,5 +1,6 @@
 import * as React from "react";
 import { exampleUserData } from "../exampleData/ExampleUserData";
+import { exampleCultivations } from "../exampleData/ExampleCultivations";
 
 const UserContext = React.createContext();
 
@@ -18,8 +19,14 @@ export function UserContextProvider({ children }) {
     setUserData(null);
     setIsLoggedIn(false);
   };
+  const getAssignedCultivations = () => {
+    if (!userData) return null;
+    return exampleCultivations;
+  };
   return (
-    <UserContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
+    <UserContext.Provider
+      value={{ userData, isLoggedIn, logIn, logOut, getAssignedCultivations }}
+    >
       {children}
     </UserContext.Provider>
   );
