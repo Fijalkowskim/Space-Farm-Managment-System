@@ -28,10 +28,24 @@ export const exampleCultivations = [
     [], // Responsible workers
     "Dummy comment 2"
   ),
+  new Cultivation(
+    3,
+    new Date("2023-01-13T00:00:00"),
+    "Type 2",
+    [], // Harvests
+    ["Lettuce"], // Plants
+    [], // Stages
+    [], // Stations
+    2.3,
+    new Date("2025-09-09T00:00:00"),
+    undefined,
+    [], // Responsible workers
+    undefined
+  ),
 ];
 export const exampleFinishedCultivations = [
   new Cultivation(
-    1,
+    4,
     new Date("2022-11-23T00:00:00"),
     "Type 3",
     [], // Harvests
