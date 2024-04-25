@@ -1,23 +1,15 @@
 import React from "react";
 import PageWrapper from "./PageWrapper";
-import CustomButton from "../components/general/CustomButton";
-import { useUserContext } from "../context/UserContext";
+
+import YourProfileSection from "../components/profile/YourProfileSection";
 
 function Profile() {
-  const { logOut } = useUserContext();
   return (
     <PageWrapper
       secured={true}
-      className={"flex h-screen items-center justify-center"}
+      className={"flex h-screen items-center justify-start flex-col"}
     >
-      <CustomButton
-        className={"text-xl"}
-        onClick={() => {
-          logOut();
-        }}
-      >
-        Log out
-      </CustomButton>
+      <YourProfileSection />
     </PageWrapper>
   );
 }

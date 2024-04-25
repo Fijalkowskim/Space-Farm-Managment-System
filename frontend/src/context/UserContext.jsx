@@ -1,4 +1,5 @@
 import * as React from "react";
+import { exampleUserData } from "../exampleData/ExampleUserData";
 
 const UserContext = React.createContext();
 
@@ -7,10 +8,11 @@ export function useUserContext() {
 }
 
 export function UserContextProvider({ children }) {
-  const [userData, setUserData] = React.useState();
+  const [userData, setUserData] = React.useState(exampleUserData);
   const [isLoggedIn, setIsLoggedIn] = React.useState();
   const logIn = (email, password) => {
     setIsLoggedIn(true);
+    setUserData(exampleUserData);
   };
   const logOut = () => {
     setUserData(null);
