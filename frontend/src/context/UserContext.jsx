@@ -20,7 +20,7 @@ export function UserContextProvider({ children }) {
     setIsLoggedIn(false);
   };
   const getAssignedCultivations = () => {
-    if (!userData) return null;
+    if (!userData) return [];
     return exampleCultivations;
   };
   return (

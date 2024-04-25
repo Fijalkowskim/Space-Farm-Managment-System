@@ -7,7 +7,7 @@ function AssignedCultivationsSection() {
   return (
     <CultivationDisplay
       className={
-        "max-w-6xl rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
+        "w-full rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
       }
       header="Assiged cultivations"
       cultivations={getAssignedCultivations()}

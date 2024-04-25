@@ -6,14 +6,11 @@ import AssignedCultivationsSection from "../components/profile/AssignedCultivati
 
 function Profile() {
   return (
-    <PageWrapper
-      secured={true}
-      className={
-        "flex items-center justify-start flex-col gap-8 min-h-0 h-[90vh] overflow-hidden"
-      }
-    >
-      <YourProfileSection />
-      <AssignedCultivationsSection />
+    <PageWrapper secured={true} className={"overflow-hidden h-[90vh] min-h-0"}>
+      <div className="w-full max-w-4xl flex items-center justify-start flex-col gap-8 h-full">
+        <YourProfileSection />
+        <AssignedCultivationsSection />
+      </div>
     </PageWrapper>
   );
 }

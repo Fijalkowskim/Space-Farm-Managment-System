@@ -8,7 +8,7 @@ function YourProfileSection() {
     return <div></div>;
   }
   return (
-    <div className="w-full flex-wrap max-w-6xl bg-background-950/50 p-4 rounded-md shadow-md text-text-50 flex flex-col items-center justify-center gap-3">
+    <div className="w-full flex-wrap bg-background-950/50 p-4 rounded-md shadow-md text-text-50 flex flex-col items-center justify-center gap-3">
       <div className="w-full flex items-center md:justify-between justify-center gap-3 md:gap-0 flex-row flex-wrap">
         <h1 className="text-4xl">Your profile</h1>
         <div>

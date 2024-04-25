@@ -1,8 +1,14 @@
 import React from "react";
+import { cn } from "../../helpers/helpers";
 
-function CultivationCardAttribute({ label, value }) {
+function CultivationCardAttribute({ label, value, className }) {
   return (
-    <div className="flex flex-col items-start justify-center truncate">
+    <div
+      className={cn(
+        "flex flex-col items-start justify-center truncate",
+        className
+      )}
+    >
       <h1 className="text-sm  font-light capitalize text-primary-500 opacity-70">
         {label}
       </h1>
