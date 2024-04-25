@@ -4,7 +4,7 @@ import { FaEye } from "react-icons/fa";
 import FormInput from "./FormInput";
 import { useUserContext } from "../../context/UserContext";
 function LoginPanel() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const { logIn } = useUserContext();
@@ -13,19 +13,18 @@ function LoginPanel() {
       className="flex flex-col gap-4 justify-center items-center py-12 md:py-6 w-full max-w-[20rem] bg-background-800/50 p-10 rounded-lg shadow-md"
       onSubmit={(e) => {
         e.preventDefault();
-        logIn(email, password);
+        logIn(username, password);
       }}
     >
       <div className="relative w-full">
         <FormInput
-          id="email"
-          value={email}
-          setValue={setEmail}
+          id="username"
+          value={username}
+          setValue={setUsername}
           required
           type="text"
-          placeholder="user@email.com"
         >
-          Email
+          Username
         </FormInput>
       </div>
       <div className="relative w-full">
@@ -55,12 +54,6 @@ function LoginPanel() {
         >
           Login
         </button>
-        <div className="mt-2 text-center text-sm text-background-700">
-          Don't have an account?{" "}
-          <NavLink className="underline" to={"/register"}>
-            Sign up
-          </NavLink>
-        </div>
       </div>
     </form>
   );
