@@ -21,8 +21,11 @@ public class Cultivation {
     @JoinColumn(name = "typeId")
     private CultivationType type;
 
-    @OneToMany(mappedBy = "cultivation")
-    private Set<Harvest> harvests;
+    private float area;
+
+    private Date plannedFinishDate;
+
+    private Date realFinishDate;
 
     @ManyToOne
     @JoinColumn(name = "plantId")
@@ -31,18 +34,15 @@ public class Cultivation {
     @OneToMany(mappedBy = "cultivation")
     private Set<Stage> stages;
 
+    @OneToMany(mappedBy = "cultivation")
+    private Set<Harvest> harvests;
+
     @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "stationId")
     )
     private Set<Station> stations;
-
-    private float area;
-
-    private Date plannedFinishDate;
-
-    private Date realFinishDate;
 
     @ManyToMany
     @JoinTable(

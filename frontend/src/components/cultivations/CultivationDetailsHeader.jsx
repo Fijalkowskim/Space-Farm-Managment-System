@@ -25,6 +25,10 @@ function CultivationDetailsHeader({ cultivation }) {
                 : "-"
             }
           />
+          <CultivationDetailsAttribute
+            label="Plant"
+            value={cultivation.plant}
+          />
           <CultivationDetailsAttribute label="Type" value={cultivation.type} />
           <CultivationDetailsAttribute
             label="Area"

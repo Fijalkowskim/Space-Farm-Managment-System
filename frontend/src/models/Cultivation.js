@@ -4,7 +4,7 @@ export class Cultivation {
     startDate,
     type,
     harvests,
-    plants,
+    plant,
     stages,
     stations,
     area,
@@ -17,7 +17,7 @@ export class Cultivation {
     this.startDate = startDate;
     this.type = type;
     this.harvests = harvests;
-    this.plants = plants;
+    this.plant = plant;
     this.stages = stages;
     this.stations = stations;
     this.area = area;

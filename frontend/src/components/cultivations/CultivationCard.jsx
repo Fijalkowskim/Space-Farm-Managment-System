@@ -16,17 +16,8 @@ function CultivationCard({ cultivationData }) {
           label="Start date"
           value={format(cultivationData.startDate, "yyyy-MM-dd")}
         />
-        <CultivationCardAttribute
-          label="Type"
-          value={cultivationData.type}
-          className="w-16"
-        />
-        <CultivationCardAttribute
-          label="Plants"
-          value={cultivationData.plants.map(
-            (plant, idx) => `${idx !== 0 ? `, ` : ``}${plant}`
-          )}
-        />
+        <CultivationCardAttribute label="Id" value={cultivationData.id} />
+        <CultivationCardAttribute label="Plant" value={cultivationData.plant} />
       </div>
       <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
         <CultivationCardAttribute
@@ -39,14 +30,10 @@ function CultivationCard({ cultivationData }) {
             "yyyy-MM-dd"
           )}
         />
+        <CultivationCardAttribute label="Type" value={cultivationData.type} />
         <CultivationCardAttribute
           label="Area"
           value={`${cultivationData.area} ha`}
-          className="w-16"
-        />
-        <CultivationCardAttribute
-          label="Comment"
-          value={cultivationData.comment ?? "-"}
         />
       </div>
     </NavLink>
