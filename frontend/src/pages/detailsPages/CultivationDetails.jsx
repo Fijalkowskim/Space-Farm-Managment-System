@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
 import { useParams } from "react-router-dom";
 import { useCultivation } from "../../hooks/useCultivation";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
+import LoadingBar from "../../components/general/LoadingBar";
 
 function CultivationDetails() {
   const { id } = useParams();
@@ -16,9 +16,7 @@ function CultivationDetails() {
           </h1>
         </div>
       ) : isPending ? (
-        <div className="-mt-20 animate-spin h-screen flex items-center justify-center text-2xl">
-          <AiOutlineLoading3Quarters />
-        </div>
+        <LoadingBar variant={"fullPage"} />
       ) : (
         <></>
       )}
