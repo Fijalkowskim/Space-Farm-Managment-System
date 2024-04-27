@@ -6,20 +6,14 @@ function CultivationCard({ data }) {
   const finished = data.realFinishDate !== undefined;
   if (data === null) return;
   return (
-    <NavLink
-      to={`/cultivation/${data.id}`}
-      className="flex flex-col items-center justify-center gap-1 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base"
-    >
+    <NavLink to={`/cultivation/${data.id}`}>
       <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
+        <DisplayCardAttribute label="Id" value={data.id} />
         <DisplayCardAttribute
-          className="w-36"
+          className="w-24"
           label="Start date"
           value={format(data.startDate, "yyyy-MM-dd")}
         />
-        <DisplayCardAttribute label="Id" value={data.id} />
-        <DisplayCardAttribute label="Plant" value={data.plant} />
-      </div>
-      <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
         <DisplayCardAttribute
           className="w-36"
           label={finished ? "Finish date" : "Planned finish date"}
@@ -28,8 +22,13 @@ function CultivationCard({ data }) {
             "yyyy-MM-dd"
           )}
         />
+
+        <DisplayCardAttribute label="Plant" value={data.plant} />
+      </div>
+      <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
         <DisplayCardAttribute label="Type" value={data.type} />
         <DisplayCardAttribute label="Area" value={`${data.area} ha`} />
+        <DisplayCardAttribute label="Comment" value={data.comment ?? "-"} />
       </div>
     </NavLink>
   );
