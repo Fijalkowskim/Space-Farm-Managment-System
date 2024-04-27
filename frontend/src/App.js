@@ -11,6 +11,7 @@ import Plants from "./pages/resourcesPages/Plants";
 import MeasureUnits from "./pages/resourcesPages/MeasureUnits";
 import StageTypes from "./pages/resourcesPages/StageTypes";
 import CultivationTypes from "./pages/resourcesPages/CultivationTypes";
+import CultivationDetails from "./pages/detailsPages/CultivationDetails";
 function App() {
   const { isLoggedIn } = useUserContext();
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="/measure-units" element={<MeasureUnits />} />
           <Route path="/stage-types" element={<StageTypes />} />
           <Route path="/cultivation-types" element={<CultivationTypes />} />
+          <Route path="/cultivation/:id" element={<CultivationDetails />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
