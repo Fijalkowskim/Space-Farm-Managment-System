@@ -6,7 +6,7 @@ function CultivationCard({ data }) {
   const finished = data.realFinishDate !== undefined;
   if (data === null) return;
   return (
-    <NavLink to={`/cultivation/${data.id}`}>
+    <>
       <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
         <DisplayCardAttribute label="Id" value={data.id} />
         <DisplayCardAttribute
@@ -25,12 +25,12 @@ function CultivationCard({ data }) {
 
         <DisplayCardAttribute label="Plant" value={data.plant} />
       </div>
-      <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
+      <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full mt-2">
         <DisplayCardAttribute label="Type" value={data.type} />
         <DisplayCardAttribute label="Area" value={`${data.area} ha`} />
         <DisplayCardAttribute label="Comment" value={data.comment ?? "-"} />
       </div>
-    </NavLink>
+    </>
   );
 }
 
