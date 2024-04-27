@@ -24,7 +24,7 @@ public class Cultivation {
     private float area;
 
     private Date plannedFinishDate;
-
+""
     private Date realFinishDate;
 
     @ManyToOne

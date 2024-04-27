@@ -6,6 +6,7 @@ import {
   exampleFinishedCultivations,
 } from "../exampleData/ExampleCultivations";
 import CustomButton from "../components/general/CustomButton";
+import VertivalScrollableDisplay from "../components/verticalScrollableDisplay/VertivalScrollableDisplay";
 function Cultivations() {
   return (
     <PageWrapper
@@ -14,13 +15,15 @@ function Cultivations() {
     >
       <CustomButton className="text-lg w-44">New cultivation</CustomButton>
       <div className="flex flex-col gap-4 items-start justify-center w-full max-w-4xl h-full">
-        <CultivationsDisplay
-          header="Active cultivations"
-          cultivations={exampleCultivations}
+        <VertivalScrollableDisplay
+          header={"Active cultivations"}
+          entries={exampleCultivations}
+          contentType={"cultivation"}
         />
-        <CultivationsDisplay
-          header="Finished cultivations"
-          cultivations={exampleFinishedCultivations}
+        <VertivalScrollableDisplay
+          header={"Finished cultivations"}
+          entries={exampleFinishedCultivations}
+          contentType={"cultivation"}
         />
       </div>
     </PageWrapper>
