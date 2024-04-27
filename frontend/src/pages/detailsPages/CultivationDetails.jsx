@@ -3,6 +3,7 @@ import PageWrapper from "../PageWrapper";
 import { useParams } from "react-router-dom";
 import { useCultivation } from "../../hooks/useCultivation";
 import LoadingBar from "../../components/general/LoadingBar";
+import CultivationDetailsHeader from "../../components/cultivations/CultivationDetailsHeader";
 
 function CultivationDetails() {
   const { id } = useParams();
@@ -18,7 +19,9 @@ function CultivationDetails() {
       ) : isPending ? (
         <LoadingBar variant={"fullPage"} />
       ) : (
-        <></>
+        <div className="w-full flex flex-col items-center justify-start">
+          <CultivationDetailsHeader cultivation={cultivation} />
+        </div>
       )}
     </PageWrapper>
   );
