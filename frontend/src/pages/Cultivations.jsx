@@ -1,6 +1,5 @@
 import React from "react";
 import PageWrapper from "./PageWrapper";
-import CultivationsDisplay from "../components/cultivations/CultivationsDisplay";
 import {
   exampleCultivations,
   exampleFinishedCultivations,

@@ -1,16 +1,17 @@
 import React from "react";
 import { useUserContext } from "../../context/UserContext";
-import CultivationDisplay from "../cultivations/CultivationsDisplay";
+import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
 
 function AssignedCultivationsSection() {
   const { getAssignedCultivations } = useUserContext();
   return (
-    <CultivationDisplay
+    <VertivalScrollableDisplay
       className={
         "w-full rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
       }
       header="Assiged cultivations"
-      cultivations={getAssignedCultivations()}
+      entries={getAssignedCultivations()}
+      contentType={"cultivation"}
     />
   );
 }

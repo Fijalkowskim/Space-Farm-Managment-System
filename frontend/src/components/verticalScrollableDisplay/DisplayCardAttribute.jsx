@@ -1,6 +1,13 @@
 import React from "react";
 import { cn } from "../../helpers/helpers";
-function DisplayCardAttribute({ label, value, className }) {
+import CustomButton from "../general/CustomButton";
+function DisplayCardAttribute({
+  label,
+  value,
+  className,
+  editable,
+  onEditClick,
+}) {
   return (
     <div
       className={cn(
@@ -12,6 +19,11 @@ function DisplayCardAttribute({ label, value, className }) {
         {label}
       </h1>
       <p>{value}</p>
+      {editable === true && (
+        <CustomButton className={"text-sm"} onClick={onEditClick}>
+          Set
+        </CustomButton>
+      )}
     </div>
   );
 }
