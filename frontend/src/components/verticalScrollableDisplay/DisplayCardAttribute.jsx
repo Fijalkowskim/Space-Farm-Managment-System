@@ -11,7 +11,7 @@ function DisplayCardAttribute({
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-center truncate",
+        "flex flex-col items-start justify-center truncate text-base",
         className
       )}
     >

@@ -1,11 +1,12 @@
 import React from "react";
 import CultivationCard from "./displayCards/CultivationCard";
+import WorkerCard from "./displayCards/WorkerCard";
 
 function DisplayCard({ data, contentType }) {
   return contentType === "cultivation" ? (
     <CultivationCard data={data} />
   ) : contentType === "worker" ? (
-    <div>Worker Card</div>
+    <WorkerCard data={data} />
   ) : contentType === "stage" ? (
     <div>Stage Card</div>
   ) : contentType === "plant" ? (
