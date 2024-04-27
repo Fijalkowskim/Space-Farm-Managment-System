@@ -24,7 +24,11 @@ function CultivationDetails() {
   return (
     <PageWrapper secured={true}>
       {cultivation === undefined ? (
-        <h1>There is no cultivation with given id.</h1>
+        <div className="h-screen flex items-center justify-center">
+          <h1 className="text-xl text-center">
+            There is no cultivation with given id.
+          </h1>
+        </div>
       ) : (
         <>Cultivation {id}</>
       )}
