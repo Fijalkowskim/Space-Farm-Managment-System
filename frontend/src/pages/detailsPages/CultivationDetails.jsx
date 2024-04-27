@@ -10,13 +10,13 @@ function CultivationDetails() {
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>
       {cultivation === undefined && !isPending ? (
-        <div className="h-screen flex items-center justify-center">
+        <div className="-mt-20 h-screen flex items-center justify-center">
           <h1 className="text-xl text-center">
             There is no cultivation with given id.
           </h1>
         </div>
       ) : isPending ? (
-        <div className="animate-spin">
+        <div className="-mt-20 animate-spin h-screen flex items-center justify-center text-2xl">
           <AiOutlineLoading3Quarters />
         </div>
       ) : (

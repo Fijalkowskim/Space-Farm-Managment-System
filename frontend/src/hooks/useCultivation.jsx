@@ -15,7 +15,7 @@ export const useCultivation = (id) => {
       } catch (err) {
         console.log(err);
       }
-      setIsPending(false);
+      setIsPending(true);
     };
     loadCultivation();
   }, [getCultivation, setCultivation, id, setIsPending]);
