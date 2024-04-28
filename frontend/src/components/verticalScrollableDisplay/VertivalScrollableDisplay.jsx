@@ -16,7 +16,7 @@ function VertivalScrollableDisplay({
       )}
     >
       <h1 className="">{header}</h1>
-      {entries.length > 0 ? (
+      {entries !== undefined && entries.length > 0 ? (
         entries.map((entry) => (
           <DisplayCard key={entry.id} data={entry} contentType={contentType} />
         ))
