@@ -12,10 +12,12 @@ import MeasureUnits from "./pages/resourcesPages/MeasureUnits";
 import StageTypes from "./pages/resourcesPages/StageTypes";
 import CultivationTypes from "./pages/resourcesPages/CultivationTypes";
 import CultivationDetails from "./pages/detailsPages/CultivationDetails";
+import PopupController from "./components/popup/PopupController";
 function App() {
   const { isLoggedIn } = useUserContext();
   return (
-    <div className="overflow-x-hidden">
+    <div className="overflow-x-hidden relative">
+      <PopupController />
       <BrowserRouter>
         {isLoggedIn && <Navbar />}
         <Routes>

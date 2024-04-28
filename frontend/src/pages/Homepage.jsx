@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageWrapper from "./PageWrapper";
 import LoginPanel from "../components/loginPanel/LoginPanel";
 
