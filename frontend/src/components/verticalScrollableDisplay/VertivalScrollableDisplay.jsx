@@ -1,12 +1,13 @@
 import React from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
-
+import LoadingBar from "../general/LoadingBar";
 function VertivalScrollableDisplay({
   header,
   entries,
   className,
   contentType,
+  loading,
 }) {
   return (
     <div
@@ -16,7 +17,9 @@ function VertivalScrollableDisplay({
       )}
     >
       <h1 className="">{header}</h1>
-      {entries !== undefined && entries.length > 0 ? (
+      {loading === true ? (
+        <LoadingBar variant={"parent"} />
+      ) : entries !== undefined && entries.length > 0 ? (
         entries.map((entry) => (
           <DisplayCard key={entry.id} data={entry} contentType={contentType} />
         ))

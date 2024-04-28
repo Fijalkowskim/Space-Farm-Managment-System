@@ -4,21 +4,17 @@ import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScro
 import { useAssignedCultivations } from "../../hooks/cultivations/useAssignedCultivations";
 
 function AssignedCultivationsSection() {
-  const { cultivations } = useAssignedCultivations();
-  if (cultivations === undefined) return;
+  const { cultivations, isPending } = useAssignedCultivations();
   return (
-    <>
-      {
-        <VertivalScrollableDisplay
-          className={
-            "w-full rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
-          }
-          header="Assiged cultivations"
-          entries={cultivations}
-          contentType={"cultivation"}
-        />
+    <VertivalScrollableDisplay
+      className={
+        "w-full rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
       }
-    </>
+      header="Assiged cultivations"
+      entries={cultivations}
+      contentType={"cultivation"}
+      loading={isPending}
+    />
   );
 }
 

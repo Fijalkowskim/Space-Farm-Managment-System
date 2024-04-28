@@ -1,14 +1,11 @@
 import React from "react";
 import PageWrapper from "./PageWrapper";
-import {
-  exampleCultivations,
-  exampleFinishedCultivations,
-} from "../exampleData/ExampleCultivations";
 import CustomButton from "../components/general/CustomButton";
 import VertivalScrollableDisplay from "../components/verticalScrollableDisplay/VertivalScrollableDisplay";
 import { useCultivations } from "../hooks/cultivations/useCultivations";
 function Cultivations() {
-  const { activeCultivations, finishedCultivations } = useCultivations();
+  const { activeCultivations, finishedCultivations, isPending } =
+    useCultivations();
   return (
     <PageWrapper
       secured={true}
@@ -20,11 +17,13 @@ function Cultivations() {
           header={"Active cultivations"}
           entries={activeCultivations}
           contentType={"cultivation"}
+          loading={isPending}
         />
         <VertivalScrollableDisplay
           header={"Finished cultivations"}
           entries={finishedCultivations}
           contentType={"cultivation"}
+          loading={isPending}
         />
       </div>
     </PageWrapper>

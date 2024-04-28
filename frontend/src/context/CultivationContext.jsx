@@ -4,6 +4,7 @@ import {
   exampleFinishedCultivations,
 } from "../exampleData/ExampleCultivations";
 import { useUserContext } from "./UserContext";
+import api from "../api/api";
 
 const CultivationContext = createContext();
 
@@ -13,16 +14,35 @@ export function useCultivationContext() {
 
 export function CultivationContextProvider({ children }) {
   const { userData } = useUserContext();
+  //************ Get methods ************
   const getActiveCultivations = async () => {
-    //Api call
+    try {
+      const res = await api.get("/cultivation/active");
+      if (res.data) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
     return exampleCultivations;
   };
   const getFinishedCultivations = async () => {
-    //Api call
+    try {
+      const res = await api.get("/cultivation/finished");
+      if (res.data) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
     return exampleFinishedCultivations;
   };
   const getCultivation = async (id) => {
-    //Api call
+    try {
+      const res = await api.get(`/cultivation/${id}`);
+      if (res.data) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
     const foundCultivation = exampleCultivations.find(
       (cultivation) => cultivation.id === id
     );
@@ -33,9 +53,16 @@ export function CultivationContextProvider({ children }) {
   };
   const getAssignedCultivations = async () => {
     if (!userData) return [];
-    //Api call
+    try {
+      const res = await api.get(`/cultivation/user/${userData.id}`);
+      if (res.data) {
+      }
+    } catch (err) {
+      console.log(err);
+    }
     return exampleCultivations;
   };
+  //************ Get methods ************
   return (
     <CultivationContext.Provider
       value={{
