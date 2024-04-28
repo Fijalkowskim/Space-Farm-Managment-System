@@ -3,6 +3,7 @@ import {
   exampleCultivations,
   exampleFinishedCultivations,
 } from "../exampleData/ExampleCultivations";
+import { useUserContext } from "./UserContext";
 
 const CultivationContext = createContext();
 
@@ -11,6 +12,7 @@ export function useCultivationContext() {
 }
 
 export function CultivationContextProvider({ children }) {
+  const { userData } = useUserContext();
   const getActiveCultivations = async () => {
     //Api call
     return exampleCultivations;
@@ -29,9 +31,19 @@ export function CultivationContextProvider({ children }) {
       exampleFinishedCultivations.find((cultivation) => cultivation.id === id)
     );
   };
+  const getAssignedCultivations = async () => {
+    if (!userData) return [];
+    //Api call
+    return exampleCultivations;
+  };
   return (
     <CultivationContext.Provider
-      value={{ getActiveCultivations, getFinishedCultivations, getCultivation }}
+      value={{
+        getActiveCultivations,
+        getFinishedCultivations,
+        getCultivation,
+        getAssignedCultivations,
+      }}
     >
       {children}
     </CultivationContext.Provider>

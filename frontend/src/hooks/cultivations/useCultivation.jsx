@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useCultivationContext } from "../context/CultivationContext";
+import { useCultivationContext } from "../../context/CultivationContext";
 export const useCultivation = (id) => {
   const [cultivation, setCultivation] = useState();
   const [isPending, setIsPending] = useState(false);

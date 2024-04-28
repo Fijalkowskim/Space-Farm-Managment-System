@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
 import { useParams } from "react-router-dom";
-import { useCultivation } from "../../hooks/useCultivation";
+import { useCultivation } from "../../hooks/cultivations/useCultivation";
 import LoadingBar from "../../components/general/LoadingBar";
 import CultivationDetailsHeader from "../../components/cultivations/CultivationDetailsHeader";
 import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";

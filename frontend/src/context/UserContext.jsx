@@ -19,14 +19,9 @@ export function UserContextProvider({ children }) {
     setUserData(null);
     setIsLoggedIn(false);
   };
-  const getAssignedCultivations = () => {
-    if (!userData) return [];
-    return exampleCultivations;
-  };
+
   return (
-    <UserContext.Provider
-      value={{ userData, isLoggedIn, logIn, logOut, getAssignedCultivations }}
-    >
+    <UserContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
       {children}
     </UserContext.Provider>
   );

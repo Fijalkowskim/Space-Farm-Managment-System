@@ -7,7 +7,6 @@ function VertivalScrollableDisplay({
   entries,
   className,
   contentType,
-  navigateTo,
 }) {
   return (
     <div
@@ -19,12 +18,7 @@ function VertivalScrollableDisplay({
       <h1 className="">{header}</h1>
       {entries.length > 0 ? (
         entries.map((entry) => (
-          <DisplayCard
-            key={entry.id}
-            data={entry}
-            contentType={contentType}
-            navigateTo={navigateTo ?? "/"}
-          />
+          <DisplayCard key={entry.id} data={entry} contentType={contentType} />
         ))
       ) : (
         <p className="text-base font-light -mt-3 opacity-70">No data yet</p>
