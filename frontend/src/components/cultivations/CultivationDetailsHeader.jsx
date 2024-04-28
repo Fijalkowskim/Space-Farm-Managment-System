@@ -3,8 +3,17 @@ import { format } from "date-fns";
 import DisplayCardAttribute from "../verticalScrollableDisplay/DisplayCardAttribute";
 import { NavLink } from "react-router-dom";
 import CustomButton from "../general/CustomButton";
+import { useCultivationDetailsContext } from "../../context/cultivations/CultivationDetailsContext";
 
 function CultivationDetailsHeader({ cultivation }) {
+  const {
+    setEditingStartDate,
+    setEditingPlannedFinishDate,
+    setEditingFinishDate,
+    setEditingType,
+    setEditingArea,
+    setEditingComment,
+  } = useCultivationDetailsContext();
   return (
     <div className="flex flex-col justify-center items-start w-full max-w-4xl bg-background-950/50 p-4 gap-2">
       <h1 className="text-3xl">Cultivation {cultivation.id}</h1>
@@ -24,11 +33,15 @@ function CultivationDetailsHeader({ cultivation }) {
             label="Start date"
             value={format(cultivation.startDate, "yyyy-MM-dd")}
             editable={true}
+            onEditClick={() => {
+              setEditingStartDate(true);
+            }}
           />
           <DisplayCardAttribute
             label="Planned finish date"
             value={format(cultivation.plannedFinishDate, "yyyy-MM-dd")}
             editable={true}
+            onEditClick={() => setEditingPlannedFinishDate(true)}
           />
           <DisplayCardAttribute
             label="Real finish date"
@@ -38,21 +51,25 @@ function CultivationDetailsHeader({ cultivation }) {
                 : "-"
             }
             editable={true}
+            onEditClick={() => setEditingFinishDate(true)}
           />
           <DisplayCardAttribute
             label="Type"
             value={cultivation.type}
             editable={true}
+            onEditClick={() => setEditingType(true)}
           />
           <DisplayCardAttribute
             label="Area"
             value={`${cultivation.area} ha`}
             editable={true}
+            onEditClick={() => setEditingArea(true)}
           />
           <DisplayCardAttribute
             label="Comment"
             value={cultivation.comment ?? "-"}
             editable={true}
+            onEditClick={() => setEditingComment(true)}
           />
         </div>
       </div>

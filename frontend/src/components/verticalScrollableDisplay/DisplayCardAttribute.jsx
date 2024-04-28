@@ -11,7 +11,7 @@ function DisplayCardAttribute({
   return (
     <div
       className={cn(
-        "flex flex-col items-start justify-center truncate text-base",
+        "flex flex-col items-start justify-center truncate text-base pointer-events-auto",
         className
       )}
     >
@@ -20,9 +20,11 @@ function DisplayCardAttribute({
       </h1>
       <p>{value}</p>
       {editable === true && (
-        <CustomButton className={"text-sm"} onClick={onEditClick}>
-          Set
-        </CustomButton>
+        <>
+          <CustomButton className={"text-sm"} onClick={onEditClick}>
+            Set
+          </CustomButton>
+        </>
       )}
     </div>
   );
