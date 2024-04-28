@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSettingsContext } from "../../context/SettingsContext";
 
-function Modal({ children, onClose, onValueSet, visible }) {
+function Modal({ children, onClose, visible }) {
   const { setDisableScroll } = useSettingsContext();
   const closeModal = () => {
     onClose();
@@ -15,7 +15,7 @@ function Modal({ children, onClose, onValueSet, visible }) {
   return (
     <div
       className={`${
-        visible ? "absolute" : "hidden"
+        visible ? "fixed" : "hidden"
       } w-screen h-screen top-0 left-0 z-10 flex items-center justify-center text-center pointer-events-auto`}
     >
       <div

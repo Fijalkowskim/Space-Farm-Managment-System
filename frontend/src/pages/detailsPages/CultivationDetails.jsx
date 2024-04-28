@@ -6,13 +6,16 @@ import LoadingBar from "../../components/general/LoadingBar";
 import CultivationDetailsHeader from "../../components/cultivations/CultivationDetailsHeader";
 import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
 import { useCultivationDetailsContext } from "../../context/cultivations/CultivationDetailsContext";
-import CultivationDetailsModals from "../../components/cultivations/CultivationDetailsModals";
 import { useLocation } from "react-router-dom";
+import CultivationEditForm from "../../components/cultivations/CultivationEditForm";
+import { useCultivationContext } from "../../context/cultivations/CultivationContext";
+import Modal from "../../components/general/Modal";
 
 function CultivationDetails() {
   const { id } = useParams();
   const { cultivation, isPending } = useCultivation(id);
-  const { disableEditing } = useCultivationDetailsContext();
+  const { disableEditing, editedCultivation } = useCultivationDetailsContext();
+  const { updateCultivation } = useCultivationContext();
   const location = useLocation();
 
   useEffect(() => {
@@ -30,7 +33,16 @@ function CultivationDetails() {
         <LoadingBar variant={"fullPage"} />
       ) : (
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
-          <CultivationDetailsModals cultivation={cultivation} />
+          <Modal visible={editedCultivation} onClose={disableEditing}>
+            <CultivationEditForm
+              cultivation={cultivation}
+              onSubmit={(newCultivation) => {
+                //Api call
+                updateCultivation(cultivation, newCultivation);
+              }}
+            />
+          </Modal>
+
           <CultivationDetailsHeader cultivation={cultivation} />
           <VertivalScrollableDisplay
             entries={cultivation.stages}

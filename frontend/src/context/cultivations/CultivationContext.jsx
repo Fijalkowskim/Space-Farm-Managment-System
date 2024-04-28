@@ -5,6 +5,7 @@ import {
 } from "../../exampleData/ExampleCultivations";
 import { useUserContext } from "../UserContext";
 import api from "../../api/api";
+import { useCultivationDetailsContext } from "./CultivationDetailsContext";
 
 const CultivationContext = createContext();
 
@@ -14,6 +15,8 @@ export function useCultivationContext() {
 
 export function CultivationContextProvider({ children }) {
   const { userData } = useUserContext();
+  const { editedCultivation, setEditedCultivation } =
+    useCultivationDetailsContext();
   //************ Get methods ************
   const getActiveCultivations = async () => {
     return exampleCultivations;
@@ -72,7 +75,12 @@ export function CultivationContextProvider({ children }) {
     }
     return exampleCultivations;
   };
-  //************ Get methods ************
+  //************ Put methods ************
+  const updateCultivation = async (previousCultivation, newCultivation) => {
+    if (previousCultivation.id !== newCultivation.id) return;
+    previousCultivation = newCultivation;
+    setEditedCultivation(undefined);
+  };
   return (
     <CultivationContext.Provider
       value={{
@@ -80,6 +88,8 @@ export function CultivationContextProvider({ children }) {
         getFinishedCultivations,
         getCultivation,
         getAssignedCultivations,
+
+        updateCultivation,
       }}
     >
       {children}
