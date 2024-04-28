@@ -35,7 +35,7 @@ function CultivationDetails() {
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
           <Modal visible={editedCultivation} onClose={disableEditing}>
             <CultivationEditForm
-              cultivation={cultivation}
+              editedCultivation={cultivation}
               onSubmit={(newCultivation) => {
                 //Api call
                 updateCultivation(cultivation, newCultivation);
