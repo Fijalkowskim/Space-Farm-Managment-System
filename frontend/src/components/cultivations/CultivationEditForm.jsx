@@ -11,7 +11,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
     <form
       onSubmit={(e) => {
         e.preventDefault();
-        onSubmit(editedCultivation);
+        onSubmit(newCultivation);
       }}
       className="bg-background-800 p-4 flex flex-col items-center justify-center text-center gap-1 w-full max-w-md"
     >
@@ -72,7 +72,6 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
       <input
         type={"number"}
         required
-        defaultValue={newCultivation?.area}
         value={newCultivation?.area}
         className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
