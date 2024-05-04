@@ -17,13 +17,25 @@ function CultivationDetails() {
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
   const { updateCultivation } = useCultivationContext();
   const location = useLocation();
+  const [currentCultivation, setCurrentCultivation] = useState(undefined);
 
   useEffect(() => {
     disableEditing();
   }, [location]);
+
+  useEffect(() => {
+    setCurrentCultivation(cultivation);
+  }, [cultivation, setCurrentCultivation]);
+
+  const cultivationEditFormSubmit = async (newCultivation) => {
+    const resp = await updateCultivation(currentCultivation, newCultivation);
+    if (resp) {
+      setCurrentCultivation(resp);
+    }
+  };
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>
-      {cultivation === undefined && !isPending ? (
+      {currentCultivation === undefined && !isPending ? (
         <div className="-mt-20 h-screen flex items-center justify-center">
           <h1 className="text-xl text-center">
             There is no cultivation with given id.
@@ -35,35 +47,33 @@ function CultivationDetails() {
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
           <Modal visible={editedCultivation} onClose={disableEditing}>
             <CultivationEditForm
-              editedCultivation={cultivation}
-              onSubmit={(newCultivation) => {
-                //Api call
-                updateCultivation(cultivation, newCultivation);
-              }}
+              editedCultivation={currentCultivation}
+              visible={editedCultivation}
+              onSubmit={cultivationEditFormSubmit}
             />
           </Modal>
 
-          <CultivationDetailsHeader cultivation={cultivation} />
+          <CultivationDetailsHeader cultivation={currentCultivation} />
           <VertivalScrollableDisplay
-            entries={cultivation.stages}
+            entries={currentCultivation.stages}
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
           />
           <VertivalScrollableDisplay
-            entries={cultivation.harvests}
+            entries={currentCultivation.harvests}
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
           />
           <VertivalScrollableDisplay
-            entries={cultivation.stations}
+            entries={currentCultivation.stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
           />
           <VertivalScrollableDisplay
-            entries={cultivation.responsibleWorkers}
+            entries={currentCultivation.responsibleWorkers}
             header="ResponsibleWorkers"
             contentType="worker"
             className="max-w-4xl items-start"

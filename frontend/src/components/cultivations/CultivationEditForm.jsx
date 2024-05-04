@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../general/CustomButton";
-function CultivationEditForm({ editedCultivation, onSubmit }) {
+
+function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
   const [newCultivation, setNewCultivation] = useState();
   useEffect(() => {
     setNewCultivation(editedCultivation);
-  }, [editedCultivation, setNewCultivation]);
+  }, [editedCultivation, setNewCultivation, visible]);
+  if (!newCultivation) return;
   return (
     <form
       onSubmit={(e) => {
         e.preventDefault();
         onSubmit(editedCultivation);
       }}
-      className="bg-background-800 p-4 flex flex-col items-start justify-center text-center gap-1"
+      className="bg-background-800 p-4 flex flex-col items-center justify-center text-center gap-1 w-full max-w-md"
     >
       <h1 className="text-2xl mb-3">
         Edit cultivation {editedCultivation?.id}
@@ -20,13 +22,16 @@ function CultivationEditForm({ editedCultivation, onSubmit }) {
       <input
         required
         type={"date"}
-        defaultValue={newCultivation?.startDate}
-        value={newCultivation?.startDate}
-        className="bg-background-900 p-1 mb-1"
+        value={
+          newCultivation.startDate
+            ? newCultivation.startDate.toISOString().split("T")[0]
+            : newCultivation.startDate
+        }
+        className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            startDate: e.target.value,
+            startDate: new Date(e.target.value),
           }))
         }
       />
@@ -34,26 +39,32 @@ function CultivationEditForm({ editedCultivation, onSubmit }) {
       <input
         required
         type={"date"}
-        defaultValue={newCultivation?.plannedFinishDate}
-        value={newCultivation?.plannedFinishDate}
-        className="bg-background-900 p-1 mb-1"
+        value={
+          newCultivation.plannedFinishDate
+            ? newCultivation.plannedFinishDate.toISOString().split("T")[0]
+            : newCultivation.plannedFinishDate
+        }
+        className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            plannedFinishDate: e.target.value,
+            plannedFinishDate: new Date(e.target.value),
           }))
         }
       />
       <label className="capitalize -mb-1">real finish date</label>
       <input
         type={"date"}
-        defaultValue={newCultivation?.realFinishDate}
-        value={newCultivation?.realFinishDate}
-        className="bg-background-900 p-1 mb-1"
+        value={
+          newCultivation.realFinishDate
+            ? newCultivation.realFinishDate.toISOString().split("T")[0]
+            : newCultivation.realFinishDate
+        }
+        className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            realFinishDate: e.target.value,
+            realFinishDate: new Date(e.target.value),
           }))
         }
       />
@@ -63,7 +74,7 @@ function CultivationEditForm({ editedCultivation, onSubmit }) {
         required
         defaultValue={newCultivation?.area}
         value={newCultivation?.area}
-        className="bg-background-900 p-1 mb-1"
+        className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
@@ -75,16 +86,18 @@ function CultivationEditForm({ editedCultivation, onSubmit }) {
       <label className="capitalize -mb-1">comment</label>
       <textarea
         value={newCultivation?.comment}
-        className="bg-background-900 p-1 mb-1 resize-none"
+        className="bg-background-900 p-1 mb-1 resize-none w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            area: e.target.value,
+            comment: e.target.value,
           }))
         }
       />
 
-      <CustomButton type="submit">Set</CustomButton>
+      <CustomButton type="submit" className={"w-full mt-1"}>
+        Set
+      </CustomButton>
     </form>
   );
 }

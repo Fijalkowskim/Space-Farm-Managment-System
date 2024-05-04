@@ -77,9 +77,20 @@ export function CultivationContextProvider({ children }) {
   };
   //************ Put methods ************
   const updateCultivation = async (previousCultivation, newCultivation) => {
-    if (previousCultivation.id !== newCultivation.id) return;
-    previousCultivation = newCultivation;
+    if (previousCultivation.id !== newCultivation.id) return undefined;
     setEditedCultivation(undefined);
+    return newCultivation;
+    try {
+      const res = await api.put(`/cultivation/${newCultivation.id}`);
+      if (res.data) {
+        previousCultivation = newCultivation;
+        return newCultivation;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setEditedCultivation(undefined);
+    return undefined;
   };
   return (
     <CultivationContext.Provider

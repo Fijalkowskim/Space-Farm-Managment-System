@@ -17,17 +17,36 @@ function CultivationDetailsHeader({ cultivation }) {
           className={"text-2xl"}
         />
       </div>
+      {/* Plant */}
       <div className="w-full flex flex-row -mt-1 gap-4">
         <NavLink to="/">
-          <CustomButton variant="action" className={"text-sm"}>
+          <CustomButton variant="action" className={"text-sm w-40"}>
             Go to plant page
           </CustomButton>
         </NavLink>
-        <CustomButton variant="" className={"text-sm"}>
+        <CustomButton variant="" className={"text-sm w-32"}>
           Change plant
         </CustomButton>
       </div>
-      <div className="w-full flex flex-row items-center justify-start flex-wrap">
+      {/* Type */}
+      <div className="flex flex-row items-end justify-center gap-4">
+        <DisplayCardAttribute
+          label="type"
+          value={cultivation.type}
+          className={"text-xl"}
+        />
+      </div>
+      <div className="w-full flex flex-row -mt-1 gap-4">
+        <NavLink to="/">
+          <CustomButton variant="action" className={"text-sm w-40"}>
+            Go to type page
+          </CustomButton>
+        </NavLink>
+        <CustomButton variant="" className={"text-sm w-32"}>
+          Change type
+        </CustomButton>
+      </div>
+      <div className="w-full flex flex-row items-center justify-start flex-wrap mt-2">
         <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
           <DisplayCardAttribute
             label="Start date"
@@ -45,7 +64,6 @@ function CultivationDetailsHeader({ cultivation }) {
                 : "-"
             }
           />
-          <DisplayCardAttribute label="Type" value={cultivation.type} />
           <DisplayCardAttribute label="Area" value={`${cultivation.area} ha`} />
           <DisplayCardAttribute
             label="Comment"
