@@ -13,6 +13,7 @@ import StageTypes from "./pages/resourcesPages/StageTypes";
 import CultivationTypes from "./pages/resourcesPages/CultivationTypes";
 import CultivationDetails from "./pages/detailsPages/CultivationDetails";
 import PopupController from "./components/popup/PopupController";
+import StationDetails from "./pages/detailsPages/StationDetails";
 function App() {
   const { isLoggedIn } = useUserContext();
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/stage-types" element={<StageTypes />} />
           <Route path="/cultivation-types" element={<CultivationTypes />} />
           <Route path="/cultivation/:id" element={<CultivationDetails />} />
+          <Route path="/station/:id" element={<StationDetails />} />
 
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
