@@ -3,6 +3,7 @@ import PageWrapper from "../PageWrapper";
 import { useParams } from "react-router-dom";
 import LoadingBar from "../../components/general/LoadingBar";
 import { useStation } from "../../hooks/stations/useStation";
+import StationCultivationsDisplay from "../../components/stations/StationCultivationsDisplay";
 
 function StationDetails() {
   const { id } = useParams();
@@ -26,6 +27,7 @@ function StationDetails() {
       ) : (
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
           <h1 className="text-4xl mt-2">Station {currentStation.id}</h1>
+          <StationCultivationsDisplay station={currentStation} />
         </div>
       )}
     </PageWrapper>
