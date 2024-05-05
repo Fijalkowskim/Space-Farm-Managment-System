@@ -8,6 +8,7 @@ function VertivalScrollableDisplay({
   className,
   contentType,
   loading,
+  showRemoveButton,
 }) {
   return (
     <div
@@ -21,7 +22,12 @@ function VertivalScrollableDisplay({
         <LoadingBar variant={"parent"} />
       ) : entries !== undefined && entries.length > 0 ? (
         entries.map((entry) => (
-          <DisplayCard key={entry.id} data={entry} contentType={contentType} />
+          <DisplayCard
+            key={entry.id}
+            data={entry}
+            contentType={contentType}
+            showRemoveButton={showRemoveButton}
+          />
         ))
       ) : (
         <p className="text-base font-light -mt-3 opacity-70">No data yet</p>

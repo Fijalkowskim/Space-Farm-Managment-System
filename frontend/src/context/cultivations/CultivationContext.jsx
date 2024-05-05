@@ -14,7 +14,6 @@ export function useCultivationContext() {
 }
 
 export function CultivationContextProvider({ children }) {
-  const { userData } = useUserContext();
   const { editedCultivation, setEditedCultivation } =
     useCultivationDetailsContext();
   //************ Get methods ************
@@ -63,11 +62,10 @@ export function CultivationContextProvider({ children }) {
     //   exampleFinishedCultivations.find((cultivation) => cultivation.id === id)
     // );
   };
-  const getAssignedCultivations = async () => {
+  const getAssignedCultivations = async (userID) => {
     return exampleCultivations;
-    if (!userData) return [];
     try {
-      const res = await api.get(`/cultivation/user/${userData.id}`);
+      const res = await api.get(`/cultivation/user/${userID}`);
       if (res.data) {
       }
     } catch (err) {

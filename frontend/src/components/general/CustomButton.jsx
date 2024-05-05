@@ -19,9 +19,13 @@ const variants = cva(
   }
 );
 
-function CustomButton({ className, children, variant, ...props }) {
+function CustomButton({ className, children, variant, onClick, ...props }) {
   return (
-    <button {...props} className={variants({ variant, className })}>
+    <button
+      onClick={onClick}
+      {...props}
+      className={variants({ variant, className })}
+    >
       {children}
     </button>
   );

@@ -1,4 +1,5 @@
 import { Cultivation } from "../models/Cultivation";
+import { Station } from "../models/Station";
 export const exampleCultivations = [
   new Cultivation(
     1,
@@ -7,7 +8,7 @@ export const exampleCultivations = [
     [], // Harvests
     "Sunflower", // Plant
     [], // Stages
-    [], // Stations
+    [new Station(1, [])], // Stations
     10.5,
     new Date("2046-12-17"),
     undefined,

@@ -3,12 +3,13 @@ import CultivationCard from "./displayCards/CultivationCard";
 import WorkerCard from "./displayCards/WorkerCard";
 import { NavLink } from "react-router-dom";
 import StationCard from "./displayCards/StationCard";
-
-function DisplayCard({ data, contentType }) {
+import CustomButton from "../general/CustomButton";
+import { FaRegTrashAlt } from "react-icons/fa";
+function DisplayCard({ data, contentType, showRemoveButton }) {
   return (
     <NavLink
       to={data.id ? `/${contentType}/${data.id}` : "/"}
-      className="flex flex-row items-center flex-wrap justify-start gap-2 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base"
+      className="flex flex-row items-start flex-wrap justify-center gap-2 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative pb-6"
     >
       {contentType === "cultivation" ? (
         <CultivationCard data={data} />
@@ -25,6 +26,17 @@ function DisplayCard({ data, contentType }) {
       ) : contentType === "reading" ? (
         <div>Reading Card</div>
       ) : null}
+      {showRemoveButton === true && (
+        <CustomButton
+          className={"absolute right-1 bottom-1 z-10"}
+          onClick={(e) => {
+            e.stopPropagation();
+          }}
+          variant={"action"}
+        >
+          <FaRegTrashAlt />
+        </CustomButton>
+      )}
     </NavLink>
   );
 }
