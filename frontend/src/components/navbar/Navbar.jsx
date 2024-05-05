@@ -3,11 +3,12 @@ import { useSettingsContext } from "../../context/SettingsContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoX } from "react-icons/go";
 import NavbarLink from "./NavbarLink";
+import { useUserContext } from "../../context/UserContext";
 
 const navlinks = [
   { name: "Cultivations", to: "/" },
   { name: "Stations", to: "/stations" },
-  { name: "Workers", to: "/workers", onlyFor: "ADMIN" | "MANAGER" },
+  { name: "Workers", to: "/workers", onlyFor: ["admin", "manager"] },
   { name: "Resources", to: "/resources" },
   { name: "Profile", to: "/profile" },
 ];
@@ -16,12 +17,12 @@ function Navbar() {
   const ref = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { setDisableScroll } = useSettingsContext();
-
+  const { userData } = useUserContext();
   const toggleMobileMenu = () => {
     setDisableScroll(!isMobileMenuOpen);
     setIsMobileMenuOpen((isMobileMenuOpen) => !isMobileMenuOpen);
   };
-
+  if (!userData) return;
   return (
     <div
       className={`fixed left-0 top-0 z-20 flex w-screen flex-row items-center justify-center gap-8 bg-background-950 px-5 py-3 text-text-50 shadow-sm sm:px-24 xl:px-60 text-lg`}
@@ -34,9 +35,15 @@ function Navbar() {
       <div
         className={`hidden flex-row items-center justify-end gap-8 lg:flex w-full`}
       >
-        {navlinks.map((n) => (
-          <NavbarLink key={n.to} data={n} />
-        ))}
+        {navlinks
+          .filter(
+            (n) =>
+              n.onlyFor === undefined ||
+              (n.onlyFor && n.onlyFor.includes(userData.role.toLowerCase()))
+          )
+          .map((n) => (
+            <NavbarLink key={n.to} data={n} />
+          ))}
       </div>
       <button
         ref={ref}
@@ -62,16 +69,22 @@ function Navbar() {
             >
               <GoX />
             </button>
-            {navlinks.map((n) => (
-              <div
-                key={n.to}
-                onClick={() => {
-                  toggleMobileMenu();
-                }}
-              >
-                <NavbarLink data={n} />
-              </div>
-            ))}
+            {navlinks
+              .filter(
+                (n) =>
+                  n.onlyFor === undefined ||
+                  (n.onlyFor && n.onlyFor.includes(userData.role.toLowerCase()))
+              )
+              .map((n) => (
+                <div
+                  key={n.to}
+                  onClick={() => {
+                    toggleMobileMenu();
+                  }}
+                >
+                  <NavbarLink data={n} />
+                </div>
+              ))}
           </ul>
         </div>
       )}

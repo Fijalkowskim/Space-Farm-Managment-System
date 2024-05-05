@@ -18,14 +18,12 @@ function Cultivations() {
           entries={activeCultivations}
           contentType={"cultivation"}
           loading={isPending}
-          showRemoveButton={true}
         />
         <VertivalScrollableDisplay
           header={"Finished cultivations"}
           entries={finishedCultivations}
           contentType={"cultivation"}
           loading={isPending}
-          showRemoveButton={true}
         />
       </div>
     </PageWrapper>

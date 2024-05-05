@@ -2,14 +2,16 @@ import React from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
+import { useUserContext } from "../../context/UserContext";
 function VertivalScrollableDisplay({
   header,
   entries,
   className,
   contentType,
   loading,
-  showRemoveButton,
 }) {
+  const { userData } = useUserContext();
+  if (!userData) return;
   return (
     <div
       className={cn(
@@ -26,7 +28,10 @@ function VertivalScrollableDisplay({
             key={entry.id}
             data={entry}
             contentType={contentType}
-            showRemoveButton={showRemoveButton}
+            showRemoveButton={
+              userData.role.toLowerCase() === "admin" ||
+              userData.role.toLowerCase() === "manager"
+            }
           />
         ))
       ) : (

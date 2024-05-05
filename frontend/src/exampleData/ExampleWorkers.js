@@ -1,7 +1,7 @@
 import { WorkerType } from "../models/dictionaries/WorkerType";
 import { Person } from "../models/Person";
 export const exampleWorkers = [
-  new Person(1, "John", "Doe", WorkerType.LABWORKER, [
+  new Person(1, "John", "Doe", WorkerType.ADMIN, [
     "Cultivation A",
     "Cultivation B",
   ]),
