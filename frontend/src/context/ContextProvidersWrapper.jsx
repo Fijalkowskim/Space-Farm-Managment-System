@@ -4,7 +4,9 @@ import { UserContextProvider } from "./UserContext";
 import { CultivationContextProvider } from "./cultivations/CultivationContext";
 import { PopupContextProvider } from "./PopupContext";
 import { CultivationDetailContextProvider } from "./cultivations/CultivationDetailsContext";
-import { StationContextProvider } from "./stations/StationContext";
+import { StationContextProvider } from "./StationContext";
+import { PlantContextProvider } from "./PlantContext";
+import { StageContextProvider } from "./StageContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
@@ -13,7 +15,9 @@ function ContextProvidersWrapper({ children }) {
           <SettingsContextProvider>
             <UserContextProvider>
               <CultivationContextProvider>
-                {children}
+                <PlantContextProvider>
+                  <StageContextProvider>{children}</StageContextProvider>
+                </PlantContextProvider>
               </CultivationContextProvider>
             </UserContextProvider>
           </SettingsContextProvider>

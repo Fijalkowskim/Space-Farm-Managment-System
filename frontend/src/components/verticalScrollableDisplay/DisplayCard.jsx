@@ -5,6 +5,8 @@ import { NavLink } from "react-router-dom";
 import StationCard from "./displayCards/StationCard";
 import CustomButton from "../general/CustomButton";
 import { FaRegTrashAlt } from "react-icons/fa";
+import PlantCard from "./displayCards/PlantCard";
+import StageCard from "./displayCards/StageCard";
 function DisplayCard({ data, contentType, showRemoveButton }) {
   return (
     <NavLink
@@ -16,9 +18,9 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
       ) : contentType === "worker" ? (
         <WorkerCard data={data} />
       ) : contentType === "stage" ? (
-        <div>Stage Card</div>
+        <StageCard data={data} />
       ) : contentType === "plant" ? (
-        <div>Plant Card</div>
+        <PlantCard data={data} />
       ) : contentType === "harvest" ? (
         <div>Harvest Card</div>
       ) : contentType === "station" ? (

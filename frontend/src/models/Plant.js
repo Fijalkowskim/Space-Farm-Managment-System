@@ -1,7 +1,7 @@
 export class Plant {
-  constructor(id, name, cultivation) {
+  constructor(id, name, cultivations) {
     this.id = id;
     this.name = name;
-    this.cultivation = cultivation;
+    this.cultivations = cultivations;
   }
 }

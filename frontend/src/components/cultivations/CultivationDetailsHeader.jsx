@@ -67,7 +67,11 @@ function CultivationDetailsHeader({ cultivation }) {
           <DisplayCardAttribute label="Area" value={`${cultivation.area} ha`} />
           <DisplayCardAttribute
             label="Comment"
-            value={cultivation.comment ?? "-"}
+            value={
+              !cultivation.comment || cultivation.comment === ""
+                ? "-"
+                : cultivation.comment
+            }
           />
         </div>
         <CustomButton

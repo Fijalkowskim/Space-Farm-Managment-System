@@ -15,5 +15,5 @@ public class Plant {
     private String name;
 
     @OneToMany(mappedBy = "plant")
-    private Set<Cultivation> cultivation;
+    private Set<Cultivation> cultivations;
 }

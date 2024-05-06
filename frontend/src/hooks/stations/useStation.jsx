@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useStationContext } from "../../context/stations/StationContext";
+import { useStationContext } from "../../context/StationContext";
 export const useStation = (id) => {
   const [station, setStation] = useState();
   const [isPending, setIsPending] = useState(false);
