@@ -1,4 +1,11 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 
-public interface HarvestController {
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping( value = "/api/harvest")
+@CrossOrigin("http://localhost:3000")
+public class HarvestController {
 }
