@@ -1,8 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
-
+import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import { useCultivationTypeContext } from "../../context/dictionaries/CultivationTypeContext";
 function CultivationTypes() {
-  return <PageWrapper secured={true}>CultivationTypes</PageWrapper>;
+  const { getCultivationTypes } = useCultivationTypeContext();
+  const { data, isPending } = useFetchArrayData(getCultivationTypes);
+  return (
+    <PageWrapper secured={true}>
+      <VertivalScrollableDisplay
+        className={"max-w-4xl"}
+        header="Cultivation Types"
+        entries={data}
+        contentType={"cultivationType"}
+        loading={isPending}
+      />
+    </PageWrapper>
+  );
 }
 
 export default CultivationTypes;

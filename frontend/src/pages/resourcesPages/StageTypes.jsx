@@ -3,17 +3,17 @@ import PageWrapper from "../PageWrapper";
 import { usePlantContext } from "../../context/dictionaries/PlantContext";
 import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
-import { useStageContext } from "../../context/StageContext";
+import { useStageTypeContext } from "../../context/dictionaries/StageTypeContext";
 function StageTypes() {
-  const { getStages } = useStageContext();
-  const { data, isPending } = useFetchArrayData(getStages);
+  const { getStageTypes } = useStageTypeContext();
+  const { data, isPending } = useFetchArrayData(getStageTypes);
   return (
     <PageWrapper secured={true}>
       <VertivalScrollableDisplay
         className={"max-w-4xl"}
-        header="Stages"
+        header="Stage Types"
         entries={data}
-        contentType={"stage"}
+        contentType={"stageType"}
         loading={isPending}
       />
     </PageWrapper>
