@@ -1,7 +1,7 @@
 export class MeasureUnit {
-  constructor(id, name, measuredValue) {
+  constructor(id, name, measuredValues) {
     this.id = id;
     this.name = name;
-    this.measuredValue = measuredValue;
+    this.measuredValues = measuredValues;
   }
 }

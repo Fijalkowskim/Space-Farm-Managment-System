@@ -7,6 +7,8 @@ import CustomButton from "../general/CustomButton";
 import { FaRegTrashAlt } from "react-icons/fa";
 import PlantCard from "./displayCards/PlantCard";
 import StageCard from "./displayCards/StageCard";
+import StageTypeCard from "./displayCards/StageTypeCard";
+import MeasureUnitCard from "./displayCards/MeasureUnitCard";
 function DisplayCard({ data, contentType, showRemoveButton }) {
   return (
     <NavLink
@@ -19,6 +21,8 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
         <WorkerCard data={data} />
       ) : contentType === "stage" ? (
         <StageCard data={data} />
+      ) : contentType === "stageType" ? (
+        <StageTypeCard data={data} />
       ) : contentType === "plant" ? (
         <PlantCard data={data} />
       ) : contentType === "harvest" ? (
@@ -27,6 +31,8 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
         <StationCard data={data} />
       ) : contentType === "reading" ? (
         <div>Reading Card</div>
+      ) : contentType === "measuredUnit" ? (
+        <MeasureUnitCard data={data} />
       ) : null}
       {showRemoveButton === true && (
         <CustomButton

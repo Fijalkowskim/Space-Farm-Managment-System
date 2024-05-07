@@ -16,6 +16,6 @@ public class MeasureUnit {
     private String name;
 
     @OneToMany(mappedBy = "measureUnit")
-    private Set<MeasuredValue> measuredValue;
+    private Set<MeasuredValue> measuredValues;
 
 }

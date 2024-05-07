@@ -16,5 +16,5 @@ public class StageType {
     private String name;
 
     @OneToMany(mappedBy = "stageType")
-    private Set<Stage> stage;
+    private Set<Stage> stages;
 }

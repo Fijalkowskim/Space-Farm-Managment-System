@@ -1,7 +1,7 @@
 export class StageType {
-  constructor(id, name, stage) {
+  constructor(id, name, stages) {
     this.id = id;
     this.name = name;
-    this.stage = stage;
+    this.stages = stages;
   }
 }
