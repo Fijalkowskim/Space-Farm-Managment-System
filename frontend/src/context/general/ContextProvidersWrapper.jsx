@@ -5,12 +5,15 @@ import { CultivationContextProvider } from "../cultivations/CultivationContext";
 import { PopupContextProvider } from "./PopupContext";
 import { CultivationDetailContextProvider } from "../cultivations/CultivationDetailsContext";
 import { StationContextProvider } from "../StationContext";
-import { PlantContextProvider } from "../PlantContext";
+import { PlantContextProvider } from "../dictionaries/PlantContext";
 import { StageContextProvider } from "../StageContext";
 import { ControlContextProvider } from "../ControlContext";
 import { HarvestContextProvider } from "../HarvestContext";
 import { MeasuredValueContextProvider } from "../MeasuredValueContext";
 import { ReadingContextProvider } from "../ReadingContext";
+import { CultivationTypeContextProvider } from "../dictionaries/CultivationTypeContext";
+import { MeasureUnitContextProvider } from "../dictionaries/MeasureUnitContext";
+import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
@@ -25,7 +28,13 @@ function ContextProvidersWrapper({ children }) {
                       <HarvestContextProvider>
                         <MeasuredValueContextProvider>
                           <ReadingContextProvider>
-                            {children}
+                            <CultivationTypeContextProvider>
+                              <MeasureUnitContextProvider>
+                                <StageTypeContextProvider>
+                                  {children}
+                                </StageTypeContextProvider>
+                              </MeasureUnitContextProvider>
+                            </CultivationTypeContextProvider>
                           </ReadingContextProvider>
                         </MeasuredValueContextProvider>
                       </HarvestContextProvider>

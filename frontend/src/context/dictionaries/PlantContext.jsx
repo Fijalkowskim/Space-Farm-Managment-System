@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { examplePlants } from "../exampleData/ExamplePlants";
-import api from "../api/api";
+import { examplePlants } from "../../exampleData/ExamplePlants";
+import api from "../../api/api";
 
 const PlantContext = createContext();
 
