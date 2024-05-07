@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import FormInput from "./FormInput";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/general/UserContext";
 function LoginPanel() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

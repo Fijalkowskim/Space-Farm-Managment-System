@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/general/UserContext";
 function VertivalScrollableDisplay({
   header,
   entries,

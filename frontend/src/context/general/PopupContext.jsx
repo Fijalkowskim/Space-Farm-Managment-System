@@ -1,5 +1,5 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { PopupMessage } from "../models/popups/PopupMessage";
+import { PopupMessage } from "../../models/popups/PopupMessage";
 import { v4 as uuidv4 } from "uuid";
 
 const PopupContext = createContext();

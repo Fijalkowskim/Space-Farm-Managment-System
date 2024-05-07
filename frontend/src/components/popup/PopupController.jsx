@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { usePopupContext } from "../../context/PopupContext";
+import { usePopupContext } from "../../context/general/PopupContext";
 import PopupCard from "./PopupCard";
 
 function PopupController() {

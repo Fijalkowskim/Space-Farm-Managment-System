@@ -1,9 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useSettingsContext } from "../../context/SettingsContext";
+import { useSettingsContext } from "../../context/general/SettingsContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoX } from "react-icons/go";
 import NavbarLink from "./NavbarLink";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/general/UserContext";
 
 const navlinks = [
   { name: "Cultivations", to: "/" },

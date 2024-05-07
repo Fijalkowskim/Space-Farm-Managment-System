@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { cn } from "../helpers/helpers";
-import { useUserContext } from "../context/UserContext";
+import { useUserContext } from "../context/general/UserContext";
 import { useNavigate } from "react-router-dom";
 
 function PageWrapper({ children, className, secured }) {

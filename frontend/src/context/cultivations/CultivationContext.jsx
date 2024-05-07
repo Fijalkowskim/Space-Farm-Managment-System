@@ -3,7 +3,7 @@ import {
   exampleCultivations,
   exampleFinishedCultivations,
 } from "../../exampleData/ExampleCultivations";
-import { useUserContext } from "../UserContext";
+import { useUserContext } from "../general/UserContext";
 import api from "../../api/api";
 import { useCultivationDetailsContext } from "./CultivationDetailsContext";
 

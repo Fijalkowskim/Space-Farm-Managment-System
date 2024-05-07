@@ -1,5 +1,5 @@
 import React from "react";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/general/UserContext";
 import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
 import { useAssignedCultivations } from "../../hooks/cultivations/useAssignedCultivations";
 

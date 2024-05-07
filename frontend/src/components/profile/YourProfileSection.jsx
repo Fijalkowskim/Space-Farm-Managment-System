@@ -1,5 +1,5 @@
 import React from "react";
-import { useUserContext } from "../../context/UserContext";
+import { useUserContext } from "../../context/general/UserContext";
 import CustomButton from "../general/CustomButton";
 import ProfileAttribute from "./ProfileAttribute";
 function YourProfileSection() {

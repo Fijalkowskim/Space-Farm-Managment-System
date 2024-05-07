@@ -1,5 +1,5 @@
 import React from "react";
-import { usePopupContext } from "../../context/PopupContext";
+import { usePopupContext } from "../../context/general/PopupContext";
 import { cva } from "class-variance-authority";
 const variants = cva(
   "relative text-text-50 p-2 rounded-l-md w-full max-w-xs overflow-hidden z-[999] pl-7 shadow-md",

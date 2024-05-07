@@ -30,13 +30,6 @@ export function StationContextProvider({ children }) {
     } catch (err) {
       console.log(err);
     }
-    // const foundCultivation = exampleCultivations.find(
-    //   (cultivation) => cultivation.id === id
-    // );
-    // return (
-    //   foundCultivation ??
-    //   exampleFinishedCultivations.find((cultivation) => cultivation.id === id)
-    // );
   };
   return (
     <StationContext.Provider

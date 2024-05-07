@@ -13,7 +13,7 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
   return (
     <NavLink
       to={data.id ? `/${contentType}/${data.id}` : "/"}
-      className="flex flex-row items-center flex-nowrap justify-between gap-2 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative"
+      className="flex flex-row items-center flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative"
     >
       {contentType === "cultivation" ? (
         <CultivationCard data={data} />
@@ -36,7 +36,7 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
       ) : null}
       {showRemoveButton === true && (
         <CustomButton
-          className={"h-full flex-nowrap"}
+          className={"h-full flex-nowrap flex-shrink-0"}
           onClick={(e) => {
             e.stopPropagation();
           }}

@@ -1,6 +1,5 @@
 import * as React from "react";
-import { exampleCultivations } from "../exampleData/ExampleCultivations";
-import { exampleWorkers } from "../exampleData/ExampleWorkers";
+import { exampleWorkers } from "../../exampleData/ExampleWorkers";
 
 const UserContext = React.createContext();
 
