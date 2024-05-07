@@ -33,6 +33,8 @@ function DisplayCard({ data, contentType, showRemoveButton }) {
         <div>Reading Card</div>
       ) : contentType === "measuredUnit" ? (
         <MeasureUnitCard data={data} />
+      ) : contentType === "cultivationType" ? (
+        <CultivationCard data={data} />
       ) : null}
       {showRemoveButton === true && (
         <CustomButton
