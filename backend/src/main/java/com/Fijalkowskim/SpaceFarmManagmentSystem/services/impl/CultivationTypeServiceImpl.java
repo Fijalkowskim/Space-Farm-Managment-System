@@ -44,7 +44,7 @@ public class CultivationTypeServiceImpl {
         return cultivationTypeDAORepository.save(cultivationType);
     }
 
-    public CultivationType updateCultivationType(long id, CultivationTypeRequest cultivationTypeRequest) {
+    public CultivationType updateCultivationType(long id, CultivationTypeRequest cultivationTypeRequest) throws CustomHTTPException {
         Optional<CultivationType> oldCultivationType = cultivationTypeDAORepository.findById(id);
         if (oldCultivationType.isEmpty()){
             throw new CustomHTTPException("Cultivation type not found", HttpStatus.NOT_FOUND);
@@ -57,7 +57,7 @@ public class CultivationTypeServiceImpl {
         return cultivationTypeDAORepository.save(newCultivationType);
     }
 
-    public void deleteCultivationType(long id) {
+    public void deleteCultivationType(long id) throws CustomHTTPException{
         Optional<CultivationType> cultivationType = cultivationTypeDAORepository.findById(id);
         if (cultivationType.isEmpty()){
             throw new CustomHTTPException("Cultivation type not found", HttpStatus.NOT_FOUND);
