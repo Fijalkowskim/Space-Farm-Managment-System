@@ -5,6 +5,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageTypeDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.StageTypeRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.StageTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -17,7 +18,7 @@ import java.util.Optional;
 
 @Transactional
 @Service
-public class StageTypeServiceImpl {
+public class StageTypeServiceImpl implements StageTypeService {
     private final StageTypeDAORepository stageTypeDAORepository;
 
     @Autowired

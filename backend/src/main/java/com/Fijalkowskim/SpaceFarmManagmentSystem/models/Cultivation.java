@@ -3,6 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
@@ -10,6 +11,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
 public class Cultivation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -55,6 +57,23 @@ public class Cultivation {
     private String comment;
 
 
+    public Cultivation() {
+
+    }
 
 
+    public Cultivation(Long id, Date startDate, CultivationType type, float area, Date plannedFinishDate, Date realFinishDate, Plant plant, Set<Stage> stages, Set<Harvest> harvests, Set<Station> stations, Set<Person> responsibleWorkers, @Nullable String comment) {
+        this.id = id;
+        this.startDate = startDate;
+        this.type = type;
+        this.area = area;
+        this.plannedFinishDate = plannedFinishDate;
+        this.realFinishDate = realFinishDate;
+        this.plant = plant;
+        this.stages = stages;
+        this.harvests = harvests;
+        this.stations = stations;
+        this.responsibleWorkers = responsibleWorkers;
+        this.comment = comment;
+    }
 }

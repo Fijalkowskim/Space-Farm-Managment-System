@@ -72,7 +72,8 @@ public class PersonController {
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Person> updatePerson(@PathVariable long id, @RequestBody PersonRequest personRequest) throws CustomHTTPException{
+    public ResponseEntity<Person> updatePerson(
+            @PathVariable long id, @RequestBody PersonRequest personRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(personService.updatePerson(id,personRequest));
     }
 }

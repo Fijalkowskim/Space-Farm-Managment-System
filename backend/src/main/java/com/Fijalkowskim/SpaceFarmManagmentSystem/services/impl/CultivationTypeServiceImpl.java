@@ -4,6 +4,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationTypeDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationTypeRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Transactional
 @Service
-public class CultivationTypeServiceImpl {
+public class CultivationTypeServiceImpl implements CultivationTypeService {
     private final CultivationTypeDAORepository cultivationTypeDAORepository;
 
     @Autowired

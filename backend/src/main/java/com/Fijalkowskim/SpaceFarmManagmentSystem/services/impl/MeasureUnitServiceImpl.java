@@ -4,6 +4,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.Cultivation
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.MeasureUnit;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasureUnitDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MeasureUnitRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.MeasureUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @Transactional
 @Service
-public class MeasureUnitServiceImpl {
+public class MeasureUnitServiceImpl implements MeasureUnitService {
     private final MeasureUnitDAORepository measureUnitDAORepository;
 
     @Autowired
