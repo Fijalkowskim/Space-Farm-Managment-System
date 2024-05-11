@@ -29,6 +29,11 @@ public class ControlServiceImpl implements ControlService {
         this.controlDAORepository = controlDAORepository;
     }
 
+    public Control addControlToStage(Stage stage, Control control){
+        control.setStage(stage);
+        return controlDAORepository.save(control);
+    }
+
     public Page<Control> getControls(Pageable pageable) {
         return controlDAORepository.findAll(pageable);
     }

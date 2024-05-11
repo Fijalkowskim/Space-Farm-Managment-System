@@ -14,8 +14,9 @@ Reading {
     private Long id;
 
 
-    @OneToMany(mappedBy = "reading")
-    private Set<MeasuredValue> measuredValues;
+    @ManyToOne
+    @JoinColumn(name = "measuredValueId")
+    private MeasuredValue measuredValue;
 
     private int value;
 

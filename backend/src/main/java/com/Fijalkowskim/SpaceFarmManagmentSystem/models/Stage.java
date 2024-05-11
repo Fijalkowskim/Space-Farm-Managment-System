@@ -3,12 +3,14 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.Set;
 
 @Data
+@Builder
 @Entity
 public class Stage {
     @Id
@@ -32,4 +34,6 @@ public class Stage {
 
     @Nullable
     private String comment;
+
+    public Stage(){}
 }

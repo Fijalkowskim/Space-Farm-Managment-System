@@ -4,6 +4,8 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.MeasureUnit
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Set;
+
 @Data
 @Entity
 public class MeasuredValue {
@@ -17,7 +19,6 @@ public class MeasuredValue {
     @JoinColumn(name = "unitId")
     private MeasureUnit measureUnit;
 
-    @ManyToOne
-    @JoinColumn(name = "readingId")
-    private Reading reading;
+    @OneToMany(mappedBy = "measuredValue")
+    private Set<Reading> reading;
 }
