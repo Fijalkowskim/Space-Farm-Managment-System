@@ -1,11 +1,13 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Set;
 
 @Data
+@Builder
 @Entity
 public class
 Reading {
@@ -23,4 +25,6 @@ Reading {
     @ManyToOne
     @JoinColumn(name = "controlId")
     private Control control;
+
+    public Reading(){}
 }

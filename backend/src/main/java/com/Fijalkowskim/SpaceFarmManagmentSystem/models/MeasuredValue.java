@@ -20,5 +20,5 @@ public class MeasuredValue {
     private MeasureUnit measureUnit;
 
     @OneToMany(mappedBy = "measuredValue")
-    private Set<Reading> reading;
+    private Set<Reading> readings;
 }
