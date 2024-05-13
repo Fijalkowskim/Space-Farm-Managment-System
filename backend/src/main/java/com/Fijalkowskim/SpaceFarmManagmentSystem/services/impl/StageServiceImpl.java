@@ -1,7 +1,9 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Control;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.StageRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.StageService;
@@ -19,16 +21,12 @@ import java.util.Optional;
 @Service
 public class StageServiceImpl implements StageService {
     private final StageDAORepository stageDAORepository;
+    private final CultivationDAORepository cultivationDAORepository;
 
     @Autowired
-    public StageServiceImpl(StageDAORepository stageDAORepository) {
+    public StageServiceImpl(StageDAORepository stageDAORepository, CultivationDAORepository cultivationDAORepository) {
         this.stageDAORepository = stageDAORepository;
-    }
-
-    @Override
-    public Stage addControlToStage(Stage stage, Control control) {
-        stage.getControls().add(control);
-        return stageDAORepository.save(stage);
+        this.cultivationDAORepository = cultivationDAORepository;
     }
 
     @Override
@@ -56,14 +54,18 @@ public class StageServiceImpl implements StageService {
 
     @Override
     public Stage addStage(StageRequest stageRequest) {
+        Optional<Cultivation> cultivation = cultivationDAORepository.findById(stageRequest.getCultivationId());
+        if(cultivation.isEmpty()) throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
         Stage stage = Stage.builder()
                 .stageType(stageRequest.getStageType())
                 .startStageDate(stageRequest.getStartStageDate())
                 .finishStageDate(stageRequest.getFinishStageDate())
                 .comment(stageRequest.getComment())
                 .controls(new HashSet<>())
-                .controls(stageRequest.getControls())
+                .cultivation(cultivation.get())
                 .build();
+        cultivation.get().getStages().add(stage);
+        cultivationDAORepository.save(cultivation.get());
         return stageDAORepository.save(stage);
     }
 

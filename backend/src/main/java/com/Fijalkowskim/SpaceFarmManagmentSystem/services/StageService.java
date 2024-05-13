@@ -16,6 +16,4 @@ public interface StageService {
     Stage updateStage(long id, StageRequest stageRequest);
 
     void deleteStage(long id);
-
-    Stage addControlToStage(Stage stage, Control control);
 }

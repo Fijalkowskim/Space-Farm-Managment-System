@@ -13,4 +13,6 @@ public class ControlRequest {
     private int deadSeedlings;
 
     private Set<Reading> readings;
+
+    private long stageId;
 }

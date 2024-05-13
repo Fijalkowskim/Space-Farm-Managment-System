@@ -5,6 +5,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Control;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Plant;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.ControlDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.ControlRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PlantRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.ControlService;
@@ -23,15 +24,12 @@ import java.util.Optional;
 @Service
 public class ControlServiceImpl implements ControlService {
     private final ControlDAORepository controlDAORepository;
+    private final StageDAORepository stageDAORepository;
 
     @Autowired
-    public ControlServiceImpl(ControlDAORepository controlDAORepository) {
+    public ControlServiceImpl(ControlDAORepository controlDAORepository, StageDAORepository stageDAORepository) {
         this.controlDAORepository = controlDAORepository;
-    }
-
-    public Control addControlToStage(Stage stage, Control control){
-        control.setStage(stage);
-        return controlDAORepository.save(control);
+        this.stageDAORepository = stageDAORepository;
     }
 
     public Page<Control> getControls(Pageable pageable) {
@@ -55,11 +53,16 @@ public class ControlServiceImpl implements ControlService {
     }
 
     public Control addControl(ControlRequest controlRequest) {
+        Optional<Stage> stage = stageDAORepository.findById(controlRequest.getStageId());
+        if(stage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
         Control control = Control.builder()
                 .controlDate(controlRequest.getControlDate())
                 .deadSeedlings(controlRequest.getDeadSeedlings())
                 .readings(controlRequest.getReadings())
+                .stage(stage.get())
                 .build();
+        stage.get().getControls().add(control);
+        stageDAORepository.save(stage.get());
         return controlDAORepository.save(control);
     }
 

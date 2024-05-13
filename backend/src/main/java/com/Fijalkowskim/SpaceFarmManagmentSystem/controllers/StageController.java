@@ -36,6 +36,7 @@ public class StageController {
         return ResponseEntity.ok(stageService.getStageById(id));
     }
     @GetMapping("/{id}/controls")
+    //Czy to należy przesunąc do kontrolera kontroli?
     public Page<Control> getStageControls(@RequestParam(name = "page", defaultValue = "0") int page,
                                           @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
                                           @PathVariable long id) throws CustomHTTPException {
@@ -51,13 +52,7 @@ public class StageController {
     public ResponseEntity<Stage> updateStage(@PathVariable long id, @RequestPart("StageRequest") StageRequest stageRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(stageService.updateStage(id, stageRequest));
     }
-    @PostMapping("/{stageId}/{controlId}")
-    public ResponseEntity<Stage> addControlToStage(@PathVariable long stageId, @PathVariable long controlId) throws CustomHTTPException{
-        Stage stage = stageService.getStageById(stageId);
-        Control control = controlService.getControlById(controlId);
-        controlService.addControlToStage(stage, control);
-        return ResponseEntity.status(HttpStatus.OK).body(stageService.addControlToStage(stage, control));
-    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteStage(@PathVariable long id) throws CustomHTTPException {
         stageService.deleteStage(id);

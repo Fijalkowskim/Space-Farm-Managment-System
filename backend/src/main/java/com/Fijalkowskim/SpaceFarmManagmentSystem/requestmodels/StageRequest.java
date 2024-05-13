@@ -18,4 +18,6 @@ public class StageRequest {
     private String comment;
 
     private Set<Control> controls;
+
+    private long cultivationId;
 }
