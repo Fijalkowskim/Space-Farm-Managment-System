@@ -3,14 +3,17 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Control;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Plant;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Reading;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.ControlDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.ReadingDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.ControlRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PlantRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.ControlService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -25,19 +28,17 @@ import java.util.Optional;
 public class ControlServiceImpl implements ControlService {
     private final ControlDAORepository controlDAORepository;
     private final StageDAORepository stageDAORepository;
+    private final ReadingDAORepository readingDAORepository;
 
     @Autowired
-    public ControlServiceImpl(ControlDAORepository controlDAORepository, StageDAORepository stageDAORepository) {
+    public ControlServiceImpl(ControlDAORepository controlDAORepository, StageDAORepository stageDAORepository, ReadingDAORepository readingDAORepository) {
         this.controlDAORepository = controlDAORepository;
         this.stageDAORepository = stageDAORepository;
+        this.readingDAORepository = readingDAORepository;
     }
 
     public Page<Control> getControls(Pageable pageable) {
         return controlDAORepository.findAll(pageable);
-    }
-
-    public Page<Control> getControlsByStage(Pageable pageable, Stage stage) {
-        return controlDAORepository.findControlByStage(stage, pageable);
     }
 
     public Control getControlById(long id) {
@@ -77,5 +78,11 @@ public class ControlServiceImpl implements ControlService {
                 .stage(oldControl.get().getStage())
                 .build();
         return controlDAORepository.save(newControl);
+    }
+
+    public Page<Reading> getReadingsByControl(PageRequest pageRequest, long id) {
+        Optional<Control> control = controlDAORepository.findById(id);
+        if(control.isEmpty()) throw new CustomHTTPException("Control not found", HttpStatus.NOT_FOUND);
+        return readingDAORepository.findReadingByControl(control.get(), pageRequest);
     }
 }

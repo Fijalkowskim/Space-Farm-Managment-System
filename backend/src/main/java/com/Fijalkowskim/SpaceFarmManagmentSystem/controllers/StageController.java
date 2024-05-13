@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("http://localhost:3000")
 public class StageController {
     private StageServiceImpl stageService;
-    private ControlServiceImpl controlService;
-    public StageController(StageServiceImpl stageService, ControlServiceImpl controlService) {
+    public StageController(StageServiceImpl stageService) {
         this.stageService = stageService;
-        this.controlService = controlService;
     }
 
     @GetMapping("/")
@@ -36,13 +34,11 @@ public class StageController {
         return ResponseEntity.ok(stageService.getStageById(id));
     }
     @GetMapping("/{id}/controls")
-    //Czy to należy przesunąc do kontrolera kontroli?
     public Page<Control> getStageControls(@RequestParam(name = "page", defaultValue = "0") int page,
                                           @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
                                           @PathVariable long id) throws CustomHTTPException {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Stage stage = stageService.getStageById(id);
-        return controlService.getControlsByStage(pageRequest, stage);
+        return stageService.getControlsByStage(pageRequest, id);
     }
     @PutMapping("")
     public ResponseEntity<Stage> addStage(@RequestPart("StageRequest") StageRequest stageRequest){

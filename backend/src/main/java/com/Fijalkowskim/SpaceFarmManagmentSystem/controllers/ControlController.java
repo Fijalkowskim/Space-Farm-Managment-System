@@ -3,6 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Control;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Plant;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Reading;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.ControlRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PlantRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.ControlServiceImpl;
@@ -32,6 +33,14 @@ public class ControlController {
     @GetMapping("/{id}")
     public ResponseEntity<Control> getControl(@PathVariable long id) {
         return ResponseEntity.ok(controlService.getControlById(id));
+    }
+
+    @GetMapping("/{id}/readings")
+    public Page<Reading> getControlReadings(@RequestParam(name = "page", defaultValue = "0") int page,
+                                            @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
+                                            @PathVariable long id) throws CustomHTTPException {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return controlService.getReadingsByControl(pageRequest, id);
     }
 
     @DeleteMapping("/{id}")
