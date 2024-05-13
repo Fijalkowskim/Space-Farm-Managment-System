@@ -29,7 +29,7 @@ public class ReadingController {
         return ResponseEntity.ok(readingService.getReadingById(id));
     }
     @PutMapping("")
-    public ResponseEntity<Reading> addReading(@RequestPart ReadingRequest readingRequest) throws CustomHTTPException {
+    public ResponseEntity<Reading> addReading(@RequestPart("ReadingRequest") ReadingRequest readingRequest) throws CustomHTTPException {
         return ResponseEntity.status(HttpStatus.CREATED).body(readingService.addReading(readingRequest));
     }
     @PostMapping("/{id}")

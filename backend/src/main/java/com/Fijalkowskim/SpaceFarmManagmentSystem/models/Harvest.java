@@ -2,11 +2,13 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
 
 @Data
+@Builder
 @Entity
 public class Harvest {
     @Id
@@ -23,5 +25,7 @@ public class Harvest {
 
     @Nullable
     private String comment;
+
+    public Harvest() {}
 
 }
