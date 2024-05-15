@@ -2,6 +2,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.CultivationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
