@@ -8,12 +8,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 
 @RestController
 @RequestMapping( value = "/api/station")
 @CrossOrigin("http://localhost:3000")
 public class StationController {
     StationServiceImpl stationService;
+    PersonServiceImpl personService;
     @Autowired
     public StationController(StationServiceImpl stationService){
         this.stationService = stationService;
@@ -33,14 +36,18 @@ public class StationController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteStation(@PathVariable long id) throws CustomHTTPException {
-        stationService.deleteStation(id);
-        return ResponseEntity.ok("Station deleted successfully.");
+    public ResponseEntity<?> deleteStation(@PathVariable long id, @RequestParam long userID) throws CustomHTTPException {
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
+            stationService.deleteStation(id);
+            return ResponseEntity.ok("Station deleted successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 
-    @GetMapping("/")
-    public ResponseEntity<?> addStation() {
-        stationService.addStation();
-        return ResponseEntity.ok("Station added successfully.");
-    }
+    //@GetMapping("/")
+    //public ResponseEntity<?> addStation() {
+    //    stationService.addStation();
+    //    return ResponseEntity.ok("Station added successfully.");
+    //}
 }
