@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
-import java.util.Set;
+
 
 @Data
 @Builder
@@ -26,5 +26,13 @@ Reading {
     @JoinColumn(name = "controlId")
     private Control control;
 
-    public Reading(){}
+    public Reading() {
+
+    }
+    public Reading(long id, MeasuredValue measuredValue, int value, Control control){
+        this.id = id;
+        this.measuredValue = measuredValue;
+        this.value = value;
+        this.control = control;
+    }
 }

@@ -16,4 +16,11 @@ public class Station {
 
     @ManyToMany(mappedBy = "stations")
     private Set<Cultivation> cultivations;
+
+    public Station(){}
+
+    public Station(Long id, Set<Cultivation> cultivations){
+        this.id = id;
+        this.cultivations = cultivations;
+    }
 }
