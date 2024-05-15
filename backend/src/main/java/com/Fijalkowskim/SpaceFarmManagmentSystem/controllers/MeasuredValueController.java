@@ -20,8 +20,9 @@ public class MeasuredValueController {
     public MeasuredValueController(MeasuredValueServiceImpl measuredValueService) {this.measuredValueService = measuredValueService;}
 
     @GetMapping("/")
-    public ResponseEntity<Page<MeasuredValue>> getMeasuredValues(@RequestParam(name = "page", defaultValue = "0") int page,
-                                                     @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {
+    public ResponseEntity<Page<MeasuredValue>> getMeasuredValues(
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         return ResponseEntity.ok(measuredValueService.getMeasuredValue(pageRequest));
     }
@@ -35,26 +36,15 @@ public class MeasuredValueController {
         measuredValueService.deleteMeasuredValue(id);
         return ResponseEntity.ok("Measured Value deleted successfully.");
     }
-
     @PutMapping("")
-    public ResponseEntity<MeasuredValue> addMeasuredValue(@RequestPart("MeasuredValueRequest") MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
-        return ResponseEntity.status(HttpStatus.CREATED).body(measuredValueService.addMeasuredValue(measuredValueRequest));
+    public ResponseEntity<MeasuredValue> addMeasuredValue(
+            @RequestPart("MeasuredValueRequest") MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(measuredValueService.addMeasuredValue(measuredValueRequest));
     }
-
     @PostMapping("/{id}")
-    public ResponseEntity<MeasuredValue> updateMeasuredValue(@PathVariable long id, @RequestBody MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
+    public ResponseEntity<MeasuredValue> updateMeasuredValue(
+            @PathVariable long id, @RequestBody MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(measuredValueService.updateMeasuredValue(id,MeasuredValueRequest));
     }
-
 }
-
-
-/*
-    @GetMapping("/{id}/readings")
-    public Page<Reading> getControlReadings(@RequestParam(name = "page", defaultValue = "0") int page,
-                                            @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
-                                            @PathVariable long id) throws CustomHTTPException {
-        PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return controlService.getReadingsByControl(pageRequest, id);
-    }
- */
