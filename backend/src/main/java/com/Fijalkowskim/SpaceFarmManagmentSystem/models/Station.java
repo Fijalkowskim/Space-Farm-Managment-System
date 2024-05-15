@@ -2,7 +2,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import jakarta.persistence.*;
 import lombok.Data;
-
+import lombok.Builder;
 import java.util.Set;
 
 @Data
