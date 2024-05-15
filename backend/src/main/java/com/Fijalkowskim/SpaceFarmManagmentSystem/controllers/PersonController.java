@@ -2,6 +2,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,37 +44,78 @@ public class PersonController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Person> addPerson(
-            @RequestPart("PersonRequest") PersonRequest personRequest) throws CustomHTTPException{
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(personService.addPerson(personRequest));
+    public ResponseEntity<?> addPerson(
+            @RequestPart("PersonRequest") PersonRequest personRequest,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException{
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
+            personService.addPerson(personRequest);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Person has been successfully added");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 
     @PutMapping("/responsible")
     public ResponseEntity<?> addResponsiblePersonToCultivation(
             @RequestParam("personId") long personId,
-            @RequestParam("cultivationId") long cultivationId) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(personService.addResponsiblePersonToCultivation(personId, cultivationId));
+            @RequestParam("cultivationId") long cultivationId,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException{
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
+            personService.addResponsiblePersonToCultivation(personId, cultivationId);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Responsible person has been successfully added");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletePerson(@PathVariable long id) throws CustomHTTPException {
-        personService.deletePerson(id);
-        return ResponseEntity.ok("Person deleted successfully.");
+    public ResponseEntity<?> deletePerson(
+            @PathVariable long id,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException
+    {
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
+            personService.deletePerson(id);
+            return ResponseEntity.ok("Person has been deleted successfully.");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 
     @DeleteMapping("/responsible")
     public ResponseEntity<?> deleteResponsiblePersonFromCultivation(
             @RequestParam(name = "personId") long personId,
-            @RequestParam(name = "cultivationId") long cultivationId) {
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(personService.deleteResponsiblePersonFromCultivation(personId, cultivationId));
+            @RequestParam(name = "cultivationId") long cultivationId,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException{
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
+            personService.deleteResponsiblePersonFromCultivation(personId, cultivationId);
+            return ResponseEntity.status(HttpStatus.CREATED)
+                    .body("Responsible person has been deleted successfully.");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 
     @PostMapping("/{id}")
-    public ResponseEntity<Person> updatePerson(
-            @PathVariable long id, @RequestBody PersonRequest personRequest) throws CustomHTTPException{
-        return ResponseEntity.status(HttpStatus.OK).body(personService.updatePerson(id,personRequest));
+    public ResponseEntity<?> updatePerson(
+            @PathVariable long id, @RequestBody PersonRequest personRequest,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException{
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
+            personService.updatePerson(id, personRequest);
+            return ResponseEntity.status(HttpStatus.OK).body("Persons data has been updated");
+        }
+        else
+        {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+        }
     }
 }
