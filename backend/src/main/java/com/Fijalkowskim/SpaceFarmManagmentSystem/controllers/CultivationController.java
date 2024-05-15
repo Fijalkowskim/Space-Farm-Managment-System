@@ -11,13 +11,15 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 
 @RestController
 @RequestMapping( value = "/api/cultivation")
 @CrossOrigin("http://localhost:3000")
 public class CultivationController {
     CultivationServiceImpl cultivationService;
-
+    PersonServiceImpl personService;
     @Autowired
     public CultivationController(CultivationServiceImpl cultivationService) {
         this.cultivationService = cultivationService;
@@ -36,19 +38,34 @@ public class CultivationController {
     }
     @PutMapping("")
     public ResponseEntity<Cultivation> addCultivation(
-            @RequestPart("CultivationRequest") CultivationRequest cultivationRequest) throws CustomHTTPException{
+            @RequestPart("CultivationRequest") CultivationRequest cultivationRequest,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException{
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
                 return ResponseEntity.status(HttpStatus.CREATED)
                         .body(cultivationService.addCultivation(cultivationRequest));
+        }
+        else {
+            return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+        }
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCultivation(@PathVariable long id) throws CustomHTTPException {
-        cultivationService.deleteCultivation(id);
-        return ResponseEntity.ok("Cultivation deleted successfully");
+    public ResponseEntity<?> deleteCultivation(@PathVariable long id, @RequestParam(name = "userID") long userID) throws CustomHTTPException {
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
+            cultivationService.deleteCultivation(id);
+            return ResponseEntity.ok("Cultivation deleted successfully");
+        }
+        else {
+            return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+        }
     }
     @PostMapping("/{id}")
     public ResponseEntity<Cultivation> updateCultivation(
-            @PathVariable long id, @RequestBody CultivationRequest cultivationRequest) throws CustomHTTPException {
-        return ResponseEntity.status(HttpStatus.OK).body(cultivationService.updateCultivation(id, cultivationRequest));
+            @PathVariable long id, @RequestBody CultivationRequest cultivationRequest,
+            @RequestParam(name = "userID") long userID) throws CustomHTTPException {
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
+            return ResponseEntity.status(HttpStatus.OK).body(cultivationService.updateCultivation(id, cultivationRequest));
+        }
+        return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
     }
 
 
