@@ -55,17 +55,18 @@ public class CultivationController {
             return ResponseEntity.ok("Cultivation deleted successfully");
         }
         else {
-            return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+            return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
         }
     }
     @PostMapping("/{id}")
-    public ResponseEntity<Cultivation> updateCultivation(
+    public ResponseEntity<?> updateCultivation(
             @PathVariable long id, @RequestBody CultivationRequest cultivationRequest,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException {
-        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
-            return ResponseEntity.status(HttpStatus.OK).body(cultivationService.updateCultivation(id, cultivationRequest));
+        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER || cultivationService.isPersonAssignedToCultivation(id, userID)) {
+            cultivationService.updateCultivation(id, cultivationRequest);
+            return ResponseEntity.status(HttpStatus.OK).body("Cultivation updated successfully");
         }
-        return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
     }
 
 

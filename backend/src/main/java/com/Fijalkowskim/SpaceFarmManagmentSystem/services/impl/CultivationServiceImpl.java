@@ -81,4 +81,10 @@ public class CultivationServiceImpl implements CultivationService {
         return cultivationDAORepository.save(cultivation);
     }
 
+
+    public boolean isPersonAssignedToCultivation(Long cultivationId, Long personId) {
+        return cultivationDAORepository.existsByCultivationIdAndPersonId(cultivationId, personId);
+    }
+
+
 }
