@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Data
 @Entity
+@Builder
 public class Station {
 
     @Id
