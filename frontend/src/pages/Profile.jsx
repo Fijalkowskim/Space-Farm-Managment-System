@@ -1,18 +1,15 @@
-import React from "react";
-import PageWrapper from "./PageWrapper";
-
-import YourProfileSection from "../components/profile/YourProfileSection";
-import AssignedCultivationsSection from "../components/profile/AssignedCultivationsSection";
+import React, { useEffect } from "react";
+import { usePersonContext } from "../context/PersonContext";
+import { useNavigate } from "react-router-dom";
 
 function Profile() {
-  return (
-    <PageWrapper secured={true} className={"overflow-hidden h-[90vh] min-h-0"}>
-      <div className="w-full max-w-4xl flex items-center justify-start flex-col gap-8 h-full">
-        <YourProfileSection />
-        <AssignedCultivationsSection />
-      </div>
-    </PageWrapper>
-  );
+  const { userData } = usePersonContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!userData) return;
+    navigate(`/worker/${userData.id}`);
+  }, [userData, navigate]);
+  return <></>;
 }
 
 export default Profile;
