@@ -11,25 +11,26 @@ export function useStationContext() {
 export function StationContextProvider({ children }) {
   //************ Get methods ************
   const getStations = async () => {
-    return exampleStations;
     try {
-      const res = await api.get("/station");
+      const res = await api.get("/station/");
       if (res.data) {
+        return res.data.content;
       }
     } catch (err) {
       console.log(err);
     }
+    return undefined;
   };
   const getStation = async (id) => {
-    return exampleStations.find((station) => station.id === id);
-
     try {
       const res = await api.get(`/station/${id}`);
       if (res.data) {
+        return res.data;
       }
     } catch (err) {
       console.log(err);
     }
+    return undefined;
   };
   return (
     <StationContext.Provider

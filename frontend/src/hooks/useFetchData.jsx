@@ -5,10 +5,12 @@ export const useFetchData = (getMethod, id) => {
 
   useEffect(() => {
     const loadData = async () => {
+      if (id === undefined) return;
+
       setIsPending(true);
       try {
         const parsedId = parseInt(id);
-        const loadedData = await getMethod();
+        const loadedData = await getMethod(parsedId);
         setData(loadedData);
       } catch (err) {
         console.log(err);
