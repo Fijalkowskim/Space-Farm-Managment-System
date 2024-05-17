@@ -3,7 +3,7 @@ import { usePersonContext } from "../../context/PersonContext";
 import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
 import { useAssignedCultivations } from "../../hooks/cultivations/useAssignedCultivations";
 
-function AssignedCultivationsSection() {
+function AssignedCultivationsSection(worker) {
   const { cultivations, isPending } = useAssignedCultivations();
   return (
     <VertivalScrollableDisplay
@@ -14,6 +14,7 @@ function AssignedCultivationsSection() {
       entries={cultivations}
       contentType={"cultivation"}
       loading={isPending}
+      detailsPageDisplay={true}
     />
   );
 }

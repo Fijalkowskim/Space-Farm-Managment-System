@@ -3,12 +3,14 @@ import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
 import { usePersonContext } from "../../context/PersonContext";
+import CustomButton from "../general/CustomButton";
 function VertivalScrollableDisplay({
   header,
   entries,
   className,
   contentType,
   loading,
+  detailsPageDisplay,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -20,6 +22,14 @@ function VertivalScrollableDisplay({
       )}
     >
       <h1 className="">{header}</h1>
+      <div className="w-full flex flex-row items-center justify-center gap-4 flex-shrink-0 -mt-2">
+        <CustomButton className={"w-full text-base"}>Create new</CustomButton>
+        {detailsPageDisplay === true && (
+          <CustomButton className={"w-full text-base"} variant={"action"}>
+            Add existing
+          </CustomButton>
+        )}
+      </div>
       {loading === true ? (
         <LoadingBar variant={"parent"} />
       ) : entries !== undefined && entries.length > 0 ? (
