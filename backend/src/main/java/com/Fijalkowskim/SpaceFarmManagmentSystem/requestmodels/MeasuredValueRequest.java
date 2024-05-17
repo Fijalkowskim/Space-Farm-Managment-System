@@ -1,11 +1,11 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Reading;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dicttionaries.MeasureUnit;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.MeasureUnit;
 import jakarta.persistence.*;
 import lombok.Data;
 
 @Data
-public class PlantRequest {
+public class MeasuredValueRequest {
     private String name;
 
     private MeasureUnit measureUnit;

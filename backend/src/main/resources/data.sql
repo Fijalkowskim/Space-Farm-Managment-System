@@ -1,8 +1,23 @@
+-- Clear existing data
+DELETE FROM cultivation_responsible_workers;
+DELETE FROM cultivation_stations;
+DELETE FROM harvest;
+DELETE FROM measured_value;
+DELETE FROM reading;
+DELETE FROM control;
+DELETE FROM stage;
+DELETE FROM cultivation;
+DELETE FROM plant;
+DELETE FROM stage_type;
+DELETE FROM measure_unit;
+DELETE FROM person;
+DELETE FROM cultivation_type;
+DELETE FROM station;
 -- Sample data for the 'station' table
 INSERT INTO station (id) VALUES (1), (2), (3);
 
 -- Sample data for the 'cultivation_type' table
-INSERT INTO cultivation_type (name) VALUES ('Type A'), ('Type B');
+INSERT INTO cultivation_type (id, name) VALUES (1, 'Type A'), (2, 'Type B');
 
 -- Sample data for the 'person' table
 INSERT INTO person (login, name, password, role, surname)
@@ -10,7 +25,6 @@ VALUES
     ('john_doe', 'John', 'password1', 1, 'Doe'),
     ('alice_smith', 'Alice', 'password2', 2, 'Smith'),
     ('bob_johnson', 'Bob', 'password3', 1, 'Johnson');
-
 
 -- Sample data for the 'stage_type' table
 INSERT INTO stage_type (name) VALUES ('Type X'), ('Type Y'), ('Type Z');
@@ -52,4 +66,4 @@ INSERT INTO harvest (comment, harvest_date, successful_harvest, cultivation_id)
 VALUES ('First harvest', '2023-01-25 08:00:00', 1, 1), ('Second harvest', '2023-02-10 08:00:00', 0, 2);
 
 -- Sample data for the 'measured_value' table
-INSERT INTO measured_value (name, unit_id, reading_id) VALUES ('Measurement 1', 1, 1), ('Measurement 2', 2, 2), ('Measurement 3', 3, 3);
+INSERT INTO measured_value (name, unit_id) VALUES ('Measurement 1', 1), ('Measurement 2', 2), ('Measurement 3', 3);

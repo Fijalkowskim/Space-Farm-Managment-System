@@ -42,16 +42,16 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
     public MeasuredValue addMeasuredValue(MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
         MeasuredValue measuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
-                .mesureUnit(measuredValueRequest.getMesureUnit())
+                .measureUnit(measuredValueRequest.getMeasureUnit())
                 .build();
         return measuredValueDAORepository.save(measuredValue);
     }
     public MeasuredValue updateMeasuredValue(long id, MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
-        Optional<MeasuredValue> oldMeasuredValue = MeasuredValueDAORepository.findById(id);
+        Optional<MeasuredValue> oldMeasuredValue = measuredValueDAORepository.findById(id);
         if(oldMeasuredValue.isEmpty()) throw new CustomHTTPException("MeasuredValue not found", HttpStatus.NOT_FOUND);
         MeasuredValue newMeasuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
-                .mesureUnit(measuredValueRequest.getMesureUnit())
+                .measureUnit(measuredValueRequest.getMeasureUnit())
                 .id(oldMeasuredValue.get().getId())
                 .build();
         return measuredValueDAORepository.save(newMeasuredValue);
