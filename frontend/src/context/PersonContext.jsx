@@ -1,5 +1,5 @@
-import * as React from "react";
-import { exampleWorkers } from "../exampleData/ExampleWorkers";
+import React, { useState } from "react";
+import api from "../api/api";
 
 const PersonContext = React.createContext();
 
@@ -8,19 +8,51 @@ export function usePersonContext() {
 }
 
 export function PersonContextProvider({ children }) {
-  const [userData, setUserData] = React.useState(exampleWorkers[0]);
-  const [isLoggedIn, setIsLoggedIn] = React.useState();
-  const logIn = (email, password) => {
-    setIsLoggedIn(true);
-    setUserData(exampleWorkers[0]);
+  const [userData, setUserData] = useState(undefined);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const logIn = async (email, password) => {
+    try {
+      const res = await api.get("/person/login");
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return false;
   };
   const logOut = () => {
     setUserData(null);
     setIsLoggedIn(false);
   };
+  //************ Get methods ************
+  const getPersons = async () => {
+    try {
+      const res = await api.get("/person/");
+      if (res.data) {
+        return res.data.content;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return undefined;
+  };
+  const getPerson = async (id) => {
+    try {
+      const res = await api.get(`/person/${id}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return undefined;
+  };
 
   return (
-    <PersonContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
+    <PersonContext.Provider
+      value={{ userData, isLoggedIn, logIn, logOut, getPersons, getPerson }}
+    >
       {children}
     </PersonContext.Provider>
   );
