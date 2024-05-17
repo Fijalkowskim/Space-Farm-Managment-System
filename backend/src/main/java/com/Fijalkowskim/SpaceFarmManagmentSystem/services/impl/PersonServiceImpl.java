@@ -123,4 +123,12 @@ public class PersonServiceImpl implements PersonService {
         personOptional.get().setPassword(newPassword);
         return personDAORepository.save(personOptional.get());
     }
+
+
+    public Person login(String login, String password) {
+        Optional<Person> personOptional = personDAORepository.findByLogin(login);
+        if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
+        if(!personOptional.get().getPassword().equals(password)) throw new CustomHTTPException("Wrong password", HttpStatus.UNAUTHORIZED);
+        return personOptional.get();
+    }
 }
