@@ -1,6 +1,5 @@
 import React from "react";
 import { SettingsContextProvider } from "./SettingsContext";
-import { UserContextProvider } from "./UserContext";
 import { CultivationContextProvider } from "../cultivations/CultivationContext";
 import { PopupContextProvider } from "./PopupContext";
 import { CultivationDetailContextProvider } from "../cultivations/CultivationDetailsContext";
@@ -14,13 +13,14 @@ import { ReadingContextProvider } from "../ReadingContext";
 import { CultivationTypeContextProvider } from "../dictionaries/CultivationTypeContext";
 import { MeasureUnitContextProvider } from "../dictionaries/MeasureUnitContext";
 import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
+import { PersonContextProvider } from "../PersonContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
       <CultivationDetailContextProvider>
         <StationContextProvider>
           <SettingsContextProvider>
-            <UserContextProvider>
+            <PersonContextProvider>
               <CultivationContextProvider>
                 <PlantContextProvider>
                   <StageContextProvider>
@@ -42,7 +42,7 @@ function ContextProvidersWrapper({ children }) {
                   </StageContextProvider>
                 </PlantContextProvider>
               </CultivationContextProvider>
-            </UserContextProvider>
+            </PersonContextProvider>
           </SettingsContextProvider>
         </StationContextProvider>
       </CultivationDetailContextProvider>

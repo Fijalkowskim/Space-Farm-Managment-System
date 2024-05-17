@@ -13,9 +13,9 @@ import StageTypes from "../../pages/resourcesPages/StageTypes";
 import CultivationTypes from "../../pages/resourcesPages/CultivationTypes";
 import CultivationDetails from "../../pages/detailsPages/CultivationDetails";
 import StationDetails from "../../pages/detailsPages/StationDetails";
-import { useUserContext } from "../../context/general/UserContext";
+import { usePersonContext } from "../../context/PersonContext";
 function AppRouter() {
-  const { isLoggedIn } = useUserContext();
+  const { isLoggedIn } = usePersonContext();
   return (
     <BrowserRouter>
       {isLoggedIn && <Navbar />}

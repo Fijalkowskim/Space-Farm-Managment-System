@@ -1,9 +1,9 @@
 import React from "react";
-import { useUserContext } from "../../context/general/UserContext";
+import { usePersonContext } from "../../context/PersonContext";
 import CustomButton from "../general/CustomButton";
 import ProfileAttribute from "./ProfileAttribute";
 function YourProfileSection() {
-  const { logOut, userData } = useUserContext();
+  const { logOut, userData } = usePersonContext();
   if (!userData) {
     return <div></div>;
   }

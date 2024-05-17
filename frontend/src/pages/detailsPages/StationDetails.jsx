@@ -15,6 +15,7 @@ function StationDetails() {
 
   useEffect(() => {
     setCurrentStation(data);
+    console.log(data);
   }, [data, setCurrentStation]);
 
   return (
