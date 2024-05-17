@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/api";
+import { exampleWorkers } from "../exampleData/ExampleWorkers";
+import { TbRuler } from "react-icons/tb";
 
 const PersonContext = React.createContext();
 
@@ -11,6 +13,9 @@ export function PersonContextProvider({ children }) {
   const [userData, setUserData] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const logIn = async (email, password) => {
+    setIsLoggedIn(true);
+    setUserData(exampleWorkers[0]);
+    return true;
     try {
       const res = await api.get("/person/login");
       if (res.data) {

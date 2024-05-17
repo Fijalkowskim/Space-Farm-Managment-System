@@ -9,6 +9,7 @@ function StationCultivationsDisplay({ station }) {
         entries={station.cultivations}
         contentType={"cultivation"}
         className={""}
+        detailsPageDisplay={true}
       />
     </div>
   );

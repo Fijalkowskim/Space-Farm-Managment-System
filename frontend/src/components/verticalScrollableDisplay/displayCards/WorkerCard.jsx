@@ -3,6 +3,7 @@ import DisplayCardAttribute from "../DisplayCardAttribute";
 
 function WorkerCard({ data }) {
   if (data === null) return;
+
   return (
     <>
       <DisplayCardAttribute label="Id" value={data.id} />

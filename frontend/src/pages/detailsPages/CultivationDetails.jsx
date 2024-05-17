@@ -59,24 +59,28 @@ function CultivationDetails() {
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
+            detailsPageDisplay={true}
           />
           <VertivalScrollableDisplay
             entries={currentCultivation.harvests}
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
+            detailsPageDisplay={true}
           />
           <VertivalScrollableDisplay
             entries={currentCultivation.stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
+            detailsPageDisplay={true}
           />
           <VertivalScrollableDisplay
             entries={currentCultivation.responsibleWorkers}
             header="ResponsibleWorkers"
             contentType="worker"
             className="max-w-4xl items-start"
+            detailsPageDisplay={true}
           />
         </div>
       )}
