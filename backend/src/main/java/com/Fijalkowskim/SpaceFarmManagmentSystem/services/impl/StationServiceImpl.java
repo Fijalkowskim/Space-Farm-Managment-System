@@ -28,9 +28,9 @@ public class StationServiceImpl implements StationService {
         return stationDAORepository.findAll(pageable);
     }
     public Station getStationById(Long stationId) throws CustomHTTPException {
-        Optional<Station> Station = stationDAORepository.findById(stationId);
-        if(Station.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
-        return Station.get();
+        Optional<Station> station = stationDAORepository.findById(stationId);
+        if(station.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+        return station.get();
     }
 
     public Station addStation() throws CustomHTTPException {

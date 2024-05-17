@@ -7,8 +7,8 @@ import lombok.Data;
 
 
 @Data
-@Builder
 @Entity
+@Builder
 public class
 Reading {
     @Id
@@ -29,7 +29,7 @@ Reading {
     public Reading() {
 
     }
-    public Reading(long id, MeasuredValue measuredValue, int value, Control control){
+    public Reading(Long id, MeasuredValue measuredValue, int value, Control control){
         this.id = id;
         this.measuredValue = measuredValue;
         this.value = value;
