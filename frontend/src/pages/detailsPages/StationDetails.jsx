@@ -4,15 +4,19 @@ import { useParams } from "react-router-dom";
 import LoadingBar from "../../components/general/LoadingBar";
 import { useStation } from "../../hooks/stations/useStation";
 import StationCultivationsDisplay from "../../components/stations/StationCultivationsDisplay";
+import { useFetchData } from "../../hooks/useFetchData";
+import { useStationContext } from "../../context/StationContext";
 
 function StationDetails() {
   const { id } = useParams();
-  const { station, isPending } = useStation(id);
+  const { getStation } = useStationContext();
+  const { data, isPending } = useFetchData(getStation, id);
   const [currentStation, setCurrentStation] = useState(undefined);
 
   useEffect(() => {
-    setCurrentStation(station);
-  }, [station, setCurrentStation]);
+    setCurrentStation(data);
+    console.log(data);
+  }, [data, setCurrentStation]);
 
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>

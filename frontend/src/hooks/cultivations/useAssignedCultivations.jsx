@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
 import { useCultivationContext } from "../../context/cultivations/CultivationContext";
-import { useUserContext } from "../../context/general/UserContext";
+import { usePersonContext } from "../../context/PersonContext";
 export const useAssignedCultivations = () => {
   const [cultivations, setCultivations] = useState();
   const [isPending, setIsPending] = useState(false);
   const { getAssignedCultivations } = useCultivationContext();
-  const { userData } = useUserContext();
+  const { userData } = usePersonContext();
 
   useEffect(() => {
     const loadCultivation = async () => {

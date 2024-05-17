@@ -3,7 +3,7 @@ import { useSettingsContext } from "../../context/general/SettingsContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { GoX } from "react-icons/go";
 import NavbarLink from "./NavbarLink";
-import { useUserContext } from "../../context/general/UserContext";
+import { usePersonContext } from "../../context/PersonContext";
 
 const navlinks = [
   { name: "Cultivations", to: "/" },
@@ -17,7 +17,7 @@ function Navbar() {
   const ref = useRef(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { setDisableScroll } = useSettingsContext();
-  const { userData } = useUserContext();
+  const { userData } = usePersonContext();
   const toggleMobileMenu = () => {
     setDisableScroll(!isMobileMenuOpen);
     setIsMobileMenuOpen((isMobileMenuOpen) => !isMobileMenuOpen);

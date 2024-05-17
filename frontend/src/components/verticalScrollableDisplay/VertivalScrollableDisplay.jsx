@@ -2,7 +2,7 @@ import React from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
-import { useUserContext } from "../../context/general/UserContext";
+import { usePersonContext } from "../../context/PersonContext";
 function VertivalScrollableDisplay({
   header,
   entries,
@@ -10,7 +10,7 @@ function VertivalScrollableDisplay({
   contentType,
   loading,
 }) {
-  const { userData } = useUserContext();
+  const { userData } = usePersonContext();
   if (!userData) return;
   return (
     <div

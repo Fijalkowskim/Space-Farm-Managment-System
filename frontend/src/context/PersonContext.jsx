@@ -1,13 +1,13 @@
 import * as React from "react";
-import { exampleWorkers } from "../../exampleData/ExampleWorkers";
+import { exampleWorkers } from "../exampleData/ExampleWorkers";
 
-const UserContext = React.createContext();
+const PersonContext = React.createContext();
 
-export function useUserContext() {
-  return React.useContext(UserContext);
+export function usePersonContext() {
+  return React.useContext(PersonContext);
 }
 
-export function UserContextProvider({ children }) {
+export function PersonContextProvider({ children }) {
   const [userData, setUserData] = React.useState(exampleWorkers[0]);
   const [isLoggedIn, setIsLoggedIn] = React.useState();
   const logIn = (email, password) => {
@@ -20,8 +20,8 @@ export function UserContextProvider({ children }) {
   };
 
   return (
-    <UserContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
+    <PersonContext.Provider value={{ userData, isLoggedIn, logIn, logOut }}>
       {children}
-    </UserContext.Provider>
+    </PersonContext.Provider>
   );
 }
