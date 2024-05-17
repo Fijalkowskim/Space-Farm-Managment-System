@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
@@ -13,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping( value = "/api/cultivation")
@@ -67,6 +70,23 @@ public class CultivationController {
             return ResponseEntity.status(HttpStatus.OK).body("Cultivation updated successfully");
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
+    }
+    @GetMapping("/person/")
+    public ResponseEntity<Set<Cultivation>> getCultvitationsByPersonId(
+            @RequestParam(name = "personId") long personId) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.getCultvitationsByPersonId(personId));
+    }
+    @PutMapping("/person/")
+    public ResponseEntity<Cultivation> addCultivationToPerson(
+            @RequestParam(name = "cultivationId") long cultivationId,
+            @RequestParam(name = "personId") long personId) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.addCultivationToPerson(cultivationId, personId));
+    }
+    @DeleteMapping("/person/")
+    public ResponseEntity<Cultivation> deleteCultivationFromPerson(
+            @RequestParam(name = "cultivationId") long cultivationId,
+            @RequestParam(name = "personId") long personId) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.deleteCultivationFromPerson(cultivationId, personId));
     }
 
 
