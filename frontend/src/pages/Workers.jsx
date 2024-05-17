@@ -3,8 +3,12 @@ import PageWrapper from "./PageWrapper";
 import CustomButton from "../components/general/CustomButton";
 import VertivalScrollableDisplay from "../components/verticalScrollableDisplay/VertivalScrollableDisplay";
 import { exampleWorkers } from "../exampleData/ExampleWorkers";
+import { usePersonContext } from "../context/PersonContext";
+import { useFetchArrayData } from "../hooks/useFetchArrayData";
 
 function Workers() {
+  const { getPersons } = usePersonContext();
+  const { data, isPending } = useFetchArrayData(getPersons);
   return (
     <PageWrapper
       secured={true}
@@ -13,9 +17,10 @@ function Workers() {
       <CustomButton className="text-lg w-44">New worker</CustomButton>
       <VertivalScrollableDisplay
         header={"Workers"}
-        entries={exampleWorkers}
+        entries={data}
         contentType={"worker"}
         className={"max-w-4xl"}
+        loading={isPending}
       />
     </PageWrapper>
   );
