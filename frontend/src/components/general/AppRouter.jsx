@@ -14,6 +14,7 @@ import CultivationTypes from "../../pages/resourcesPages/CultivationTypes";
 import CultivationDetails from "../../pages/detailsPages/CultivationDetails";
 import StationDetails from "../../pages/detailsPages/StationDetails";
 import { usePersonContext } from "../../context/PersonContext";
+import WorkerDetails from "../../pages/detailsPages/WorkerDetails";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
@@ -34,6 +35,7 @@ function AppRouter() {
         <Route path="/cultivation-types" element={<CultivationTypes />} />
         <Route path="/cultivation/:id" element={<CultivationDetails />} />
         <Route path="/station/:id" element={<StationDetails />} />
+        <Route path="/worker/:id" element={<WorkerDetails />} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
