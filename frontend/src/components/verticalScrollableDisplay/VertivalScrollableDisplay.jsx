@@ -38,9 +38,14 @@ function VertivalScrollableDisplay({
             key={entry.id}
             data={entry}
             contentType={contentType}
-            showRemoveButton={
+            showDeleteButton={
               userData.role.toLowerCase() === "admin" ||
               userData.role.toLowerCase() === "manager"
+            }
+            showRemoveButton={
+              detailsPageDisplay &&
+              (userData.role.toLowerCase() === "admin" ||
+                userData.role.toLowerCase() === "manager")
             }
           />
         ))

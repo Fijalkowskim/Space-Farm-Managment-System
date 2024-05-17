@@ -11,6 +11,7 @@ const variants = cva(
           "border-2 border-action-500 bg-primary-50 hover:bg-primary-100",
         green: "bg-green-500 hover:bg-green-600 text-primary-50",
         action: "bg-action-600 hover:bg-action-700 text-text-50",
+        error: "bg-red-600 hover:bg-red-700 text-text-50",
       },
     },
     defaultVariants: {
