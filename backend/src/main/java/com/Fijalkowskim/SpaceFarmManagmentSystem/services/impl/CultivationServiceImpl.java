@@ -2,7 +2,9 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +17,18 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional
 @Service
 public class CultivationServiceImpl implements CultivationService {
     private final CultivationDAORepository cultivationDAORepository;
+    private final PersonDAORepository personDAORepository;
 
     @Autowired
-    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository) {
+    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository) {
         this.cultivationDAORepository = cultivationDAORepository;
+        this.personDAORepository = personDAORepository;
     }
 
     public Page<Cultivation> getCultivations(PageRequest pageRequest){
@@ -87,4 +92,43 @@ public class CultivationServiceImpl implements CultivationService {
     }
 
 
+    public Set<Cultivation> getCultvitationsByPersonId(long personId) {
+        return cultivationDAORepository.findAllByWorkerId(personId);
+    }
+
+    public Cultivation addCultivationToPerson(long cultivationId, long personId) throws CustomHTTPException {
+        Optional<Person> personOptional = personDAORepository.findById(personId);
+        if(personOptional.isEmpty()){
+            throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
+        }
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(cultivationId);
+        if(cultivationOptional.isEmpty()){
+            throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        }
+        Person person = personOptional.get();
+        Cultivation cultivation = cultivationOptional.get();
+        cultivation.getResponsibleWorkers().add(person);
+        cultivationDAORepository.save(cultivation);
+        return cultivation;
+    }
+
+    public Cultivation deleteCultivationFromPerson(long cultivationId, long personId) throws CustomHTTPException {
+        Optional<Person> personOptional = personDAORepository.findById(personId);
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(cultivationId);
+
+        if (personOptional.isEmpty()) {
+            throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
+        }
+
+        if (cultivationOptional.isEmpty()) {
+            throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        }
+
+        Person person = personOptional.get();
+        Cultivation cultivation = cultivationOptional.get();
+
+        cultivation.getResponsibleWorkers().remove(person);
+        cultivationDAORepository.save(cultivation);
+        return cultivation;
+    }
 }
