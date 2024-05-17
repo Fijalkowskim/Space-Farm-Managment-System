@@ -118,4 +118,12 @@ public class PersonController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
         }
     }
+
+    @PostMapping("/changepassword/{id}")
+    public ResponseEntity<?> changePassword(
+            @PathVariable long id,
+            @RequestParam(name = "newPassword") String newPassword) throws CustomHTTPException{
+        return ResponseEntity.status(HttpStatus.OK).body(personService.changePassword(id, newPassword));
+    }
+
 }

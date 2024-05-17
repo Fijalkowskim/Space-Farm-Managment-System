@@ -116,4 +116,11 @@ public class PersonServiceImpl implements PersonService {
                 .build();
         return personDAORepository.save(newPerson);
     }
+
+    public Person changePassword(long id, String newPassword) {
+        Optional<Person> personOptional = personDAORepository.findById(id);
+        if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
+        personOptional.get().setPassword(newPassword);
+        return personDAORepository.save(personOptional.get());
+    }
 }
