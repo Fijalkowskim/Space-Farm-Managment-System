@@ -10,7 +10,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -57,16 +57,16 @@ public class DataLoader implements ApplicationRunner {
     public void run(ApplicationArguments args) {
         insertStationData();
         insertCultivationTypeData();
-        insertPersonData();
-        insertStageTypeData();
-        insertMeasureUnitData();
-        insertCultivationData();
         insertPlantData();
+        insertMeasureUnitData();
+        insertStageTypeData();
+        insertCultivationData();
+        insertPersonData();
         insertStageData();
         insertControlData();
         insertReadingData();
-        insertHarvestData();
         insertMeasuredValueData();
+        insertHarvestData();
     }
 
     private void insertStationData() {
@@ -99,8 +99,23 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void insertCultivationData() {
-        cultivationDAORepository.save(new Cultivation(1L, Date.valueOf("2023-01-01 08:00:00"), cultivationTypeDAORepository.findById(1L).get(), 10.5f, Date.valueOf("2023-01-20 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), plantDAORepository.findById(1L).get()));
-        cultivationDAORepository.save(new Cultivation(2L, Date.valueOf("2023-02-01 08:00:00"), cultivationTypeDAORepository.findById(2L).get(), 8f, null, Date.valueOf("2023-02-01 08:00:00"), plantDAORepository.findById(2L).get()));
+        cultivationDAORepository.save(new Cultivation(
+                1L,
+                new java.sql.Date(Timestamp.valueOf("2023-01-01 08:00:00").getTime()), // Convert to java.sql.Date
+                cultivationTypeDAORepository.findByIdWithEagerLoading(1L),
+                10.5f,
+                new java.sql.Date(Timestamp.valueOf("2023-01-20 08:00:00").getTime()), // Convert to java.sql.Date
+                new java.sql.Date(Timestamp.valueOf("2023-01-01 08:00:00").getTime()), // Convert to java.sql.Date
+                plantDAORepository.findByIdWithEagerLoading(1L)));
+        cultivationDAORepository.save(new Cultivation(
+                2L,
+                new java.sql.Timestamp(Timestamp.valueOf("2023-02-01 08:00:00").getTime()), // Convert to Timestamp
+                cultivationTypeDAORepository.findByIdWithEagerLoading(2L),
+                8f,
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-20 08:00:00").getTime()), // Convert to Timestamp
+                new java.sql.Timestamp(Timestamp.valueOf("2023-02-01 08:00:00").getTime()), // Convert to Timestamp
+                plantDAORepository.findByIdWithEagerLoading(2L)
+        ));
     }
 
     private void insertPersonData() {
@@ -110,31 +125,53 @@ public class DataLoader implements ApplicationRunner {
     }
 
     private void insertStageData() {
-        stageDAORepository.save(new Stage(1L, stageTypeDAORepository.findById(1L).get(), Date.valueOf("2023-01-10 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), cultivationDAORepository.findById(1L).get()));
-        stageDAORepository.save(new Stage(2L, stageTypeDAORepository.findById(2L).get(), Date.valueOf("2023-01-20 08:00:00"), Date.valueOf("2023-01-10 08:00:00"), cultivationDAORepository.findById(2L).get()));
-        stageDAORepository.save(new Stage(3L, stageTypeDAORepository.findById(3L).get(), Date.valueOf("2023-01-10 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), cultivationDAORepository.findById(3L).get()));
+        stageDAORepository.save(new Stage(
+                1L,
+                stageTypeDAORepository.findByIdWithEagerLoading(1L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-10 08:00:00").getTime()), // Convert to Timestamp
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-01 08:00:00").getTime()), // Convert to Timestamp
+                cultivationDAORepository.findByIdWithEagerLoading(1L)
+        ));
+        stageDAORepository.save(new Stage(
+                2L,
+                stageTypeDAORepository.findByIdWithEagerLoading(2L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-20 08:00:00").getTime()), // Convert to Timestamp
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-10 08:00:00").getTime()), // Convert to Timestamp
+                cultivationDAORepository.findByIdWithEagerLoading(2L)
+        ));
+        stageDAORepository.save(new Stage(
+                3L,
+                stageTypeDAORepository.findByIdWithEagerLoading(3L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-10 08:00:00").getTime()), // Convert to Timestamp
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-01 08:00:00").getTime()), // Convert to Timestamp
+                cultivationDAORepository.findByIdWithEagerLoading(2L)
+        ));
     }
 
     private void insertControlData() {
-        controlDAORepository.save(new Control(1L, stageDAORepository.findById(1L).get(), Date.valueOf("2023-01-15 08:00:00"), 5));
-        controlDAORepository.save(new Control(2L, stageDAORepository.findById(2L).get(), Date.valueOf("2023-01-20 08:00:00"), 5));
-        controlDAORepository.save(new Control(3L, stageDAORepository.findById(3L).get(), Date.valueOf("2023-01-25 08:00:00"), 5));
+        controlDAORepository.save(new Control(1L, stageDAORepository.findByIdWithEagerLoading(1L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-15 08:00:00").getTime()), 5));
+        controlDAORepository.save(new Control(2L, stageDAORepository.findByIdWithEagerLoading(2L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-20 08:00:00").getTime()), 5));
+        controlDAORepository.save(new Control(3L, stageDAORepository.findByIdWithEagerLoading(3L),
+                new java.sql.Timestamp(Timestamp.valueOf("2023-01-25 08:00:00").getTime()), 5));
     }
 
     private void insertMeasuredValueData() {
-        measuredValueDAORepository.save(new MeasuredValue(1L, "Measurement 1", measureUnitDAORepository.findById(1L).get()));
-        measuredValueDAORepository.save(new MeasuredValue(2L, "Measurement 2", measureUnitDAORepository.findById(2L).get()));
-        measuredValueDAORepository.save(new MeasuredValue(3L, "Measurement 3", measureUnitDAORepository.findById(3L).get()));
+        measuredValueDAORepository.save(new MeasuredValue(1L, "Measurement 1", measureUnitDAORepository.findByIdWithEagerLoading(1L)));
+        measuredValueDAORepository.save(new MeasuredValue(2L, "Measurement 2", measureUnitDAORepository.findByIdWithEagerLoading(2L)));
+        measuredValueDAORepository.save(new MeasuredValue(3L, "Measurement 3", measureUnitDAORepository.findByIdWithEagerLoading(3L)));
     }
 
     private void insertReadingData() {
-        readingDAORepository.save(new Reading(1L, measuredValueDAORepository.findById(1L).get(), 10, controlDAORepository.findById(1L).get()));
-        readingDAORepository.save(new Reading(2L, measuredValueDAORepository.findById(2L).get(), 15, controlDAORepository.findById(2L).get()));
-        readingDAORepository.save(new Reading(3L, measuredValueDAORepository.findById(3L).get(), 20, controlDAORepository.findById(3L).get()));
+        readingDAORepository.save(new Reading(1L, measuredValueDAORepository.findByIdWithEagerLoading(1L), 10, controlDAORepository.findByIdWithEagerLoading(1L)));
+        readingDAORepository.save(new Reading(2L, measuredValueDAORepository.findByIdWithEagerLoading(2L), 15, controlDAORepository.findByIdWithEagerLoading(2L)));
+        readingDAORepository.save(new Reading(3L, measuredValueDAORepository.findByIdWithEagerLoading(3L), 20, controlDAORepository.findByIdWithEagerLoading(3L)));
     }
 
+
     private void insertHarvestData() {
-        harvestDAORepository.save(new Harvest(1L, Date.valueOf("2023-01-25 08:00:00"), cultivationDAORepository.findById(1L).get(), Boolean.TRUE));
-        harvestDAORepository.save(new Harvest(2L, Date.valueOf("2023-02-10 08:00:00"), cultivationDAORepository.findById(2L).get(), Boolean.FALSE));
+        harvestDAORepository.save(new Harvest(1L, new java.sql.Timestamp(Timestamp.valueOf("2023-01-25 08:00:00").getTime()), cultivationDAORepository.findByIdWithEagerLoading(1L), Boolean.TRUE));
+        harvestDAORepository.save(new Harvest(2L, new java.sql.Timestamp(Timestamp.valueOf("2023-02-10 08:00:00").getTime()), cultivationDAORepository.findByIdWithEagerLoading(2L), Boolean.FALSE));
     }
 }

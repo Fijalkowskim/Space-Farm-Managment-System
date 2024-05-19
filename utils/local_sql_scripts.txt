@@ -1,0 +1,118 @@
+-- Until maven is not prepared for initialization of the db by itself,
+-- we should provide this script into mysql manually
+
+
+CREATE DATABASE IF NOT EXISTS space_farm;
+USE space_farm;
+
+SET FOREIGN_KEY_CHECKS = 0;
+
+DROP TABLE IF EXISTS uprawa;
+DROP TABLE IF EXISTS uprawa_osoba;
+DROP TABLE IF EXISTS uprawa_stanowisko;
+DROP TABLE IF EXISTS rosliny;
+DROP TABLE IF EXISTS stanowisko;
+DROP TABLE IF EXISTS osoba;
+DROP TABLE IF EXISTS zbior;
+DROP TABLE IF EXISTS typ_etapu;
+DROP TABLE IF EXISTS etap;
+DROP TABLE IF EXISTS kontrola;
+DROP TABLE IF EXISTS odczyt;
+DROP TABLE IF EXISTS mierzona_wartosc;
+
+
+SET FOREIGN_KEY_CHECKS = 1;
+
+
+CREATE TABLE uprawa (
+    id_uprawy INT AUTO_INCREMENT PRIMARY KEY,
+    data_rozpoczecia DATE,
+    typ VARCHAR(255),
+    id_rosliny INT,
+    areał DECIMAL(10, 2),
+    planowana_data_zakonczenia DATE,
+    rzeczywista_data_zakonczenia DATE,
+    udane BOOLEAN,
+    uwagi VARCHAR(255)
+);
+
+CREATE TABLE rosliny (
+    id_rosliny INT AUTO_INCREMENT PRIMARY KEY,
+    nazwa VARCHAR(255),
+    uwagi VARCHAR(255)
+);
+
+CREATE TABLE stanowisko (
+    id_stanowiska INT AUTO_INCREMENT PRIMARY KEY,
+    uwagi VARCHAR(255)
+);
+
+CREATE TABLE osoba (
+    id_osoby INT AUTO_INCREMENT PRIMARY KEY,
+    imie VARCHAR(255),
+    nazwisko VARCHAR(255),
+    rola VARCHAR(255)
+);
+
+CREATE TABLE zbior (
+    id_zbioru INT AUTO_INCREMENT PRIMARY KEY,
+    data_wykonania_zbioru DATE,
+    id_uprawy INT,
+    udane_plony INT,
+    nieudane_plony INT,
+    FOREIGN KEY (id_uprawy) REFERENCES uprawa(id_uprawy)
+);
+
+CREATE TABLE etap (
+    id_etapu INT AUTO_INCREMENT PRIMARY KEY,
+    id_uprawy INT,
+    id_typu_etapu INT,
+    data_rozpoczecia_etapu DATE,
+    data_zakonczenia_etapu DATE,
+    FOREIGN KEY (id_uprawy) REFERENCES uprawa(id_uprawy),
+    FOREIGN KEY (id_typu_etapu) REFERENCES typ_etapu(id_typu_etapu)
+);
+
+CREATE TABLE typ_etapu (
+    id_typu_etapu INT AUTO_INCREMENT PRIMARY KEY,
+    nazwa VARCHAR(255)
+);
+
+CREATE TABLE kontrola (
+    id_kontroli INT AUTO_INCREMENT PRIMARY KEY,
+    id_etapu INT,
+    odczyty VARCHAR(255),
+    data_wykonania_kontroli DATE,
+    ilosc_obumarych_sadzonek INT,
+    FOREIGN KEY (id_etapu) REFERENCES etap(id_etapu)
+);
+
+CREATE TABLE odczyt (
+    id_kontroli INT,
+    id_mierzonej_wartosci INT,
+    wartosc DECIMAL(10, 2),
+    FOREIGN KEY (id_kontroli) REFERENCES kontrola(id_kontroli),
+    FOREIGN KEY (id_mierzonej_wartosci) REFERENCES mierzone_wartosci(id_mierzonej_wartosci)
+);
+
+CREATE TABLE mierzona_wartosc (
+    id_mierzonej_wartosci INT AUTO_INCREMENT PRIMARY KEY,
+    nazwa VARCHAR(255),
+    jednostka_miary VARCHAR(50)
+);
+
+CREATE TABLE uprawa_stanowisko (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_uprawy INT,
+    id_stanowiska INT,
+    FOREIGN KEY (id_uprawy) REFERENCES uprawa(id_uprawy),
+    FOREIGN KEY (id_stanowiska) REFERENCES stanowisko(id_stanowiska)
+);
+
+CREATE TABLE uprawa_osoba (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_uprawy INT,
+    id_osoby INT,
+    FOREIGN KEY (id_uprawy) REFERENCES uprawa(id_uprawy),
+    FOREIGN KEY (id_osoby) REFERENCES osoba(id_osoby)
+);
