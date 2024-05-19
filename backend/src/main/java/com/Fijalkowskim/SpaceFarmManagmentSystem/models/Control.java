@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.HashSet;
 import java.util.Set;
 
 
@@ -29,6 +28,13 @@ public class Control {
     private Set<Reading> readings;
 
     public Control() {}
+
+    public Control(Long id, Stage stage, Date controlDate, int deadSeedlings) {
+        this.id = id;
+        this.stage = stage;
+        this.controlDate = controlDate;
+        this.deadSeedlings = deadSeedlings;
+    }
 
     public Control(Long id, Stage stage, Date controlDate, int deadSeedlings, Set<Reading> readings) {
         this.id = id;

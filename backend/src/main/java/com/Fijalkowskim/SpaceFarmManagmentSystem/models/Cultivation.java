@@ -61,6 +61,27 @@ public class Cultivation {
 
     }
 
+    public Cultivation(Long id, Date startDate, CultivationType type, float area, Date plannedFinishDate, Date realFinishDate, Plant plant) {
+        this.id = id;
+        this.startDate = startDate;
+        this.type = type;
+        this.area = area;
+        this.plannedFinishDate = plannedFinishDate;
+        this.realFinishDate = realFinishDate;
+        this.plant = plant;
+    }
+
+    public Cultivation(Long id, Date startDate, CultivationType type, float area, Date plannedFinishDate, Date realFinishDate, Plant plant, @Nullable String comment) {
+        this.id = id;
+        this.startDate = startDate;
+        this.type = type;
+        this.area = area;
+        this.plannedFinishDate = plannedFinishDate;
+        this.realFinishDate = realFinishDate;
+        this.plant = plant;
+        this.comment = comment;
+    }
+
 
     public Cultivation(Long id, Date startDate, CultivationType type, float area, Date plannedFinishDate, Date realFinishDate, Plant plant, Set<Stage> stages, Set<Harvest> harvests, Set<Station> stations, Set<Person> responsibleWorkers, @Nullable String comment) {
         this.id = id;

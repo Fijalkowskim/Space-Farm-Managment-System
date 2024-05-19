@@ -27,6 +27,12 @@ public class MeasuredValue {
     public MeasuredValue() {
     }
 
+    public MeasuredValue(Long id, String name, MeasureUnit measureUnit) {
+        this.id = id;
+        this.name = name;
+        this.measureUnit = measureUnit;
+    }
+
     public MeasuredValue(Long id, String name, MeasureUnit measureUnit, Set<Reading> readings) {
         this.id = id;
         this.name = name;

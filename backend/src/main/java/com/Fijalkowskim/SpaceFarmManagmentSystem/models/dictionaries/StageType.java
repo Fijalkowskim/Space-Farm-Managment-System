@@ -23,6 +23,12 @@ public class StageType {
     public StageType() {
 
     }
+
+    public StageType(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public StageType(long id, String name, Set<Stage> stages) {
         this.id = id;
         this.name = name;

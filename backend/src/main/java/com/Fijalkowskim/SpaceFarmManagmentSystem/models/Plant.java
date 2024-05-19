@@ -22,6 +22,10 @@ public class Plant {
     public Plant() {
 
     }
+    public Plant(Long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
     public Plant(Long id, String name, Set<Cultivation> cultivations) {
         this.id = id;
         this.name = name;

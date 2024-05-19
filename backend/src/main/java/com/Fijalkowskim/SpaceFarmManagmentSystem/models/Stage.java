@@ -37,6 +37,14 @@ public class Stage {
 
     public Stage(){}
 
+    public Stage(Long id, StageType stageType, Date startStageDate, Date finishStageDate, Cultivation cultivation) {
+        this.id = id;
+        this.stageType = stageType;
+        this.startStageDate = startStageDate;
+        this.finishStageDate = finishStageDate;
+        this.cultivation = cultivation;
+    }
+
     public Stage(Long id, StageType stageType, Date startStageDate, Date finishStageDate, Cultivation cultivation, Set<Control> controls, @Nullable String comment) {
         this.id = id;
         this.stageType = stageType;

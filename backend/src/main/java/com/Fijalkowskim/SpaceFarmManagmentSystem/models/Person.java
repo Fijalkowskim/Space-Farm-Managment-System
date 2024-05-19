@@ -31,6 +31,15 @@ public class Person {
     public Person() {
     }
 
+    public Person(Long id, String name, String surname, String login, String password, WorkerType role) {
+        this.id = id;
+        this.name = name;
+        this.surname = surname;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+    }
+
     public Person(Long id, String name, String surname, String login, String password, WorkerType role, Set<Cultivation> cultivations) {
         this.id = id;
         this.name = name;

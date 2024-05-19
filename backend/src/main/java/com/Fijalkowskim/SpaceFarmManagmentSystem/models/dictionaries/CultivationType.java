@@ -23,6 +23,12 @@ public class CultivationType {
 
     public CultivationType() {
     }
+
+    public CultivationType(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public CultivationType(long id, String name, Set<Cultivation> cultivations) {
         this.id = id;
         this.name = name;

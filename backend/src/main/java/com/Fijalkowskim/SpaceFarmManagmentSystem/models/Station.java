@@ -9,7 +9,6 @@ import java.util.Set;
 @Entity
 @Builder
 public class Station {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,7 +16,12 @@ public class Station {
     @ManyToMany(mappedBy = "stations")
     private Set<Cultivation> cultivations;
 
-    public Station(){}
+    public Station(){
+    }
+
+    public Station(Long id){
+        this.id = id;
+    }
 
     public Station(Long id, Set<Cultivation> cultivations){
         this.id = id;

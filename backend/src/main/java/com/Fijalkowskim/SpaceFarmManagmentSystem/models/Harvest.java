@@ -28,6 +28,13 @@ public class Harvest {
 
     public Harvest() {}
 
+    public Harvest(Long id, Date harvestDate, Cultivation cultivation, Boolean successfulHarvest) {
+        this.id = id;
+        this.harvestDate = harvestDate;
+        this.cultivation = cultivation;
+        this.successfulHarvest = successfulHarvest;
+    }
+
     public Harvest(Long id, Date harvestDate, Cultivation cultivation, Boolean successfulHarvest, @Nullable String comment) {
         this.id = id;
         this.harvestDate = harvestDate;

@@ -22,6 +22,12 @@ public class MeasureUnit {
 
     public MeasureUnit() {
     }
+
+    public MeasureUnit(long id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
     public MeasureUnit(long id, String name, Set<MeasuredValue> measuredValues) {
         this.id = id;
         this.name = name;

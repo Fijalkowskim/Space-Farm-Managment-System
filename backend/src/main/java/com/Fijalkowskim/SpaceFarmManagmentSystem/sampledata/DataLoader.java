@@ -1,9 +1,16 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.sampledata;
 
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.*;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.MeasureUnit;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.*;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
+
+import java.sql.Date;
 
 @Component
 public class DataLoader implements ApplicationRunner {
@@ -47,7 +54,87 @@ public class DataLoader implements ApplicationRunner {
     }
 
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments args) {
+        insertStationData();
+        insertCultivationTypeData();
+        insertPersonData();
+        insertStageTypeData();
+        insertMeasureUnitData();
+        insertCultivationData();
+        insertPlantData();
+        insertStageData();
+        insertControlData();
+        insertReadingData();
+        insertHarvestData();
+        insertMeasuredValueData();
+    }
 
+    private void insertStationData() {
+        stationDAORepository.save(new Station(1L));
+        stationDAORepository.save(new Station(2L));
+        stationDAORepository.save(new Station(3L));
+    }
+
+    private void insertCultivationTypeData() {
+        cultivationTypeDAORepository.save(new CultivationType(1L, "Type A"));
+        cultivationTypeDAORepository.save(new CultivationType(2L, "Type B"));
+    }
+
+    private void insertPlantData() {
+        plantDAORepository.save(new Plant(1L, "Plant A"));
+        plantDAORepository.save(new Plant(2L, "Plant B"));
+        plantDAORepository.save(new Plant(3L, "Plant C"));
+    }
+
+    private void insertStageTypeData() {
+        stageTypeDAORepository.save(new StageType(1L, "Type X"));
+        stageTypeDAORepository.save(new StageType(2L, "Type Y"));
+        stageTypeDAORepository.save(new StageType(3L, "Type Z"));
+    }
+
+    private void insertMeasureUnitData() {
+        measureUnitDAORepository.save(new MeasureUnit(1L, "Kilogram"));
+        measureUnitDAORepository.save(new MeasureUnit(2L, "Gram"));
+        measureUnitDAORepository.save(new MeasureUnit(3L, "Liter"));
+    }
+
+    private void insertCultivationData() {
+        cultivationDAORepository.save(new Cultivation(1L, Date.valueOf("2023-01-01 08:00:00"), cultivationTypeDAORepository.findById(1L).get(), 10.5f, Date.valueOf("2023-01-20 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), plantDAORepository.findById(1L).get()));
+        cultivationDAORepository.save(new Cultivation(2L, Date.valueOf("2023-02-01 08:00:00"), cultivationTypeDAORepository.findById(2L).get(), 8f, null, Date.valueOf("2023-02-01 08:00:00"), plantDAORepository.findById(2L).get()));
+    }
+
+    private void insertPersonData() {
+        personDAORepository.save(new Person(1L, "John", "Doe", "john_doe", "password1", WorkerType.ADMIN));
+        personDAORepository.save(new Person(2L, "Alice", "Smith", "alice_smith", "password2", WorkerType.MANAGER));
+        personDAORepository.save(new Person(3L, "Bob", "Johnson", "bob_johnson", "password3", WorkerType.LABWORKER));
+    }
+
+    private void insertStageData() {
+        stageDAORepository.save(new Stage(1L, stageTypeDAORepository.findById(1L).get(), Date.valueOf("2023-01-10 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), cultivationDAORepository.findById(1L).get()));
+        stageDAORepository.save(new Stage(2L, stageTypeDAORepository.findById(2L).get(), Date.valueOf("2023-01-20 08:00:00"), Date.valueOf("2023-01-10 08:00:00"), cultivationDAORepository.findById(2L).get()));
+        stageDAORepository.save(new Stage(3L, stageTypeDAORepository.findById(3L).get(), Date.valueOf("2023-01-10 08:00:00"), Date.valueOf("2023-01-01 08:00:00"), cultivationDAORepository.findById(3L).get()));
+    }
+
+    private void insertControlData() {
+        controlDAORepository.save(new Control(1L, stageDAORepository.findById(1L).get(), Date.valueOf("2023-01-15 08:00:00"), 5));
+        controlDAORepository.save(new Control(2L, stageDAORepository.findById(2L).get(), Date.valueOf("2023-01-20 08:00:00"), 5));
+        controlDAORepository.save(new Control(3L, stageDAORepository.findById(3L).get(), Date.valueOf("2023-01-25 08:00:00"), 5));
+    }
+
+    private void insertMeasuredValueData() {
+        measuredValueDAORepository.save(new MeasuredValue(1L, "Measurement 1", measureUnitDAORepository.findById(1L).get()));
+        measuredValueDAORepository.save(new MeasuredValue(2L, "Measurement 2", measureUnitDAORepository.findById(2L).get()));
+        measuredValueDAORepository.save(new MeasuredValue(3L, "Measurement 3", measureUnitDAORepository.findById(3L).get()));
+    }
+
+    private void insertReadingData() {
+        readingDAORepository.save(new Reading(1L, measuredValueDAORepository.findById(1L).get(), 10, controlDAORepository.findById(1L).get()));
+        readingDAORepository.save(new Reading(2L, measuredValueDAORepository.findById(2L).get(), 15, controlDAORepository.findById(2L).get()));
+        readingDAORepository.save(new Reading(3L, measuredValueDAORepository.findById(3L).get(), 20, controlDAORepository.findById(3L).get()));
+    }
+
+    private void insertHarvestData() {
+        harvestDAORepository.save(new Harvest(1L, Date.valueOf("2023-01-25 08:00:00"), cultivationDAORepository.findById(1L).get(), Boolean.TRUE));
+        harvestDAORepository.save(new Harvest(2L, Date.valueOf("2023-02-10 08:00:00"), cultivationDAORepository.findById(2L).get(), Boolean.FALSE));
     }
 }
