@@ -36,7 +36,7 @@ export function PersonContextProvider({ children }) {
   //************ Get methods ************
   const getPersons = async () => {
     try {
-      const res = await api.get("/person/");
+      const res = await api.get("/person");
       if (res.data) {
         return res.data.content;
       }
@@ -56,6 +56,44 @@ export function PersonContextProvider({ children }) {
     }
     return undefined;
   };
+  const getResponsibleWorkers = async (cultivationId) => {
+    try {
+      const res = await api.get(`/responsible/${cultivationId}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return undefined;
+  };
+  //************ Put methods ************
+  const addPerson = async (personCreateRequest) => {
+    if (!userData) return false;
+    try {
+      const res = await api.put(`?userID=${userData.id}`, personCreateRequest);
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return false;
+  };
+  const addResponsiblePerson = async (personId, cultivationId) => {
+    if (!userData) return false;
+    try {
+      //todo
+      const res = await api.put(`?userID=${userData.id}`, personCreateRequest);
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return false;
+  };
+  //************ User managment methods ************
   const loginFromCookies = async () => {
     const storedUserData = userCookie["user"];
     if (storedUserData) {
@@ -65,16 +103,21 @@ export function PersonContextProvider({ children }) {
     return false;
   };
   const setUserDataAfterLogin = (newUserData) => {
-    const newPerson = new Person(
-      newUserData.id,
-      newUserData.name,
-      newUserData.surname,
-      newUserData.role,
-      newUserData.cultivations
-    );
-    setUserCookie("user", newPerson, { path: "/" });
+    const newPerson = userFromResponse(newUserData);
+    setUserCookie("user", newPerson, {
+      path: "/",
+    });
     setIsLoggedIn(true);
     setUserData(newPerson);
+  };
+  const userFromResponse = (userResponse) => {
+    return new Person(
+      userResponse.id,
+      userResponse.name,
+      userResponse.surname,
+      userResponse.role,
+      userResponse.cultivations
+    );
   };
   return (
     <PersonContext.Provider
@@ -86,6 +129,8 @@ export function PersonContextProvider({ children }) {
         getPersons,
         getPerson,
         loginFromCookies,
+        getResponsibleWorkers,
+        addPerson,
       }}
     >
       {children}

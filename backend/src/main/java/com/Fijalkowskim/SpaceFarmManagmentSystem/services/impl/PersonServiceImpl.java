@@ -4,7 +4,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonCreateRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.responsemodels.PersonResponse;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
         personDAORepository.delete(person.get());
     }
 
-    public Person addPerson(PersonRequest personRequest) throws CustomHTTPException {
+    public Person addPerson(PersonCreateRequest personRequest) throws CustomHTTPException {
         Person person = Person.builder()
                 .name(personRequest.getName())
                 .surname(personRequest.getSurname())
@@ -104,7 +104,7 @@ public class PersonServiceImpl implements PersonService {
         return person;
     }
 
-    public Person updatePerson(long id, PersonRequest personRequest) throws CustomHTTPException{
+    public Person updatePerson(long id, PersonCreateRequest personRequest) throws CustomHTTPException{
         Optional<Person> oldPerson = personDAORepository.findById(id);
         if(oldPerson.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         Person newPerson = Person.builder()

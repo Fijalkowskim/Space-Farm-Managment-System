@@ -4,7 +4,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 import lombok.Data;
 
 @Data
-public class PersonRequest {
+public class PersonCreateRequest {
     private String name;
 
     private String surname;

@@ -1,9 +1,8 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonCreateRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.responsemodels.PersonResponse;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,15 +37,15 @@ public class PersonController {
         return ResponseEntity.ok(personService.getPersonById(id));
     }
 
-    @GetMapping("/responsible")
+    @GetMapping("/responsible/{cultivationId}")
     public ResponseEntity<Set<PersonResponse>> getResponsiblePersonsByCultivationId(
-            @RequestParam(name = "cultivationId") long cultivationId) {
+            @PathVariable long cultivationId) {
         return ResponseEntity.ok(personService.getResponsiblePersonsByCultivationId(cultivationId));
     }
 
     @PutMapping("")
     public ResponseEntity<?> addPerson(
-            @RequestPart("PersonRequest") PersonRequest personRequest,
+            @RequestBody PersonCreateRequest personRequest,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException{
         if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
             personService.addPerson(personRequest);
@@ -108,7 +107,7 @@ public class PersonController {
 
     @PostMapping("/{id}")
     public ResponseEntity<?> updatePerson(
-            @PathVariable long id, @RequestBody PersonRequest personRequest,
+            @PathVariable long id, @RequestBody PersonCreateRequest personRequest,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException{
         if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
             personService.updatePerson(id, personRequest);
