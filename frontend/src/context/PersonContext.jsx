@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import api from "../api/api";
 import { exampleWorkers } from "../exampleData/ExampleWorkers";
 import { CookiesProvider, useCookies } from "react-cookie";
-
+import { Person } from "../models/Person";
 const PersonContext = React.createContext();
 
 export function usePersonContext() {
@@ -12,12 +12,15 @@ export function usePersonContext() {
 export function PersonContextProvider({ children }) {
   const [userData, setUserData] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userCookie, setUserCookie, removeUserCookie] = useCookies(["user"]);
+
   const logIn = async (email, password) => {
-    setUserDataAfterLogin(exampleWorkers[0]);
-    return true;
     try {
-      const res = await api.get("/person/login");
+      const res = await api.get(
+        `/person/login?login=${email}&password=${password}`
+      );
       if (res.data) {
+        setUserDataAfterLogin(res.data);
         return true;
       }
     } catch (err) {
@@ -60,10 +63,16 @@ export function PersonContextProvider({ children }) {
     }
     return false;
   };
-
   const setUserDataAfterLogin = (newUserData) => {
+    const newPerson = new Person(
+      newUserData.id,
+      newUserData.name,
+      newUserData.surname,
+      newUserData.role,
+      newUserData.cultivations
+    );
     setIsLoggedIn(true);
-    setUserData(newUserData);
+    setUserData(newPerson);
   };
   return (
     <PersonContext.Provider
