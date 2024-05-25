@@ -26,20 +26,20 @@ public class PersonController {
     }
 
     @GetMapping("")
-    public Page<Person> getAllPersons(
+    public Page<PersonResponse> getAllPersons(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         return personService.getPersons(pageRequest);
     }
     @GetMapping("/{id}")
-    public ResponseEntity<Person> getPersonById(
+    public ResponseEntity<PersonResponse> getPersonById(
             @PathVariable long id) throws CustomHTTPException {
         return ResponseEntity.ok(personService.getPersonById(id));
     }
 
     @GetMapping("/responsible")
-    public ResponseEntity<Set<Person>> getResponsiblePersonsByCultivationId(
+    public ResponseEntity<Set<PersonResponse>> getResponsiblePersonsByCultivationId(
             @RequestParam(name = "cultivationId") long cultivationId) {
         return ResponseEntity.ok(personService.getResponsiblePersonsByCultivationId(cultivationId));
     }

@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -30,19 +31,19 @@ public class PersonServiceImpl implements PersonService {
         this.cultivationDAORepository = cultivationDAORepository;
     }
 
-    public Page<Person> getPersons(PageRequest pageRequest) {
-        return personDAORepository.findAll(pageRequest);
+    public Page<PersonResponse> getPersons(PageRequest pageRequest) {
+        return personResponsePageFromPersonPage(personDAORepository.findAll(pageRequest));
     }
 
-    public Person getPersonById(long id) throws CustomHTTPException {
+    public PersonResponse getPersonById(long id) throws CustomHTTPException {
         Optional<Person> person = personDAORepository.findById(id);
         if (person.isEmpty()){
             throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         }
-        return person.get();
+        return personResponseFromPerson(person.get());
     }
-    public Set<Person> getResponsiblePersonsByCultivationId(long cultivationId) {
-        return personDAORepository.findAllByCultivations_Id(cultivationId);
+    public Set<PersonResponse> getResponsiblePersonsByCultivationId(long cultivationId) {
+        return personDAORepository.findAllByCultivations_Id(cultivationId).stream().map(this::personResponseFromPerson).collect(Collectors.toSet());
     }
 
     public void deletePerson(long id) throws CustomHTTPException{
@@ -130,12 +131,18 @@ public class PersonServiceImpl implements PersonService {
         Optional<Person> personOptional = personDAORepository.findByLogin(login);
         if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         if(!personOptional.get().getPassword().equals(password)) throw new CustomHTTPException("Wrong password", HttpStatus.UNAUTHORIZED);
+        return personResponseFromPerson(personOptional.get());
+    }
+    private PersonResponse personResponseFromPerson(final Person person){
         return PersonResponse.builder()
-                .id(personOptional.get().getId())
-                .name(personOptional.get().getName())
-                .surname(personOptional.get().getSurname())
-                .role(personOptional.get().getRole())
-                .cultivations(personOptional.get().getCultivations())
+                .id(person.getId())
+                .name(person.getName())
+                .surname(person.getSurname())
+                .role(person.getRole())
+                .cultivations(person.getCultivations())
                 .build();
+    }
+    private Page<PersonResponse> personResponsePageFromPersonPage(final Page<Person> personPage) {
+        return personPage.map(this::personResponseFromPerson);
     }
 }
