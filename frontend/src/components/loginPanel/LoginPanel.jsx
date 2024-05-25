@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FaEye } from "react-icons/fa";
 import FormInput from "./FormInput";
@@ -10,7 +10,7 @@ function LoginPanel() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const { logIn } = usePersonContext();
+  const { logIn, loginFromCookies } = usePersonContext();
   const { addMessage } = usePopupContext();
   const onSumbit = async () => {
     setIsPending(true);
@@ -20,6 +20,10 @@ function LoginPanel() {
     }
     setIsPending(false);
   };
+
+  useEffect(() => {
+    loginFromCookies();
+  }, [loginFromCookies]);
   return (
     <form
       className="flex flex-col gap-4 justify-center items-center py-12 md:py-6 w-full max-w-[20rem] bg-background-800/50 p-10 rounded-lg shadow-md"

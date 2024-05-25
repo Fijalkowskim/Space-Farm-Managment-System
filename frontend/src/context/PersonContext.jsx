@@ -29,6 +29,7 @@ export function PersonContextProvider({ children }) {
     return false;
   };
   const logOut = () => {
+    removeUserCookie("user", { path: "/" });
     setUserData(null);
     setIsLoggedIn(false);
   };
@@ -59,7 +60,7 @@ export function PersonContextProvider({ children }) {
     const storedUserData = userCookie["user"];
     if (storedUserData) {
       setUserDataAfterLogin(storedUserData);
-      return await logIn(storedUserData.email, storedUserData.password);
+      return true;
     }
     return false;
   };
@@ -71,6 +72,7 @@ export function PersonContextProvider({ children }) {
       newUserData.role,
       newUserData.cultivations
     );
+    setUserCookie("user", newPerson, { path: "/" });
     setIsLoggedIn(true);
     setUserData(newPerson);
   };
