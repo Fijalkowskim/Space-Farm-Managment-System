@@ -11,6 +11,8 @@ function VertivalScrollableDisplay({
   contentType,
   loading,
   detailsPageDisplay,
+  deleteButtonWorkerTypes,
+  removeButtonWorkerTypes,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
