@@ -4,6 +4,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.responsemodels.PersonResponse;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -126,7 +127,7 @@ public class PersonController {
         return ResponseEntity.status(HttpStatus.OK).body(personService.changePassword(id, newPassword));
     }
     @GetMapping("/login")
-    public ResponseEntity<Person> login(
+    public ResponseEntity<PersonResponse> login(
             @RequestParam(name = "login") String login,
             @RequestParam(name = "password") String password) throws CustomHTTPException{
             return ResponseEntity.status(HttpStatus.OK).body(personService.login(login, password));

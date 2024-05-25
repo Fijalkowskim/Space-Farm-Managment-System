@@ -5,6 +5,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.responsemodels.PersonResponse;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -125,10 +126,16 @@ public class PersonServiceImpl implements PersonService {
     }
 
 
-    public Person login(String login, String password) {
+    public PersonResponse login(String login, String password) {
         Optional<Person> personOptional = personDAORepository.findByLogin(login);
         if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         if(!personOptional.get().getPassword().equals(password)) throw new CustomHTTPException("Wrong password", HttpStatus.UNAUTHORIZED);
-        return personOptional.get();
+        return PersonResponse.builder()
+                .id(personOptional.get().getId())
+                .name(personOptional.get().getName())
+                .surname(personOptional.get().getSurname())
+                .role(personOptional.get().getRole())
+                .cultivations(personOptional.get().getCultivations())
+                .build();
     }
 }
