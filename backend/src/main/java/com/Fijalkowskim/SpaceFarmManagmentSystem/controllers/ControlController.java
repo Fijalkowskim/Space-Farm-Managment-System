@@ -23,7 +23,7 @@ public class ControlController {
     @Autowired
     public ControlController(ControlServiceImpl controlService) {this.controlService = controlService;}
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Page<Control>> getControls(@RequestParam(name = "page", defaultValue = "0") int page,
                                      @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {
         PageRequest pageRequest = PageRequest.of(page, pageSize);

@@ -19,7 +19,7 @@ public class MeasuredValueController {
     @Autowired
     public MeasuredValueController(MeasuredValueServiceImpl measuredValueService) {this.measuredValueService = measuredValueService;}
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<Page<MeasuredValue>> getMeasuredValues(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {

@@ -18,7 +18,7 @@ public class ReadingController {
     public ReadingController(ReadingServiceImpl readingService) {
         this.readingService = readingService;
     }
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Reading> getReadings(@RequestParam(name = "page", defaultValue = "0") int page,
                                      @RequestParam(name = "pageSize", defaultValue = "20") int pageSize){
         PageRequest pageRequest = PageRequest.of(page, pageSize);

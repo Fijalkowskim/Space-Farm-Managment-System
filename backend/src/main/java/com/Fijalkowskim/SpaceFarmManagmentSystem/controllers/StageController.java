@@ -23,7 +23,7 @@ public class StageController {
         this.stageService = stageService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Stage> getStages(@RequestParam(name = "page", defaultValue = "0") int page,
                                  @RequestParam(name = "pageSize", defaultValue = "20") int pageSize){
         PageRequest pageRequest = PageRequest.of(page, pageSize);

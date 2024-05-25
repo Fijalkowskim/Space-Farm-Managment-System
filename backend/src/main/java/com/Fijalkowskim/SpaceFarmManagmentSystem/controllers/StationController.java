@@ -21,7 +21,7 @@ public class StationController {
     public StationController(StationServiceImpl stationService){
         this.stationService = stationService;
     }
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Station> getStations(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {

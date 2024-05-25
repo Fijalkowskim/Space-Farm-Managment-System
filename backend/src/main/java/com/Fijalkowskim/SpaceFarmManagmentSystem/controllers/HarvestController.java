@@ -19,7 +19,7 @@ public class HarvestController {
         this.harvestService = harvestService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Harvest> getHarvests(@RequestParam(name = "page", defaultValue = "0") int page,
                                      @RequestParam(name = "pageSize", defaultValue = "20") int pageSize){
         PageRequest pageRequest = PageRequest.of(page, pageSize);

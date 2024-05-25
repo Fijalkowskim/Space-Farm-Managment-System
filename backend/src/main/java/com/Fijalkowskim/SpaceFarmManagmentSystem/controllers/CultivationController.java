@@ -28,7 +28,7 @@ public class CultivationController {
         this.cultivationService = cultivationService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Cultivation> getAllCultivations(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {

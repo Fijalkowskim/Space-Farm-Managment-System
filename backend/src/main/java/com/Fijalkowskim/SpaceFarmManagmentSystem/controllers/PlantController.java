@@ -20,7 +20,7 @@ public class PlantController {
         this.plantService = plantService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public Page<Plant> getPlants(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "pageSize", defaultValue = "20") int pageSize) throws CustomHTTPException {
