@@ -13,7 +13,6 @@ export function PlantContextProvider({ children }) {
     try {
       const res = await api.get("/plant");
       if (res.data) {
-        console.log(res.data.content);
         return res.data.content;
       }
     } catch (err) {

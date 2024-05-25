@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import api from "../api/api";
 import { exampleWorkers } from "../exampleData/ExampleWorkers";
-import { TbRuler } from "react-icons/tb";
+import { CookiesProvider, useCookies } from "react-cookie";
 
 const PersonContext = React.createContext();
 
@@ -13,8 +13,7 @@ export function PersonContextProvider({ children }) {
   const [userData, setUserData] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const logIn = async (email, password) => {
-    setIsLoggedIn(true);
-    setUserData(exampleWorkers[0]);
+    setUserDataAfterLogin(exampleWorkers[0]);
     return true;
     try {
       const res = await api.get("/person/login");
@@ -53,10 +52,30 @@ export function PersonContextProvider({ children }) {
     }
     return undefined;
   };
+  const loginFromCookies = async () => {
+    const storedUserData = userCookie["user"];
+    if (storedUserData) {
+      setUserDataAfterLogin(storedUserData);
+      return await logIn(storedUserData.email, storedUserData.password);
+    }
+    return false;
+  };
 
+  const setUserDataAfterLogin = (newUserData) => {
+    setIsLoggedIn(true);
+    setUserData(newUserData);
+  };
   return (
     <PersonContext.Provider
-      value={{ userData, isLoggedIn, logIn, logOut, getPersons, getPerson }}
+      value={{
+        userData,
+        isLoggedIn,
+        logIn,
+        logOut,
+        getPersons,
+        getPerson,
+        loginFromCookies,
+      }}
     >
       {children}
     </PersonContext.Provider>

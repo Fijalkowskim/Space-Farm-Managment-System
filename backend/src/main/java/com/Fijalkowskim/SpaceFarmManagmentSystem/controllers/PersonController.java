@@ -125,8 +125,8 @@ public class PersonController {
             @RequestParam(name = "newPassword") String newPassword) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(personService.changePassword(id, newPassword));
     }
-    @GetMapping("/login/")
-    public ResponseEntity<?> login(
+    @GetMapping("/login")
+    public ResponseEntity<Person> login(
             @RequestParam(name = "login") String login,
             @RequestParam(name = "password") String password) throws CustomHTTPException{
             return ResponseEntity.status(HttpStatus.OK).body(personService.login(login, password));
