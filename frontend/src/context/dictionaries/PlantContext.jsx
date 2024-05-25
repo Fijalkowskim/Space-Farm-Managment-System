@@ -11,8 +11,10 @@ export function PlantContextProvider({ children }) {
   //************ Get methods ************
   const getPlants = async () => {
     try {
-      const res = await api.get("/plants");
+      const res = await api.get("/plant");
       if (res.data) {
+        console.log(res.data.content);
+        return res.data.content;
       }
     } catch (err) {
       console.log(err);
@@ -22,6 +24,7 @@ export function PlantContextProvider({ children }) {
     try {
       const res = await api.get(`/plant/${id}`);
       if (res.data) {
+        return res.data;
       }
     } catch (err) {
       console.log(err);

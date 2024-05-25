@@ -34,7 +34,9 @@ function VertivalScrollableDisplay({
       </div>
       {loading === true ? (
         <LoadingBar variant={"parent"} />
-      ) : entries !== undefined && entries.length > 0 ? (
+      ) : entries !== undefined &&
+        entries.length !== undefined &&
+        entries.length > 0 ? (
         entries.map((entry) => (
           <DisplayCard
             key={entry.id}

@@ -12,7 +12,7 @@ export function StationContextProvider({ children }) {
   //************ Get methods ************
   const getStations = async () => {
     try {
-      const res = await api.get("/station/");
+      const res = await api.get("/station");
       if (res.data) {
         return res.data.content;
       }
