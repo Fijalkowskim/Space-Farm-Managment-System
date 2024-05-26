@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CultivationForm from "../components/dataCreation/CultivationForm";
-import { ObjectCreationData } from "../models/dataCreation/ObjectCreationData";
-import { CultivationCreateRequest } from "../models/requestmodels/CultivationCreateRequest";
-import { useCultivationContext } from "../context/cultivations/CultivationContext";
-import { useDataCreationContext } from "../context/general/DataCreationContext";
 import PageWrapper from "./PageWrapper";
 
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
-  const { startCreatingObject } = useDataCreationContext();
-
-  const { addCultivation } = useCultivationContext();
 
   const [pageContent, setPageContent] = useState({
     content: undefined,
@@ -26,12 +19,6 @@ function DataCreationFormWrapper() {
           content: <CultivationForm />,
           label: "cultivation",
         });
-        startCreatingObject(
-          new CultivationCreateRequest(),
-          addCultivation,
-          "/",
-          "cultivation"
-        );
         break;
       default:
         navigate("/");

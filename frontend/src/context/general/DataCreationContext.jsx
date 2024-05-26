@@ -1,8 +1,16 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 import { api } from "../../api/api";
 import { usePopupContext } from "./PopupContext";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ObjectCreationData } from "../../models/dataCreation/ObjectCreationData";
+import { CultivationCreateRequest } from "../../models/requestmodels/CultivationCreateRequest";
+import { useCultivationContext } from "../cultivations/CultivationContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -12,7 +20,11 @@ export function useDataCreationContext() {
 export function DataCreationContextProvider({ children }) {
   const { addMessage } = usePopupContext();
   const [objectCreationQueue, setObjectCreationQueue] = useState([]);
-  const { navigate } = useNavigate();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const { addCultivation } = useCultivationContext();
+
   // Method for starting new obejct creation process
   const startCreatingObject = (
     objectBody,
@@ -29,6 +41,19 @@ export function DataCreationContextProvider({ children }) {
       ),
       ...prev,
     ]);
+  };
+  // Simplified Method for starting new obejct creation process
+  const startCreatingObjectByType = (dataType) => {
+    switch (dataType.toLowerCase()) {
+      case "cultivation":
+        startCreatingObject(
+          new CultivationCreateRequest(),
+          addCultivation,
+          "/",
+          "cultivation"
+        );
+        break;
+    }
   };
   // Method for finishing obejct creation process
   const finishCreatingObject = async () => {
@@ -77,10 +102,16 @@ export function DataCreationContextProvider({ children }) {
       })
     );
   };
+  const clearQueue = () => {
+    setObjectCreationQueue([]);
+  };
+  useEffect(() => {
+    if (!location.pathname.includes("/create/")) clearQueue();
+  }, [location]);
   return (
     <DataCreationContext.Provider
       value={{
-        startCreatingObject,
+        startCreatingObjectByType,
         finishCreatingObject,
         getCurrentObject,
         setCurrentObject,

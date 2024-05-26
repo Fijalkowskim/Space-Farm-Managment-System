@@ -5,6 +5,7 @@ import LoadingBar from "../general/LoadingBar";
 import { usePersonContext } from "../../context/PersonContext";
 import CustomButton from "../general/CustomButton";
 import { NavLink } from "react-router-dom";
+import DataCreationButton from "../dataCreation/DataCreationButton";
 function VertivalScrollableDisplay({
   header,
   entries,
@@ -29,11 +30,7 @@ function VertivalScrollableDisplay({
       <div className="w-full flex flex-row items-center justify-center gap-4 flex-shrink-0 -mt-2">
         {(disableCreateButton === undefined ||
           disableCreateButton === false) && (
-          <NavLink className={"w-full"} to={`create/${contentType}`}>
-            <CustomButton className={"w-full text-base"}>
-              Create new
-            </CustomButton>
-          </NavLink>
+          <DataCreationButton dataType={contentType} />
         )}
         {detailsPageDisplay === true && (
           <CustomButton className={"w-full text-base"} variant={"action"}>
