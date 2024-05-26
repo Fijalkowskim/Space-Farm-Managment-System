@@ -62,8 +62,30 @@ export function DataCreationContextProvider({ children }) {
       );
     }
   };
+  //Method returning currently created object
+  const getCurrentObject = () => {
+    return objectCreationQueue.length <= 0 ? undefined : objectCreationQueue[0];
+  };
+  //Method seting currently created object
+  const setCurrentObject = (newObject) => {
+    if (objectCreationQueue.length <= 0) return;
+    setObjectCreationQueue((prev) =>
+      prev.map((objectCreationData, i) => {
+        return i === 0
+          ? { ...objectCreationData, object: newObject }
+          : objectCreationData;
+      })
+    );
+  };
   return (
-    <DataCreationContext.Provider value={{}}>
+    <DataCreationContext.Provider
+      value={{
+        startCreatingObject,
+        finishCreatingObject,
+        getCurrentObject,
+        setCurrentObject,
+      }}
+    >
       {children}
     </DataCreationContext.Provider>
   );
