@@ -18,11 +18,11 @@ import { DataCreationContextProvider } from "../general/DataCreationContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
-      <DataCreationContextProvider>
-        <CultivationDetailContextProvider>
-          <StationContextProvider>
-            <SettingsContextProvider>
-              <PersonContextProvider>
+      <PersonContextProvider>
+        <DataCreationContextProvider>
+          <CultivationDetailContextProvider>
+            <StationContextProvider>
+              <SettingsContextProvider>
                 <CultivationContextProvider>
                   <PlantContextProvider>
                     <StageContextProvider>
@@ -44,11 +44,11 @@ function ContextProvidersWrapper({ children }) {
                     </StageContextProvider>
                   </PlantContextProvider>
                 </CultivationContextProvider>
-              </PersonContextProvider>
-            </SettingsContextProvider>
-          </StationContextProvider>
-        </CultivationDetailContextProvider>
-      </DataCreationContextProvider>
+              </SettingsContextProvider>
+            </StationContextProvider>
+          </CultivationDetailContextProvider>
+        </DataCreationContextProvider>
+      </PersonContextProvider>
     </PopupContextProvider>
   );
 }

@@ -14,6 +14,7 @@ export function useCultivationContext() {
 }
 
 export function CultivationContextProvider({ children }) {
+  const { userData } = usePersonContext();
   const { editedCultivation, setEditedCultivation } =
     useCultivationDetailsContext();
   //************ Get methods ************
@@ -74,12 +75,29 @@ export function CultivationContextProvider({ children }) {
     return exampleCultivations;
   };
   //************ Put methods ************
+  const addCultivaiton = async (cultivationRequest) => {
+    if (!userData) return false;
+    try {
+      const res = await api.put(
+        `/cultivation?userId=${userData.id}`,
+        cultivationRequest
+      );
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    setEditedCultivation(undefined);
+    return false;
+  };
+  //************ Post methods ************
   const updateCultivation = async (previousCultivation, newCultivation) => {
     if (previousCultivation.id !== newCultivation.id) return undefined;
     setEditedCultivation(undefined);
     return newCultivation;
     try {
-      const res = await api.put(`/cultivation/${newCultivation.id}`);
+      const res = await api.post(`/cultivation/${newCultivation.id}`);
       if (res.data) {
         previousCultivation = newCultivation;
         return newCultivation;
@@ -97,7 +115,7 @@ export function CultivationContextProvider({ children }) {
         getFinishedCultivations,
         getCultivation,
         getAssignedCultivations,
-
+        addCultivaiton,
         updateCultivation,
       }}
     >
