@@ -23,6 +23,7 @@ function Cultivations() {
           entries={finishedCultivations}
           contentType={"cultivation"}
           loading={isPending}
+          disableCreateButton={true}
         />
       </div>
     </PageWrapper>

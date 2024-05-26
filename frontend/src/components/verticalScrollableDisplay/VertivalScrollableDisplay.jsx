@@ -4,6 +4,7 @@ import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
 import { usePersonContext } from "../../context/PersonContext";
 import CustomButton from "../general/CustomButton";
+import { NavLink } from "react-router-dom";
 function VertivalScrollableDisplay({
   header,
   entries,
@@ -13,6 +14,7 @@ function VertivalScrollableDisplay({
   detailsPageDisplay,
   deleteButtonWorkerTypes,
   removeButtonWorkerTypes,
+  disableCreateButton,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -25,7 +27,14 @@ function VertivalScrollableDisplay({
     >
       <h1 className="">{header}</h1>
       <div className="w-full flex flex-row items-center justify-center gap-4 flex-shrink-0 -mt-2">
-        <CustomButton className={"w-full text-base"}>Create new</CustomButton>
+        {(disableCreateButton === undefined ||
+          disableCreateButton === false) && (
+          <NavLink className={"w-full"} to={`create/${contentType}`}>
+            <CustomButton className={"w-full text-base"}>
+              Create new
+            </CustomButton>
+          </NavLink>
+        )}
         {detailsPageDisplay === true && (
           <CustomButton className={"w-full text-base"} variant={"action"}>
             Add existing

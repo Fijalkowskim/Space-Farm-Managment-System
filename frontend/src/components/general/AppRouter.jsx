@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Children } from "react";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navbar from "../navbar/Navbar";
 import Homepage from "../../pages/Homepage";
@@ -16,10 +16,11 @@ import StationDetails from "../../pages/detailsPages/StationDetails";
 import { usePersonContext } from "../../context/PersonContext";
 import WorkerDetails from "../../pages/detailsPages/WorkerDetails";
 import PlantDetails from "../../pages/detailsPages/PlantDetails";
+import DataCreationFormWrapper from "../../pages/DataCreationFormWrapper";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
-    <BrowserRouter>
+    <>
       {isLoggedIn && <Navbar />}
       <Routes>
         <Route
@@ -34,6 +35,12 @@ function AppRouter() {
         <Route path="/measure-units" element={<MeasureUnits />} />
         <Route path="/stage-types" element={<StageTypes />} />
         <Route path="/cultivation-types" element={<CultivationTypes />} />
+
+        <Route
+          path="/create/:creationType"
+          element={<DataCreationFormWrapper />}
+        />
+
         <Route path="/cultivation/:id" element={<CultivationDetails />} />
         <Route path="/station/:id" element={<StationDetails />} />
         <Route path="/worker/:id" element={<WorkerDetails />} />
@@ -41,7 +48,7 @@ function AppRouter() {
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
