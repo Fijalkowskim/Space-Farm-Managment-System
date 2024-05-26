@@ -8,34 +8,84 @@ export function useHarvestContext() {
 }
 
 export function HarvestContextProvider({ children }) {
+  const [harvests, setHarvests] = useState([]);
+
   //************ Get methods ************
-  const getHarvests = async () => {
-    return;
+   const getHarvests = async () => {
     try {
       const res = await api.get("/harvest");
       if (res.data) {
+        setHarvests(res.data.content);  // Assuming res.data.content contains the list of harvests
+        return res.data.content;
       }
     } catch (err) {
       console.log(err);
     }
+    return [];
   };
-  const getHarvest = async (id) => {
-    return;
-    //return exampleHarvests.find((Harvest) => Harvest.id === id);
 
+  const getHarvest = async (id) => {
     try {
       const res = await api.get(`/harvest/${id}`);
       if (res.data) {
+        return res.data;
       }
     } catch (err) {
       console.log(err);
     }
+    return null;
   };
+
+  const addHarvest = async (harvestRequest) => {
+    try {
+      const res = await api.put("/harvest", harvestRequest);
+      if (res.data) {
+        setHarvests([...harvests, res.data]);
+        return res.data;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return null;
+  };
+
+  const updateHarvest = async (id, harvestRequest) => {
+    try {
+      const res = await api.post(`/harvest/${id}`, harvestRequest);
+      if (res.data) {
+        const updatedHarvests = harvests.map((harvest) =>
+          harvest.id === id ? res.data : harvest
+        );
+        setHarvests(updatedHarvests);
+        return res.data;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return null;
+  };
+
+  const deleteHarvest = async (id) => {
+    try {
+      const res = await api.delete(`/harvest/${id}`);
+      if (res.status === 200) {
+        setHarvests(harvests.filter((harvest) => harvest.id !== id));
+        return true;
+      }
+    } catch (err) {
+      console.log(err);
+    }
+    return false;
+  };
+
   return (
     <HarvestContext.Provider
       value={{
         getHarvests,
         getHarvest,
+        addHarvest,
+        updateHarvest,
+        deleteHarvest,
       }}
     >
       {children}
