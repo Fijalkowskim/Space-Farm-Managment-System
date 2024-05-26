@@ -84,7 +84,7 @@ export function PersonContextProvider({ children }) {
     if (!userData) return false;
     try {
       //todo
-      const res = await api.put(`?userID=${userData.id}`, personCreateRequest);
+      const res = await api.put(`?userID=${userData.id}`);
       if (res.data) {
         return true;
       }

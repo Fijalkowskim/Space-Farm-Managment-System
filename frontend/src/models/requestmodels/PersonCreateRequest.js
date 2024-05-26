@@ -1,8 +1,9 @@
 export class PersonCreateRequest {
-  constructor(id, name, surname, role) {
-    this.id = id;
+  constructor(name, surname, role, login, password) {
     this.name = name;
     this.surname = surname;
     this.role = role;
+    this.login = login;
+    this.password = password;
   }
 }

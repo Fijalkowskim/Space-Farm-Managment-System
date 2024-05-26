@@ -52,7 +52,7 @@ public class CultivationServiceImpl implements CultivationService {
                 .stages(new HashSet<>())
                 .harvests(new HashSet<>())
                 .stations(new HashSet<>())
-                .responsibleWorkers(cultivationRequest.getResponsibleWorkers())
+                .responsibleWorkers(new HashSet<>())
                 .comment(cultivationRequest.getComment())
                 .build();
         return cultivationDAORepository.save(cultivation);
@@ -76,10 +76,10 @@ public class CultivationServiceImpl implements CultivationService {
                 .plannedFinishDate(cultivationRequest.getPlannedFinishDate())
                 .realFinishDate(new Date())
                 .plant(cultivationRequest.getPlant())
-                .stages(new HashSet<>())
-                .harvests(new HashSet<>())
-                .stations(new HashSet<>())
-                .responsibleWorkers(cultivationRequest.getResponsibleWorkers())
+                .stages(oldCultivation.get().getStages())
+                .harvests(oldCultivation.get().getHarvests())
+                .stations(oldCultivation.get().getStations())
+                .responsibleWorkers(oldCultivation.get().getResponsibleWorkers())
                 .comment(cultivationRequest.getComment())
                 .id(oldCultivation.get().getId())
                 .build();

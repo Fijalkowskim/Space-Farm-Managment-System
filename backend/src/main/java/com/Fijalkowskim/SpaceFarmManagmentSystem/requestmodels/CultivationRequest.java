@@ -27,7 +27,7 @@ public class CultivationRequest {
 
     //private Set<Station> stations;
 
-    private Set<Person> responsibleWorkers;
+    //private Set<Person> responsibleWorkers;
 
     private String comment;
 }

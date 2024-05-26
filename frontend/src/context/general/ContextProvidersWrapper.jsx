@@ -14,38 +14,41 @@ import { CultivationTypeContextProvider } from "../dictionaries/CultivationTypeC
 import { MeasureUnitContextProvider } from "../dictionaries/MeasureUnitContext";
 import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
 import { PersonContextProvider } from "../PersonContext";
+import { DataCreationContextProvider } from "../general/DataCreationContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
-      <CultivationDetailContextProvider>
-        <StationContextProvider>
-          <SettingsContextProvider>
-            <PersonContextProvider>
-              <CultivationContextProvider>
-                <PlantContextProvider>
-                  <StageContextProvider>
-                    <ControlContextProvider>
-                      <HarvestContextProvider>
-                        <MeasuredValueContextProvider>
-                          <ReadingContextProvider>
-                            <CultivationTypeContextProvider>
-                              <MeasureUnitContextProvider>
-                                <StageTypeContextProvider>
-                                  {children}
-                                </StageTypeContextProvider>
-                              </MeasureUnitContextProvider>
-                            </CultivationTypeContextProvider>
-                          </ReadingContextProvider>
-                        </MeasuredValueContextProvider>
-                      </HarvestContextProvider>
-                    </ControlContextProvider>
-                  </StageContextProvider>
-                </PlantContextProvider>
-              </CultivationContextProvider>
-            </PersonContextProvider>
-          </SettingsContextProvider>
-        </StationContextProvider>
-      </CultivationDetailContextProvider>
+      <DataCreationContextProvider>
+        <CultivationDetailContextProvider>
+          <StationContextProvider>
+            <SettingsContextProvider>
+              <PersonContextProvider>
+                <CultivationContextProvider>
+                  <PlantContextProvider>
+                    <StageContextProvider>
+                      <ControlContextProvider>
+                        <HarvestContextProvider>
+                          <MeasuredValueContextProvider>
+                            <ReadingContextProvider>
+                              <CultivationTypeContextProvider>
+                                <MeasureUnitContextProvider>
+                                  <StageTypeContextProvider>
+                                    {children}
+                                  </StageTypeContextProvider>
+                                </MeasureUnitContextProvider>
+                              </CultivationTypeContextProvider>
+                            </ReadingContextProvider>
+                          </MeasuredValueContextProvider>
+                        </HarvestContextProvider>
+                      </ControlContextProvider>
+                    </StageContextProvider>
+                  </PlantContextProvider>
+                </CultivationContextProvider>
+              </PersonContextProvider>
+            </SettingsContextProvider>
+          </StationContextProvider>
+        </CultivationDetailContextProvider>
+      </DataCreationContextProvider>
     </PopupContextProvider>
   );
 }

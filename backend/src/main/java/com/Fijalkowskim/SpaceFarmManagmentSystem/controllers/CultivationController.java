@@ -41,7 +41,7 @@ public class CultivationController {
     }
     @PutMapping("")
     public ResponseEntity<Cultivation> addCultivation(
-            @RequestPart("CultivationRequest") CultivationRequest cultivationRequest,
+            @RequestBody CultivationRequest cultivationRequest,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException{
         if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
                 return ResponseEntity.status(HttpStatus.CREATED)
