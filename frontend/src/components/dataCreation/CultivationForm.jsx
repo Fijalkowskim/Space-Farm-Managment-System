@@ -1,7 +1,7 @@
 import React from "react";
 
 function CultivationForm() {
-  return <div>CultivationForm</div>;
+  return <form>CultivationForm</form>;
 }
 
 export default CultivationForm;
