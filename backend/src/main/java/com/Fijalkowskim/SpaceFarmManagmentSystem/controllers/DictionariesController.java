@@ -46,7 +46,7 @@ public class DictionariesController {
     }
     @PutMapping("/cultivation-types/")
     public ResponseEntity<CultivationType> addCultivationType(
-            @RequestPart("CultivationTypeRequest") CultivationTypeRequest cultivationTypeRequest) throws CustomHTTPException{
+            @RequestBody CultivationTypeRequest cultivationTypeRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(cultivationTypeService.addCultivationType(cultivationTypeRequest));
     }
@@ -78,7 +78,7 @@ public class DictionariesController {
 
     @PutMapping("/stage-types/")
     public ResponseEntity<StageType> addStageType(
-            @RequestPart("StageTypeRequest") StageTypeRequest stageTypeRequest) throws CustomHTTPException{
+            @RequestBody StageTypeRequest stageTypeRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(stageTypeService.addStageType(stageTypeRequest));
     }
@@ -112,7 +112,7 @@ public class DictionariesController {
 
     @PutMapping("/measure-units/")
     public ResponseEntity<MeasureUnit> addMeasureUnit(
-            @RequestPart("MeasureUnitRequest") MeasureUnitRequest measureUnitRequest) throws CustomHTTPException{
+            @RequestBody MeasureUnitRequest measureUnitRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(measureUnitService.addMeasureUnit(measureUnitRequest));
     }

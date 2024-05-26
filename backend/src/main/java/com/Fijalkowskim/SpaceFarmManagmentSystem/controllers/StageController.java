@@ -41,11 +41,11 @@ public class StageController {
         return stageService.getControlsByStage(pageRequest, id);
     }
     @PutMapping("")
-    public ResponseEntity<Stage> addStage(@RequestPart("StageRequest") StageRequest stageRequest){
+    public ResponseEntity<Stage> addStage(@RequestBody StageRequest stageRequest){
         return ResponseEntity.status(HttpStatus.CREATED).body(stageService.addStage(stageRequest));
     }
     @PostMapping("/{id}")
-    public ResponseEntity<Stage> updateStage(@PathVariable long id, @RequestPart("StageRequest") StageRequest stageRequest) throws CustomHTTPException{
+    public ResponseEntity<Stage> updateStage(@PathVariable long id, @RequestBody StageRequest stageRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(stageService.updateStage(id, stageRequest));
     }
 

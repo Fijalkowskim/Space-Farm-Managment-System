@@ -38,7 +38,7 @@ public class MeasuredValueController {
     }
     @PutMapping("")
     public ResponseEntity<MeasuredValue> addMeasuredValue(
-            @RequestPart("MeasuredValueRequest") MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
+            @RequestBody MeasuredValueRequest measuredValueRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(measuredValueService.addMeasuredValue(measuredValueRequest));
     }

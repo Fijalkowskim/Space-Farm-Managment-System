@@ -41,7 +41,7 @@ public class PlantController {
     }
     @PutMapping("")
     public ResponseEntity<Plant> addPlant(
-            @RequestPart("PlantRequest") PlantRequest plantRequest) throws CustomHTTPException{
+            @RequestBody PlantRequest plantRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED).body(plantService.addPlant(plantRequest));
     }
 

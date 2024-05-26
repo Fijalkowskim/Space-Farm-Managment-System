@@ -30,11 +30,11 @@ public class HarvestController {
         return ResponseEntity.ok(harvestService.getHarvestById(id));
     }
     @PutMapping("")
-    public ResponseEntity<Harvest> addHarvest(@RequestPart("HarvestRequest") HarvestRequest harvestRequest) throws CustomHTTPException {
+    public ResponseEntity<Harvest> addHarvest(@RequestBody HarvestRequest harvestRequest) throws CustomHTTPException {
         return ResponseEntity.status(HttpStatus.CREATED).body(harvestService.addHarvest(harvestRequest));
     }
     @PostMapping("/{id}")
-    public ResponseEntity<Harvest> updateHarvest(@PathVariable long id, @RequestPart("HarvestRequest") HarvestRequest harvestRequest) throws CustomHTTPException {
+    public ResponseEntity<Harvest> updateHarvest(@PathVariable long id, @RequestBody HarvestRequest harvestRequest) throws CustomHTTPException {
         return ResponseEntity.status(HttpStatus.OK).body(harvestService.updateHarvest(id, harvestRequest));
     }
     @DeleteMapping("/{id}")

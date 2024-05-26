@@ -29,11 +29,11 @@ public class ReadingController {
         return ResponseEntity.ok(readingService.getReadingById(id));
     }
     @PutMapping("")
-    public ResponseEntity<Reading> addReading(@RequestPart("ReadingRequest") ReadingRequest readingRequest) throws CustomHTTPException {
+    public ResponseEntity<Reading> addReading(@RequestBody ReadingRequest readingRequest) throws CustomHTTPException {
         return ResponseEntity.status(HttpStatus.CREATED).body(readingService.addReading(readingRequest));
     }
     @PostMapping("/{id}")
-    public ResponseEntity<Reading> updateReading(@PathVariable long id, @RequestPart ReadingRequest readingRequest) throws CustomHTTPException {
+    public ResponseEntity<Reading> updateReading(@PathVariable long id, @RequestBody ReadingRequest readingRequest) throws CustomHTTPException {
         return ResponseEntity.status(HttpStatus.OK).body(readingService.updateReading(id, readingRequest));
     }
     @DeleteMapping("/{id}")

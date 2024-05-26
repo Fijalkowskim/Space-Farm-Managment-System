@@ -50,7 +50,7 @@ public class ControlController {
     }
 
     @PutMapping("")
-    public ResponseEntity<Control> addControl(@RequestPart("ControlRequest") ControlRequest controlRequest) throws CustomHTTPException{
+    public ResponseEntity<Control> addControl(@RequestBody ControlRequest controlRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.CREATED).body(controlService.addControl(controlRequest));
     }
 
