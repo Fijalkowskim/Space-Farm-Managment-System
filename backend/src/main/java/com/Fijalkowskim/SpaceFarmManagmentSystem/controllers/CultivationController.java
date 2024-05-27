@@ -88,6 +88,11 @@ public class CultivationController {
             @RequestParam(name = "personId") long personId) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.deleteCultivationFromPerson(cultivationId, personId));
     }
+    @GetMapping("/station/") ResponseEntity<Set<Cultivation>> getCultivationsByStationId(
+            @RequestParam(name = "stationId") long stationId
+    ){
+        return ResponseEntity.ok(cultivationService.getCultivationsByStageId(stationId));
+    }
     @PutMapping("/station/") ResponseEntity<Cultivation> addCultivationToStation(
             @RequestParam(name = "cultivationId") long cultivationId,
             @RequestParam(name = "stationId") long stationId
@@ -101,6 +106,4 @@ public class CultivationController {
     ) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.deleteCultivationFromStation(cultivationId, stationId));
     }
-
-
 }

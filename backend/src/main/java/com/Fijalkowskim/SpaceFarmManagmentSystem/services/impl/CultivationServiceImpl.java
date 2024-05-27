@@ -161,4 +161,10 @@ public class CultivationServiceImpl implements CultivationService {
         cultivation.getStations().remove(station);
         return cultivationDAORepository.save(cultivation);
     }
+
+    public Set<Cultivation> getCultivationsByStageId(long stationId) {
+        Optional<Station> stationOptional = stationDAORepository.findById(stationId);
+        if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+        return cultivationDAORepository.findAllByStationId(stationId);
+    }
 }
