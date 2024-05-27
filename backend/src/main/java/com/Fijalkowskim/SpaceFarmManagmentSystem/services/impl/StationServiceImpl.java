@@ -34,12 +34,20 @@ public class StationServiceImpl implements StationService {
     }
 
     public Station addStation() throws CustomHTTPException {
-        Station station = Station.builder().build();
+        Station station = Station.builder()
+                .cultivations(new HashSet<>())
+                .build();
         return stationDAORepository.save(station);
     }
     public void deleteStation(Long id) throws CustomHTTPException {
         Optional<Station> station = stationDAORepository.findById(id);
         if(station.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
         stationDAORepository.delete(station.get());
+    }
+
+    public Station updateStation(long id) throws CustomHTTPException {
+        Optional<Station> station = stationDAORepository.findById(id);
+        if(station.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+        return stationDAORepository.save(station.get());
     }
 }

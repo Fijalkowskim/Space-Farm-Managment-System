@@ -45,9 +45,13 @@ public class StationController {
         }
     }
 
-    //@GetMapping("/")
-    //public ResponseEntity<?> addStation() {
-    //    stationService.addStation();
-    //    return ResponseEntity.ok("Station added successfully.");
-    //}
+    @PutMapping("")
+    public ResponseEntity<Station> addStation() {
+        return ResponseEntity.status(HttpStatus.CREATED).body(stationService.addStation());
+    }
+
+    @PostMapping("/{id}")
+    public ResponseEntity<Station> updateStation(@PathVariable long id) throws CustomHTTPException {
+        return ResponseEntity.status(HttpStatus.OK).body(stationService.updateStation(id));
+    }
 }
