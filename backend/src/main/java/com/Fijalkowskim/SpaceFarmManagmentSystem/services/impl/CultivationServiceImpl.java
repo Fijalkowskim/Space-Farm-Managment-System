@@ -3,8 +3,10 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Station;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +26,13 @@ import java.util.Set;
 public class CultivationServiceImpl implements CultivationService {
     private final CultivationDAORepository cultivationDAORepository;
     private final PersonDAORepository personDAORepository;
+    private final StationDAORepository stationDAORepository;
 
     @Autowired
-    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository) {
+    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository, StationDAORepository stationDAORepository) {
         this.cultivationDAORepository = cultivationDAORepository;
         this.personDAORepository = personDAORepository;
+        this.stationDAORepository = stationDAORepository;
     }
 
     public Page<Cultivation> getCultivations(PageRequest pageRequest){
@@ -130,5 +134,31 @@ public class CultivationServiceImpl implements CultivationService {
         cultivation.getResponsibleWorkers().remove(person);
         cultivationDAORepository.save(cultivation);
         return cultivation;
+    }
+
+    public Cultivation addCultivationToStation(long cultivationId, long stationId) {
+        Optional<Station> stationOptional = stationDAORepository.findById(stationId);
+        if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(cultivationId);
+        if (cultivationOptional.isEmpty()) throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+
+        Station station = stationOptional.get();
+        Cultivation cultivation = cultivationOptional.get();
+        cultivation.getStations().add(station);
+        return cultivationDAORepository.save(cultivation);
+    }
+
+    public Cultivation deleteCultivationFromStation(long cultivationId, long stationId) {
+        Optional<Station> stationOptional = stationDAORepository.findById(stationId);
+        if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(cultivationId);
+        if (cultivationOptional.isEmpty()) throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+
+        Station station = stationOptional.get();
+        Cultivation cultivation = cultivationOptional.get();
+        cultivation.getStations().remove(station);
+        return cultivationDAORepository.save(cultivation);
     }
 }
