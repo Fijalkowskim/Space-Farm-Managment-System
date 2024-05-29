@@ -1,10 +1,18 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
 import { cn } from "../../helpers/helpers";
+import { useNavigate } from "react-router-dom";
 
 function DataCreationRegularInput({ property, label, ...props }) {
-  const { getCurrentObjectProperty, setCurrentObjectProperty } =
-    useDataCreationContext();
+  const {
+    getCurrentObjectProperty,
+    setCurrentObjectProperty,
+    isCreatingObject,
+  } = useDataCreationContext();
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isCreatingObject) navigate("/");
+  }, [isCreatingObject, navigate]);
   return (
     <>
       <lablel htmlFor={property} className="capitalize text-text-50 -mb-2">

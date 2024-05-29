@@ -80,7 +80,8 @@ export function CultivationContextProvider({ children }) {
     try {
       const res = await api.put(
         `/cultivation?userId=${userData.id}`,
-        cultivationRequest
+        cultivationRequest,
+        { headers: { "Content-Type": "text/plain" } }
       );
       if (res.data) {
         return true;

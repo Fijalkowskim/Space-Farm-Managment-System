@@ -71,7 +71,7 @@ export function DataCreationContextProvider({ children }) {
     }
 
     const objectCreationData = objectCreationQueue[0];
-
+    console.log(objectCreationData);
     if (await objectCreationData.createMethod()) {
       addMessage(
         `${
@@ -140,6 +140,9 @@ export function DataCreationContextProvider({ children }) {
   const clearQueue = () => {
     setObjectCreationQueue([]);
   };
+  const isCreatingObject = () => {
+    return objectCreationQueue.length > 0;
+  };
   useEffect(() => {
     if (!location.pathname.includes("/create/")) clearQueue();
   }, [location]);
@@ -152,6 +155,7 @@ export function DataCreationContextProvider({ children }) {
         setCurrentObject,
         setCurrentObjectProperty,
         getCurrentObjectProperty,
+        isCreatingObject,
       }}
     >
       {children}

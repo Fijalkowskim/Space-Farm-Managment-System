@@ -5,6 +5,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.PersonService;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.CultivationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,8 +25,9 @@ public class CultivationController {
     CultivationServiceImpl cultivationService;
     PersonServiceImpl personService;
     @Autowired
-    public CultivationController(CultivationServiceImpl cultivationService) {
+    public CultivationController(CultivationServiceImpl cultivationService, PersonServiceImpl personService) {
         this.cultivationService = cultivationService;
+        this.personService = personService;
     }
 
     @GetMapping("")
