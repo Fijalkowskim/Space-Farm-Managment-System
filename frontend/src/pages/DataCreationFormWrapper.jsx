@@ -32,7 +32,7 @@ function DataCreationFormWrapper() {
       className="flex flex-col items-center justify-start gap-4"
     >
       <form
-        className="flex flex-col gap-4 items-center justify-center w-full max-w-4xl p-2 h-full bg-background-950/80"
+        className="flex flex-col gap-2 items-center justify-center w-full max-w-4xl p-2 h-full bg-background-950/80"
         onSubmit={(e) => {
           e.preventDefault();
           finishCreatingObject();

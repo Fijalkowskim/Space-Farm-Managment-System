@@ -1,7 +1,12 @@
 import React from "react";
+import DataCreationRegularInput from "./DataCreationRegularInput";
 
 function CultivationForm() {
-  return <>CultivationForm</>;
+  return (
+    <>
+      <DataCreationRegularInput property={"comment"} type="text" required />
+    </>
+  );
 }
 
 export default CultivationForm;

@@ -81,8 +81,9 @@ export function DataCreationContextProvider({ children }) {
         "info",
         -1
       );
-
-      if (objectCreationData.navigateAfterCreating !== undefined)
+      if (objectCreationQueue.length > 1) {
+        navigate(`/create/${objectCreationQueue[1].objectType}`);
+      } else if (objectCreationData.navigateAfterCreating !== undefined)
         navigate(objectCreationData.navigateAfterCreating);
 
       setObjectCreationQueue((prev) => (prev.length <= 1 ? [] : prev.slice(1)));
@@ -120,8 +121,12 @@ export function DataCreationContextProvider({ children }) {
     )
       return;
     setObjectCreationQueue((prev) => {
-      prev[0].object[property] = newValue;
-      return prev;
+      return prev.map((item, index) => {
+        if (index === 0) {
+          return { ...item, object: { ...item.object, [property]: newValue } };
+        }
+        return item;
+      });
     });
   };
   //Method returning currently created object property
@@ -129,7 +134,7 @@ export function DataCreationContextProvider({ children }) {
     return objectCreationQueue.length <= 0 ||
       !objectCreationQueue[0].object.hasOwnProperty(property)
       ? undefined
-      : objectCreationQueue[0][property];
+      : objectCreationQueue[0].object[property];
   };
   //Method seting property in currently created object
   const clearQueue = () => {
