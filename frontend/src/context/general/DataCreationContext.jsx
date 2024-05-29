@@ -23,7 +23,7 @@ export function DataCreationContextProvider({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const { addCultivation } = useCultivationContext();
+  const { addCultivaiton } = useCultivationContext();
 
   // Method for starting new obejct creation process
   const startCreatingObject = (
@@ -41,6 +41,14 @@ export function DataCreationContextProvider({ children }) {
       ),
       ...prev,
     ]);
+    console.log(
+      new ObjectCreationData(
+        objectBody,
+        createMethod,
+        navigateAfterCreating,
+        objectType
+      )
+    );
   };
   // Simplified Method for starting new obejct creation process
   const startCreatingObjectByType = (dataType) => {
@@ -48,7 +56,7 @@ export function DataCreationContextProvider({ children }) {
       case "cultivation":
         startCreatingObject(
           new CultivationCreateRequest(),
-          addCultivation,
+          addCultivaiton,
           "/",
           "cultivation"
         );
@@ -58,7 +66,7 @@ export function DataCreationContextProvider({ children }) {
   // Method for finishing obejct creation process
   const finishCreatingObject = async () => {
     if (objectCreationQueue.length <= 0) {
-      addMessage("There is no object to create", "error", -1);
+      addMessage("There is no object to create.", "error", -1);
       return false;
     }
 
@@ -78,10 +86,12 @@ export function DataCreationContextProvider({ children }) {
         navigate(objectCreationData.navigateAfterCreating);
 
       setObjectCreationQueue((prev) => (prev.length <= 1 ? [] : prev.slice(1)));
+
+      return true;
     } else {
       // If couldn't create object
       addMessage(
-        `There was an error while creating ${objectCreationData.objectType.toLowerCase()}`,
+        `There was an error while creating ${objectCreationData.objectType.toLowerCase()}. Check all fields.`,
         "error",
         -1
       );
