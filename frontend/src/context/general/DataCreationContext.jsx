@@ -71,8 +71,7 @@ export function DataCreationContextProvider({ children }) {
     }
 
     const objectCreationData = objectCreationQueue[0];
-    console.log(objectCreationData);
-    if (await objectCreationData.createMethod()) {
+    if (await objectCreationData.createMethod(objectCreationData)) {
       addMessage(
         `${
           objectCreationData.objectType.charAt(0).toUpperCase() +

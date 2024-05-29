@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useDebugValue, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import CultivationForm from "../components/dataCreation/CultivationForm";
 import PageWrapper from "./PageWrapper";
@@ -7,12 +7,16 @@ import CustomButton from "../components/general/CustomButton";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
-  const { finishCreatingObject } = useDataCreationContext();
+  const { finishCreatingObject, isCreatingObject } = useDataCreationContext();
   const [pageContent, setPageContent] = useState({
     content: undefined,
     label: "",
   });
-
+  useEffect(() => {
+    if (!isCreatingObject) {
+      navigate("/");
+    }
+  }, []);
   useEffect(() => {
     switch (creationType.toLowerCase()) {
       case "cultivation":

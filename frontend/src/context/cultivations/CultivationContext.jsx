@@ -76,12 +76,12 @@ export function CultivationContextProvider({ children }) {
   };
   //************ Put methods ************
   const addCultivaiton = async (cultivationRequest) => {
+    console.log(cultivationRequest);
     if (!userData) return false;
     try {
       const res = await api.put(
-        `/cultivation?userId=${userData.id}`,
-        cultivationRequest,
-        { headers: { "Content-Type": "text/plain" } }
+        `/cultivation?userID=${userData.id}`,
+        cultivationRequest
       );
       if (res.data) {
         return true;
