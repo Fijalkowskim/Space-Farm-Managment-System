@@ -102,6 +102,26 @@ export function DataCreationContextProvider({ children }) {
       })
     );
   };
+  //Method seting property in currently created object
+  const setCurrentObjectProperty = (property, newValue) => {
+    if (
+      objectCreationQueue.length <= 0 ||
+      !objectCreationQueue[0].object.hasOwnProperty(property)
+    )
+      return;
+    setObjectCreationQueue((prev) => {
+      prev[0].object[property] = newValue;
+      return prev;
+    });
+  };
+  //Method returning currently created object property
+  const getCurrentObjectProperty = (property) => {
+    return objectCreationQueue.length <= 0 ||
+      !objectCreationQueue[0].object.hasOwnProperty(property)
+      ? undefined
+      : objectCreationQueue[0][property];
+  };
+  //Method seting property in currently created object
   const clearQueue = () => {
     setObjectCreationQueue([]);
   };
@@ -115,6 +135,8 @@ export function DataCreationContextProvider({ children }) {
         finishCreatingObject,
         getCurrentObject,
         setCurrentObject,
+        setCurrentObjectProperty,
+        getCurrentObjectProperty,
       }}
     >
       {children}
