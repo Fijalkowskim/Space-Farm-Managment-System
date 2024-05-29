@@ -42,16 +42,41 @@ public class CultivationController {
         return ResponseEntity.ok(cultivationService.getCultivationById(id));
     }
     @PutMapping("")
-    public ResponseEntity<Cultivation> addCultivation(
+    public ResponseEntity<?> addCultivation(
             @RequestBody CultivationRequest cultivationRequest,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException{
-        if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN || personService.getPersonById(userID).getRole() == WorkerType.MANAGER) {
-                return ResponseEntity.status(HttpStatus.CREATED)
-                        .body(cultivationService.addCultivation(cultivationRequest));
+        if (!(personService.getPersonById(userID).getRole() == WorkerType.ADMIN ||
+                personService.getPersonById(userID).getRole() == WorkerType.MANAGER)) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                    .body("Unauthorized: User does not have permission to perform this action.");
         }
-        else {
-            return (ResponseEntity<Cultivation>) ResponseEntity.status(HttpStatus.UNAUTHORIZED);
+
+        if (cultivationRequest.getStartDate() == null ||
+                cultivationRequest.getStartDate().getYear() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Incorrect start date.");
         }
+
+        if (cultivationRequest.getPlannedFinishDate() == null ||
+                cultivationRequest.getPlannedFinishDate().getYear() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Incorrect finish date.");
+        }
+
+        if (Float.isNaN(cultivationRequest.getArea()) ||
+                cultivationRequest.getArea() <= 0) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Incorrect area.");
+        }
+
+        if (cultivationRequest.getPlant() == null ||
+                cultivationRequest.getPlant().getName().isEmpty()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body("Plant not specified.");
+        }
+
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(cultivationService.addCultivation(cultivationRequest));
     }
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCultivation(@PathVariable long id, @RequestParam(name = "userID") long userID) throws CustomHTTPException {
