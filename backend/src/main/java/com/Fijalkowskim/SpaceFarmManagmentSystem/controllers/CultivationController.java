@@ -57,8 +57,7 @@ public class CultivationController {
                     .body("Incorrect start date.");
         }
 
-        if (cultivationRequest.getPlannedFinishDate() == null ||
-                cultivationRequest.getPlannedFinishDate().getYear() <= 0) {
+        if (cultivationRequest.getPlannedFinishDate() == null || cultivationRequest.getPlannedFinishDate().getDate() <= cultivationRequest.getStartDate().getDate()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body("Incorrect finish date.");
         }
