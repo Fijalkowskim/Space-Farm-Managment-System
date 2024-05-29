@@ -40,7 +40,9 @@ function DataCreationFormWrapper() {
       >
         <h1 className="text-2xl">Creating {pageContent.label.toLowerCase()}</h1>
         {pageContent.content}
-        <CustomButton type="submit">Create</CustomButton>
+        <CustomButton type="submit" className={"mt-4"}>
+          Create
+        </CustomButton>
       </form>
     </PageWrapper>
   );
