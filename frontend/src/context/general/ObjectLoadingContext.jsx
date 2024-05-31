@@ -23,6 +23,7 @@ export function ObjectLoadingContextProvider({ children }) {
 
   const loadObjectsByType = async (dataType) => {
     var loadingMethod;
+    if (dataType === undefined) return;
     switch (dataType.toLowerCase()) {
       case "plant":
         loadingMethod = getPlants;

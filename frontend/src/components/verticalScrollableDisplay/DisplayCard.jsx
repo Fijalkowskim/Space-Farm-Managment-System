@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CultivationCard from "./displayCards/CultivationCard";
 import WorkerCard from "./displayCards/WorkerCard";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -16,15 +16,26 @@ function DisplayCard({
   showDeleteButton,
   showRemoveButton,
   disableNavigation,
-  returnSelectedElementMethod,
+  setSelectedObjects,
+  selectedObjects,
 }) {
   const navigate = useNavigate();
+  const [isSelected, setIsSelected] = useState(false);
+
   return (
     <div
-      className="flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer"
+      className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
+        selectedObjects?.find((obj) => obj.id === data.id)
+          ? "border-2 border-primary-700"
+          : ""
+      }`}
       onClick={() => {
-        if (returnSelectedElementMethod !== undefined) {
-          returnSelectedElementMethod(data);
+        if (setSelectedObjects !== undefined && selectedObjects !== undefined) {
+          setSelectedObjects((prev) =>
+            prev.find((obj) => obj.id === data.id)
+              ? prev.filter((obj) => obj.id !== data.id)
+              : [...prev, data]
+          );
           return;
         }
         if (!disableNavigation) {

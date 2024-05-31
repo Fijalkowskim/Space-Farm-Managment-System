@@ -15,6 +15,7 @@ function DataCrationObjectInput({ objectType, multiselect }) {
         entries={data}
         contentType={"plant"}
         loading={isPending}
+        returnSelectedElementMethod={() => {}}
       />
     </div>
   );

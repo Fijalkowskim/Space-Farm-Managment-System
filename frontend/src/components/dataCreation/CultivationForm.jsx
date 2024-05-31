@@ -5,7 +5,7 @@ import DataCrationObjectInput from "./DataCrationObjectInput";
 function CultivationForm() {
   return (
     <>
-      <DataCrationObjectInput dataType="plant" />
+      <DataCrationObjectInput objectType="plant" multiselect={false} />
       <DataCreationRegularInput
         property={"startDate"}
         label="start date"

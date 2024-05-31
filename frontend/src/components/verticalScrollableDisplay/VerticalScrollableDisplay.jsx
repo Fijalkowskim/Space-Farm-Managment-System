@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
@@ -20,6 +20,7 @@ function VerticalScrollableDisplay({
   returnSelectedElementMethod,
 }) {
   const { userData } = usePersonContext();
+  const [selectedObjects, setSelectedObjects] = useState([]);
   if (!userData) return;
   return (
     <div
@@ -60,7 +61,16 @@ function VerticalScrollableDisplay({
                 userData.role.toLowerCase() === "manager")
             }
             disableNavigation={disableNavigation}
-            returnSelectedElementMethod={returnSelectedElementMethod}
+            setSelectedObjects={
+              returnSelectedElementMethod !== undefined
+                ? setSelectedObjects
+                : undefined
+            }
+            selectedObjects={
+              returnSelectedElementMethod !== undefined
+                ? selectedObjects
+                : undefined
+            }
           />
         ))
       ) : (
