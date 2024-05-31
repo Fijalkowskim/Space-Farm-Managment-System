@@ -14,7 +14,6 @@ function PlantDetails() {
 
   useEffect(() => {
     setCurrentPlant(data);
-    console.log(data);
   }, [data, setCurrentPlant]);
 
   return (

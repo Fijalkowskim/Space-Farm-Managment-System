@@ -18,9 +18,9 @@ function DisplayCard({
   disableNavigation,
   setSelectedObjects,
   selectedObjects,
+  objectSelectionData,
 }) {
   const navigate = useNavigate();
-  const [isSelected, setIsSelected] = useState(false);
 
   return (
     <div
@@ -30,12 +30,22 @@ function DisplayCard({
           : ""
       }`}
       onClick={() => {
-        if (setSelectedObjects !== undefined && selectedObjects !== undefined) {
-          setSelectedObjects((prev) =>
-            prev.find((obj) => obj.id === data.id)
-              ? prev.filter((obj) => obj.id !== data.id)
-              : [...prev, data]
-          );
+        if (
+          setSelectedObjects !== undefined &&
+          selectedObjects !== undefined &&
+          objectSelectionData !== undefined
+        ) {
+          if (objectSelectionData?.multiselect === true) {
+            setSelectedObjects((prev) =>
+              prev.find((obj) => obj.id === data.id)
+                ? prev.filter((obj) => obj.id !== data.id)
+                : [...prev, data]
+            );
+          } else {
+            setSelectedObjects((prev) =>
+              prev.find((obj) => obj.id === data.id) ? [] : [data]
+            );
+          }
           return;
         }
         if (!disableNavigation) {

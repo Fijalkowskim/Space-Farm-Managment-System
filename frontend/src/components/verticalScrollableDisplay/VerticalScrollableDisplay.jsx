@@ -17,7 +17,7 @@ function VerticalScrollableDisplay({
   removeButtonWorkerTypes,
   disableCreateButton,
   disableNavigation,
-  returnSelectedElementMethod,
+  objectSelectionData,
 }) {
   const { userData } = usePersonContext();
   const [selectedObjects, setSelectedObjects] = useState([]);
@@ -61,15 +61,12 @@ function VerticalScrollableDisplay({
                 userData.role.toLowerCase() === "manager")
             }
             disableNavigation={disableNavigation}
+            objectSelectionData={objectSelectionData}
             setSelectedObjects={
-              returnSelectedElementMethod !== undefined
-                ? setSelectedObjects
-                : undefined
+              objectSelectionData !== undefined ? setSelectedObjects : undefined
             }
             selectedObjects={
-              returnSelectedElementMethod !== undefined
-                ? selectedObjects
-                : undefined
+              objectSelectionData !== undefined ? selectedObjects : undefined
             }
           />
         ))
