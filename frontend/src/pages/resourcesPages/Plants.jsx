@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
 import { usePlantContext } from "../../context/dictionaries/PlantContext";
-import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 function Plants() {
   const { getPlants } = usePlantContext();
   const { data, isPending } = useFetchArrayData(getPlants);
   return (
     <PageWrapper secured={true}>
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         className={"max-w-4xl"}
         header="Plants"
         entries={data}

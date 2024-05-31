@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import CultivationCard from "./displayCards/CultivationCard";
 import WorkerCard from "./displayCards/WorkerCard";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import StationCard from "./displayCards/StationCard";
 import CustomButton from "../general/CustomButton";
 import { FaRegTrashAlt } from "react-icons/fa";
@@ -15,11 +15,22 @@ function DisplayCard({
   contentType,
   showDeleteButton,
   showRemoveButton,
+  disableNavigation,
+  returnSelectedElementMethod,
 }) {
+  const navigate = useNavigate();
   return (
-    <NavLink
-      to={data.id ? `/${contentType}/${data.id}` : "/"}
-      className="flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative"
+    <div
+      className="flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer"
+      onClick={() => {
+        if (returnSelectedElementMethod !== undefined) {
+          returnSelectedElementMethod(data);
+          return;
+        }
+        if (!disableNavigation) {
+          navigate(data.id ? `/${contentType}/${data.id}` : "/");
+        }
+      }}
     >
       <div className="flex flex-row items-center flex-wrap justify-between gap-4 w-full">
         {contentType === "cultivation" ? (
@@ -68,7 +79,7 @@ function DisplayCard({
           </CustomButton>
         )}
       </div>
-    </NavLink>
+    </div>
   );
 }
 

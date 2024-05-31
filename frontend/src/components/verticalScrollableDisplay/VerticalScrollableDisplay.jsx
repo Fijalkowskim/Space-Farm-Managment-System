@@ -6,7 +6,7 @@ import { usePersonContext } from "../../context/PersonContext";
 import CustomButton from "../general/CustomButton";
 import { NavLink } from "react-router-dom";
 import DataCreationButton from "../dataCreation/DataCreationButton";
-function VertivalScrollableDisplay({
+function VerticalScrollableDisplay({
   header,
   entries,
   className,
@@ -16,6 +16,8 @@ function VertivalScrollableDisplay({
   deleteButtonWorkerTypes,
   removeButtonWorkerTypes,
   disableCreateButton,
+  disableNavigation,
+  returnSelectedElementMethod,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -57,6 +59,8 @@ function VertivalScrollableDisplay({
               (userData.role.toLowerCase() === "admin" ||
                 userData.role.toLowerCase() === "manager")
             }
+            disableNavigation={disableNavigation}
+            returnSelectedElementMethod={returnSelectedElementMethod}
           />
         ))
       ) : (
@@ -66,4 +70,4 @@ function VertivalScrollableDisplay({
   );
 }
 
-export default VertivalScrollableDisplay;
+export default VerticalScrollableDisplay;

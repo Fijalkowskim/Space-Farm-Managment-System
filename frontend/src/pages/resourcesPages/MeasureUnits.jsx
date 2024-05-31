@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
-import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 import { useMeasureUnitContext } from "../../context/dictionaries/MeasureUnitContext";
 function MeasureUnits() {
@@ -8,7 +8,7 @@ function MeasureUnits() {
   const { data, isPending } = useFetchArrayData(getMeasureUnits);
   return (
     <PageWrapper secured={true}>
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         className={"max-w-4xl"}
         header="Measure Units"
         entries={data}

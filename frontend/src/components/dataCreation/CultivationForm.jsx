@@ -1,9 +1,11 @@
 import React from "react";
 import DataCreationRegularInput from "./DataCreationRegularInput";
+import DataCrationObjectInput from "./DataCrationObjectInput";
 
 function CultivationForm() {
   return (
     <>
+      <DataCrationObjectInput dataType="plant" />
       <DataCreationRegularInput
         property={"startDate"}
         label="start date"

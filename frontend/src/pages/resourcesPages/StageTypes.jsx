@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
 import { usePlantContext } from "../../context/dictionaries/PlantContext";
-import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 import { useStageTypeContext } from "../../context/dictionaries/StageTypeContext";
 function StageTypes() {
@@ -9,7 +9,7 @@ function StageTypes() {
   const { data, isPending } = useFetchArrayData(getStageTypes);
   return (
     <PageWrapper secured={true}>
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         className={"max-w-4xl"}
         header="Stage Types"
         entries={data}

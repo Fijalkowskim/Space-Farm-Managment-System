@@ -1,7 +1,7 @@
 import React from "react";
 import PageWrapper from "./PageWrapper";
 import CustomButton from "../components/general/CustomButton";
-import VertivalScrollableDisplay from "../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { exampleStations } from "../exampleData/ExampleStations";
 import { useStationContext } from "../context/StationContext";
 import { useFetchArrayData } from "../hooks/useFetchArrayData";
@@ -14,7 +14,7 @@ function Stations() {
       className="max-h-[90vh] h-screen min-h-0 overflow-hidden flex flex-col items-center justify-start gap-4 p-4"
     >
       <CustomButton className="text-lg w-44">New station</CustomButton>
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         header={"Stations"}
         entries={data}
         contentType={"station"}

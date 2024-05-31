@@ -1,10 +1,10 @@
 import React from "react";
-import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScrollableDisplay";
 
 function StationCultivationsDisplay({ station }) {
   return (
     <div className="w-full p-2 flex flex-col items-center justify-start bg-background-950/50 h-[30rem] max-w-4xl">
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         header={"Assigned cultivations"}
         entries={station.cultivations}
         contentType={"cultivation"}

@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { useCultivation } from "../../hooks/cultivations/useCultivation";
 import LoadingBar from "../../components/general/LoadingBar";
 import CultivationDetailsHeader from "../../components/cultivations/CultivationDetailsHeader";
-import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useCultivationDetailsContext } from "../../context/cultivations/CultivationDetailsContext";
 import { useLocation } from "react-router-dom";
 import CultivationEditForm from "../../components/cultivations/CultivationEditForm";
@@ -54,28 +54,28 @@ function CultivationDetails() {
           </Modal>
 
           <CultivationDetailsHeader cultivation={currentCultivation} />
-          <VertivalScrollableDisplay
+          <VerticalScrollableDisplay
             entries={currentCultivation.stages}
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
           />
-          <VertivalScrollableDisplay
+          <VerticalScrollableDisplay
             entries={currentCultivation.harvests}
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
           />
-          <VertivalScrollableDisplay
+          <VerticalScrollableDisplay
             entries={currentCultivation.stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
           />
-          <VertivalScrollableDisplay
+          <VerticalScrollableDisplay
             entries={currentCultivation.responsibleWorkers}
             header="ResponsibleWorkers"
             contentType="worker"

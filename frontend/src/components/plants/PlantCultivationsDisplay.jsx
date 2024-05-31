@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScrollableDisplay";
 
 function PlantCultivationsDisplay({ plant }) {
   if (plant === undefined) return;
   return (
     <div className="w-full p-2 flex flex-col items-center justify-start bg-background-950/50 h-[30rem] max-w-4xl">
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         header={"Assigned cultivations"}
         entries={plant.cultivations}
         contentType={"cultivation"}

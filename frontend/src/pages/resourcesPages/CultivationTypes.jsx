@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import PageWrapper from "../PageWrapper";
-import VertivalScrollableDisplay from "../../components/verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 import { useCultivationTypeContext } from "../../context/dictionaries/CultivationTypeContext";
 function CultivationTypes() {
@@ -8,7 +8,7 @@ function CultivationTypes() {
   const { data, isPending } = useFetchArrayData(getCultivationTypes);
   return (
     <PageWrapper secured={true}>
-      <VertivalScrollableDisplay
+      <VerticalScrollableDisplay
         className={"max-w-4xl"}
         header="Cultivation Types"
         entries={data}

@@ -1,12 +1,12 @@
 import React from "react";
 import { usePersonContext } from "../../context/PersonContext";
-import VertivalScrollableDisplay from "../verticalScrollableDisplay/VertivalScrollableDisplay";
+import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useAssignedCultivations } from "../../hooks/cultivations/useAssignedCultivations";
 
 function AssignedCultivationsSection(worker) {
   const { cultivations, isPending } = useAssignedCultivations();
   return (
-    <VertivalScrollableDisplay
+    <VerticalScrollableDisplay
       className={
         "w-full rounded-md shadow-md items-start text-3xl max-h-[40rem] pt-2"
       }

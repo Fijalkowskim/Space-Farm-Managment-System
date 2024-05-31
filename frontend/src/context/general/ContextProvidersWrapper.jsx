@@ -15,6 +15,7 @@ import { MeasureUnitContextProvider } from "../dictionaries/MeasureUnitContext";
 import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
 import { PersonContextProvider } from "../PersonContext";
 import { DataCreationContextProvider } from "../general/DataCreationContext";
+import { ObjectLoadingContextProvider } from "./ObjectLoadingContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <PopupContextProvider>
@@ -33,7 +34,9 @@ function ContextProvidersWrapper({ children }) {
                               <MeasureUnitContextProvider>
                                 <StageTypeContextProvider>
                                   <DataCreationContextProvider>
-                                    {children}
+                                    <ObjectLoadingContextProvider>
+                                      {children}
+                                    </ObjectLoadingContextProvider>
                                   </DataCreationContextProvider>
                                 </StageTypeContextProvider>
                               </MeasureUnitContextProvider>
