@@ -89,7 +89,6 @@ export function CultivationContextProvider({ children }) {
     } catch (err) {
       console.log(err);
     }
-    setEditedCultivation(undefined);
     return false;
   };
   //************ Post methods ************

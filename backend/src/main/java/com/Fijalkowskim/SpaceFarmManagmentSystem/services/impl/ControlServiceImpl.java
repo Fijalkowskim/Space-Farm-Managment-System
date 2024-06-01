@@ -59,7 +59,7 @@ public class ControlServiceImpl implements ControlService {
         Control control = Control.builder()
                 .controlDate(controlRequest.getControlDate())
                 .deadSeedlings(controlRequest.getDeadSeedlings())
-                .readings(controlRequest.getReadings())
+                .readings(new HashSet<>())
                 .stage(stage.get())
                 .build();
         stage.get().getControls().add(control);
