@@ -10,40 +10,48 @@ import StageCard from "./displayCards/StageCard";
 import StageTypeCard from "./displayCards/StageTypeCard";
 import MeasureUnitCard from "./displayCards/MeasureUnitCard";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
+import { useDataCreationContext } from "../../context/general/DataCreationContext";
 function DisplayCard({
   data,
   contentType,
   showDeleteButton,
   showRemoveButton,
   disableNavigation,
-  setSelectedObjects,
-  selectedObjects,
   objectSelectionData,
+  propertyName,
 }) {
   const navigate = useNavigate();
-
+  const { setCurrentObjectProperty, getCurrentObjectProperty } =
+    useDataCreationContext();
   return (
     <div
       className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
-        selectedObjects?.find((obj) => obj.id === data.id)
+        getCurrentObjectProperty(propertyName) === data ||
+        (Array.isArray(getCurrentObjectProperty(propertyName)) &&
+          getCurrentObjectProperty(propertyName).find(
+            (obj) => obj.id === data.id
+          ))
           ? "border-2 border-primary-700"
           : ""
       }`}
       onClick={() => {
-        if (
-          setSelectedObjects !== undefined &&
-          selectedObjects !== undefined &&
-          objectSelectionData !== undefined
-        ) {
+        if (objectSelectionData !== undefined) {
           if (objectSelectionData?.multiselect === true) {
-            setSelectedObjects((prev) =>
-              prev.find((obj) => obj.id === data.id)
-                ? prev.filter((obj) => obj.id !== data.id)
-                : [...prev, data]
-            );
+            const oldProperty = getCurrentObjectProperty(propertyName);
+            if (oldProperty === undefined) {
+              setCurrentObjectProperty(propertyName, [data]);
+            } else {
+              setCurrentObjectProperty(
+                propertyName,
+                oldProperty.find((obj) => obj.id === data.id)
+                  ? oldProperty.filter((obj) => obj.id !== data.id)
+                  : [...oldProperty, data]
+              );
+            }
           } else {
-            setSelectedObjects((prev) =>
-              prev.find((obj) => obj.id === data.id) ? [] : [data]
+            setCurrentObjectProperty(
+              propertyName,
+              getCurrentObjectProperty(propertyName) === data ? undefined : data
             );
           }
           return;

@@ -13,14 +13,13 @@ function VerticalScrollableDisplay({
   contentType,
   loading,
   detailsPageDisplay,
-  deleteButtonWorkerTypes,
-  removeButtonWorkerTypes,
   disableCreateButton,
   disableNavigation,
   objectSelectionData,
+  disableDeleteButton,
+  propertyName,
 }) {
   const { userData } = usePersonContext();
-  const [selectedObjects, setSelectedObjects] = useState([]);
   if (!userData) return;
   return (
     <div
@@ -52,8 +51,9 @@ function VerticalScrollableDisplay({
             data={entry}
             contentType={contentType}
             showDeleteButton={
-              userData.role.toLowerCase() === "admin" ||
-              userData.role.toLowerCase() === "manager"
+              disableDeleteButton !== true &&
+              (userData.role.toLowerCase() === "admin" ||
+                userData.role.toLowerCase() === "manager")
             }
             showRemoveButton={
               detailsPageDisplay &&
@@ -62,12 +62,7 @@ function VerticalScrollableDisplay({
             }
             disableNavigation={disableNavigation}
             objectSelectionData={objectSelectionData}
-            setSelectedObjects={
-              objectSelectionData !== undefined ? setSelectedObjects : undefined
-            }
-            selectedObjects={
-              objectSelectionData !== undefined ? selectedObjects : undefined
-            }
+            propertyName={propertyName}
           />
         ))
       ) : (

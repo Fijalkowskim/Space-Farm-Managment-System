@@ -13,12 +13,14 @@ function DataCrationObjectInput({ objectType, multiselect }) {
     <div>
       <VerticalScrollableDisplay
         className={"h-80 max-w-[26rem] w-screen"}
-        header={"Plants"}
+        header={"Plant"}
         entries={data}
         contentType={"plant"}
         loading={isPending}
         objectSelectionData={new ObjectsSelectionData(onSelect, false)}
         disableNavigation={true}
+        disableDeleteButton={true}
+        propertyName={"plant"}
       />
     </div>
   );

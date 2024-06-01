@@ -135,6 +135,7 @@ export function DataCreationContextProvider({ children }) {
       ? undefined
       : objectCreationQueue[0].object[property];
   };
+
   //Method seting property in currently created object
   const clearQueue = () => {
     setObjectCreationQueue([]);
