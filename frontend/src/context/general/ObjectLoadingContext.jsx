@@ -5,6 +5,7 @@ import { useStationContext } from "../StationContext";
 import { usePersonContext } from "../PersonContext";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContext";
 
 const ObjectLoadingContext = createContext();
 
@@ -20,6 +21,7 @@ export function ObjectLoadingContextProvider({ children }) {
   const { getStations } = useStationContext();
   const { getPersons } = usePersonContext();
   const { getPlants } = usePlantContext();
+  const { getCultivationTypes } = useCultivationTypeContext();
 
   const loadObjectsByType = async (dataType) => {
     var loadingMethod;
@@ -27,6 +29,9 @@ export function ObjectLoadingContextProvider({ children }) {
     switch (dataType.toLowerCase()) {
       case "plant":
         loadingMethod = getPlants;
+        break;
+      case "cultivationtype":
+        loadingMethod = getCultivationTypes;
         break;
       default:
         setIsPending(false);

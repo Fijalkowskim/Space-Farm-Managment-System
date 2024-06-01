@@ -1,19 +1,14 @@
 import React, { useEffect } from "react";
 import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScrollableDisplay";
-import { useObjectLoadingContext } from "../../context/general/ObjectLoadingContext";
-import { ObjectsSelectionData } from "../../models/dataCreation/ObjectsSelectionData";
+import { useLoadByType } from "../../hooks/useLoadByType";
 
 function DataCrationObjectInput({
-  objectType,
   multiselect,
   header,
   contentType,
   propertyName,
 }) {
-  const { loadObjectsByType, data, isPending } = useObjectLoadingContext();
-  useEffect(() => {
-    loadObjectsByType(objectType);
-  }, []);
+  const { data, isPending } = useLoadByType(contentType);
   return (
     <div>
       <VerticalScrollableDisplay
