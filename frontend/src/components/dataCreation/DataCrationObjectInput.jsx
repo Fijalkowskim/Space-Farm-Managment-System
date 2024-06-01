@@ -3,24 +3,29 @@ import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScro
 import { useObjectLoadingContext } from "../../context/general/ObjectLoadingContext";
 import { ObjectsSelectionData } from "../../models/dataCreation/ObjectsSelectionData";
 
-function DataCrationObjectInput({ objectType, multiselect }) {
+function DataCrationObjectInput({
+  objectType,
+  multiselect,
+  header,
+  contentType,
+  propertyName,
+}) {
   const { loadObjectsByType, data, isPending } = useObjectLoadingContext();
   useEffect(() => {
     loadObjectsByType(objectType);
   }, []);
-  const onSelect = () => {};
   return (
     <div>
       <VerticalScrollableDisplay
         className={"h-80 max-w-[26rem] w-screen"}
-        header={"Plant"}
+        header={header}
         entries={data}
-        contentType={"plant"}
+        contentType={contentType}
         loading={isPending}
-        objectSelectionData={new ObjectsSelectionData(onSelect, false)}
+        multiselect={multiselect}
         disableNavigation={true}
         disableDeleteButton={true}
-        propertyName={"plant"}
+        propertyName={propertyName}
       />
     </div>
   );

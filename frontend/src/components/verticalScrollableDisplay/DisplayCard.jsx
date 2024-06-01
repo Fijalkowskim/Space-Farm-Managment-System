@@ -17,7 +17,7 @@ function DisplayCard({
   showDeleteButton,
   showRemoveButton,
   disableNavigation,
-  objectSelectionData,
+  multiselect,
   propertyName,
 }) {
   const navigate = useNavigate();
@@ -26,7 +26,8 @@ function DisplayCard({
   return (
     <div
       className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
-        getCurrentObjectProperty(propertyName) === data ||
+        (propertyName !== undefined &&
+          getCurrentObjectProperty(propertyName) === data) ||
         (Array.isArray(getCurrentObjectProperty(propertyName)) &&
           getCurrentObjectProperty(propertyName).find(
             (obj) => obj.id === data.id
@@ -35,8 +36,8 @@ function DisplayCard({
           : ""
       }`}
       onClick={() => {
-        if (objectSelectionData !== undefined) {
-          if (objectSelectionData?.multiselect === true) {
+        if (multiselect !== undefined) {
+          if (multiselect === true) {
             const oldProperty = getCurrentObjectProperty(propertyName);
             if (oldProperty === undefined) {
               setCurrentObjectProperty(propertyName, [data]);

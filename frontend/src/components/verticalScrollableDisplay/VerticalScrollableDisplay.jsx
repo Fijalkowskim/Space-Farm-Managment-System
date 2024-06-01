@@ -15,7 +15,7 @@ function VerticalScrollableDisplay({
   detailsPageDisplay,
   disableCreateButton,
   disableNavigation,
-  objectSelectionData,
+  multiselect,
   disableDeleteButton,
   propertyName,
 }) {
@@ -61,7 +61,7 @@ function VerticalScrollableDisplay({
                 userData.role.toLowerCase() === "manager")
             }
             disableNavigation={disableNavigation}
-            objectSelectionData={objectSelectionData}
+            multiselect={multiselect}
             propertyName={propertyName}
           />
         ))

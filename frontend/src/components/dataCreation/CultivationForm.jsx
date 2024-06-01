@@ -6,7 +6,13 @@ import { ObjectsSelectionData } from "../../models/dataCreation/ObjectsSelection
 function CultivationForm() {
   return (
     <>
-      <DataCrationObjectInput objectType="plant" />
+      <DataCrationObjectInput
+        objectType="plant"
+        multiselect={false}
+        header={"Select plant"}
+        propertyName={"plant"}
+        contentType={"plant"}
+      />
       <DataCreationRegularInput
         property={"startDate"}
         label="start date"
