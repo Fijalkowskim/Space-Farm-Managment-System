@@ -11,6 +11,7 @@ import StageTypeCard from "./displayCards/StageTypeCard";
 import MeasureUnitCard from "./displayCards/MeasureUnitCard";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
+import CultivationTypeCard from "./displayCards/CultivationTypeCard";
 function DisplayCard({
   data,
   contentType,
@@ -82,7 +83,7 @@ function DisplayCard({
         ) : contentType === "measuredUnit" ? (
           <MeasureUnitCard data={data} />
         ) : contentType === "cultivationType" ? (
-          <CultivationCard data={data} />
+          <CultivationTypeCard data={data} />
         ) : null}
       </div>
       <div className="w-10 flex-shrink-0 flex flex-col items-center justify-center gap-2">
