@@ -8,14 +8,11 @@ export function usePlantContext() {
 }
 
 export function PlantContextProvider({ children }) {
-  const [plants, setPlants] = useState([]);
-  const [plant, setPlant] = useState(null);
   //************ Get methods ************
   const getPlants = async () => {
     try {
       const res = await api.get("/plant");
       if (res.data) {
-        setPlants(res.data.content);
         return res.data.content;
       }
     } catch (err) {
@@ -27,7 +24,6 @@ export function PlantContextProvider({ children }) {
     try {
       const res = await api.get(`/plant/${id}`);
       if (res.data) {
-        setPlant(res.data);
         return res.data;
       }
     } catch (err) {
@@ -44,7 +40,6 @@ export function PlantContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setPlants((prevPlants) => [...prevPlants, res.data]);
         return res.data;
       }
     } catch (err) {
@@ -61,9 +56,6 @@ export function PlantContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setPlants((prevPlants) =>
-            prevPlants.map((plant) => (plant.id === id ? res.data : plant))
-        );
         return res.data;
       }
     } catch (err) {
@@ -75,7 +67,6 @@ export function PlantContextProvider({ children }) {
   const deletePlant = async (id) => {
     try {
       await api.delete(`/plant/${id}`);
-      setPlants((prevPlants) => prevPlants.filter((plant) => plant.id !== id));
       return true;
     } catch (err) {
       console.log(err);
@@ -86,14 +77,13 @@ export function PlantContextProvider({ children }) {
   return (
     <PlantContext.Provider
       value={{
-        plant,
-        plants,
         getPlants,
         getPlant,
         addPlant,
         updatePlant,
         deletePlant,
-      }}>
+      }}
+    >
       {children}
     </PlantContext.Provider>
   );

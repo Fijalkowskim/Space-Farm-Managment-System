@@ -12,7 +12,9 @@ function DataCrationObjectInput({
   return (
     <div>
       <VerticalScrollableDisplay
-        className={"h-80 max-w-[26rem] w-screen"}
+        className={
+          "h-80 max-w-[26rem] w-screen border-2 border-background-700 mt-2"
+        }
         header={header}
         entries={data}
         contentType={contentType}

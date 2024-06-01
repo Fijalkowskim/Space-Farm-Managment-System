@@ -4,14 +4,12 @@ import CultivationForm from "../components/dataCreation/CultivationForm";
 import PageWrapper from "./PageWrapper";
 import { useDataCreationContext } from "../context/general/DataCreationContext";
 import CustomButton from "../components/general/CustomButton";
+import PlantForm from "../components/dataCreation/PlantForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
   const { finishCreatingObject, isCreatingObject } = useDataCreationContext();
-  const [pageContent, setPageContent] = useState({
-    content: undefined,
-    label: "",
-  });
+  const [pageContent, setPageContent] = useState();
   useEffect(() => {
     if (!isCreatingObject) {
       navigate("/");
@@ -20,10 +18,10 @@ function DataCreationFormWrapper() {
   useEffect(() => {
     switch (creationType.toLowerCase()) {
       case "cultivation":
-        setPageContent({
-          content: <CultivationForm />,
-          label: "cultivation",
-        });
+        setPageContent(<CultivationForm />);
+        break;
+      case "plant":
+        setPageContent(<PlantForm />);
         break;
       default:
         navigate("/");
@@ -42,8 +40,8 @@ function DataCreationFormWrapper() {
           finishCreatingObject();
         }}
       >
-        <h1 className="text-2xl">Creating {pageContent.label.toLowerCase()}</h1>
-        {pageContent.content}
+        <h1 className="text-2xl">Creating {creationType.toLowerCase()}</h1>
+        {pageContent}
         <CustomButton type="submit" className={"mt-4"}>
           Create
         </CustomButton>

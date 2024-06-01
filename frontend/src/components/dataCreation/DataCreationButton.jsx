@@ -6,14 +6,14 @@ import { useDataCreationContext } from "../../context/general/DataCreationContex
 function DataCreationButton({ dataType }) {
   const { startCreatingObjectByType } = useDataCreationContext();
   return (
-    <NavLink className={"w-full"} to={`create/${dataType}`}>
+    <button className={"w-full"}>
       <CustomButton
         className={"w-full text-base"}
         onClick={() => startCreatingObjectByType(dataType)}
       >
         Create new
       </CustomButton>
-    </NavLink>
+    </button>
   );
 }
 

@@ -11,6 +11,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ObjectCreationData } from "../../models/dataCreation/ObjectCreationData";
 import { CultivationCreateRequest } from "../../models/requestmodels/CultivationCreateRequest";
 import { useCultivationContext } from "../cultivations/CultivationContext";
+import { PlantCreateRequest } from "../../models/requestmodels/PlantCreateRequest";
+import { usePlantContext } from "../dictionaries/PlantContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -24,6 +26,7 @@ export function DataCreationContextProvider({ children }) {
   const location = useLocation();
 
   const { addCultivaiton } = useCultivationContext();
+  const { addPlant } = usePlantContext();
 
   // Method for starting new obejct creation process
   const startCreatingObject = (
@@ -41,14 +44,7 @@ export function DataCreationContextProvider({ children }) {
       ),
       ...prev,
     ]);
-    console.log(
-      new ObjectCreationData(
-        objectBody,
-        createMethod,
-        navigateAfterCreating,
-        objectType
-      )
-    );
+    navigate(`/create/${objectType.toLowerCase()}`);
   };
   // Simplified Method for starting new obejct creation process
   const startCreatingObjectByType = (dataType) => {
@@ -61,6 +57,9 @@ export function DataCreationContextProvider({ children }) {
           "cultivation"
         );
         break;
+      case "plant":
+        startCreatingObject(new PlantCreateRequest(), addPlant, "/", "plant");
+        break;
     }
   };
   // Method for finishing obejct creation process
@@ -71,7 +70,7 @@ export function DataCreationContextProvider({ children }) {
     }
 
     const objectCreationData = objectCreationQueue[0];
-    if (await objectCreationData.createMethod(objectCreationData)) {
+    if (await objectCreationData.createMethod(objectCreationData.object)) {
       addMessage(
         `${
           objectCreationData.objectType.charAt(0).toUpperCase() +
