@@ -1,6 +1,6 @@
 import React from "react";
-import DataCreationRegularInput from "./DataCreationRegularInput";
-import DataCrationObjectInput from "./DataCrationObjectInput";
+import DataCreationRegularInput from "../DataCreationRegularInput";
+import DataCrationObjectInput from "../DataCrationObjectInput";
 
 function CultivationForm() {
   return (
@@ -21,13 +21,13 @@ function CultivationForm() {
       <DataCreationRegularInput property={"comment"} type="text" />
       <DataCrationObjectInput
         multiselect={false}
-        header={"Select plant"}
+        header={"Plant"}
         propertyName={"plant"}
         contentType={"plant"}
       />
       <DataCrationObjectInput
         multiselect={false}
-        header={"Select cultivation type"}
+        header={"Cultivation type"}
         propertyName={"type"}
         contentType={"cultivationType"}
       />

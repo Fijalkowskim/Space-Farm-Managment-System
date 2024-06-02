@@ -1,11 +1,11 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import CultivationForm from "../components/dataCreation/CultivationForm";
+import CultivationForm from "../components/dataCreation/forms/CultivationForm";
 import PageWrapper from "./PageWrapper";
 import { useDataCreationContext } from "../context/general/DataCreationContext";
 import CustomButton from "../components/general/CustomButton";
-import PlantForm from "../components/dataCreation/PlantForm";
-import StageForm from "../components/dataCreation/StageForm";
+import PlantForm from "../components/dataCreation/forms/PlantForm";
+import StageForm from "../components/dataCreation/forms/StageForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
