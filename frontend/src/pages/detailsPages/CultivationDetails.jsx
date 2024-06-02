@@ -60,6 +60,9 @@ function CultivationDetails() {
             contentType="stage"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
+            creationArgumentsFromParent={[
+              { property: "cultivationId", value: currentCultivation.id },
+            ]}
           />
           <VerticalScrollableDisplay
             entries={currentCultivation.harvests}

@@ -1,4 +1,4 @@
-export class CultivationCreateRequest {
+export class CultivationRequest {
   constructor(
     startDate = new Date(),
     plannedFinishDate = undefined,

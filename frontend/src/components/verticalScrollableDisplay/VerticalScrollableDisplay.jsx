@@ -18,6 +18,7 @@ function VerticalScrollableDisplay({
   multiselect,
   disableDeleteButton,
   propertyName,
+  creationArgumentsFromParent,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -32,7 +33,10 @@ function VerticalScrollableDisplay({
       <div className="w-full flex flex-row items-center justify-center gap-4 flex-shrink-0 -mt-2">
         {(disableCreateButton === undefined ||
           disableCreateButton === false) && (
-          <DataCreationButton dataType={contentType} />
+          <DataCreationButton
+            dataType={contentType}
+            argumentsFromParent={creationArgumentsFromParent}
+          />
         )}
         {detailsPageDisplay === true && (
           <CustomButton className={"w-full text-base"} variant={"action"}>
