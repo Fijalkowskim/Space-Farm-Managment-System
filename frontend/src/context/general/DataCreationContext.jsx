@@ -15,6 +15,7 @@ import { PlantRequest } from "../../models/requestmodels/PlantRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { useStageContext } from "../StageContext";
+import { useStageTypeContext } from "../dictionaries/StageTypeContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -26,10 +27,12 @@ export function DataCreationContextProvider({ children }) {
   const [objectCreationQueue, setObjectCreationQueue] = useState([]);
   const navigate = useNavigate();
   const location = useLocation();
+  const [isLoading, setIsLoading] = useState(false);
 
   const { addCultivaiton } = useCultivationContext();
   const { addPlant } = usePlantContext();
   const { addStage } = useStageContext();
+  const { addStageType } = useStageTypeContext();
 
   // Method for starting new obejct creation process
   const startCreatingObject = (
@@ -102,7 +105,7 @@ export function DataCreationContextProvider({ children }) {
       addMessage("There is no object to create.", "error", -1);
       return false;
     }
-
+    setIsLoading(true);
     const objectCreationData = objectCreationQueue[0];
     if (await objectCreationData.createMethod(objectCreationData.object)) {
       addMessage(
@@ -119,9 +122,10 @@ export function DataCreationContextProvider({ children }) {
         navigate(objectCreationData.navigateAfterCreating);
 
       setObjectCreationQueue((prev) => (prev.length <= 1 ? [] : prev.slice(1)));
-
+      setIsLoading(false);
       return true;
     } else {
+      setIsLoading(false);
       // If couldn't create object
       addMessage(
         `There was an error while creating ${objectCreationData.objectType.toLowerCase()}. Check all fields.`,
@@ -212,6 +216,7 @@ export function DataCreationContextProvider({ children }) {
         setCurrentObjectProperty,
         getCurrentObjectProperty,
         isCreatingObject,
+        isLoading,
       }}
     >
       {children}

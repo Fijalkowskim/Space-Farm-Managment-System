@@ -9,15 +9,11 @@ export function useStageContext() {
 }
 
 export function StageContextProvider({ children }) {
-  const [stages, setStages] = useState(exampleStages);
-  const [stage, setStage] = useState(null);
-
   //************ Get methods ************
   const getStages = async () => {
     try {
       const res = await api.get("/stage");
       if (res.data) {
-        setStages(res.data.content); // Assuming res.data.content contains the list of stages
         return res.data.content;
       }
     } catch (err) {
@@ -30,7 +26,6 @@ export function StageContextProvider({ children }) {
     try {
       const res = await api.get(`/stage/${id}`);
       if (res.data) {
-        setStage(res.data);
         return res.data;
       }
     } catch (err) {
@@ -47,7 +42,6 @@ export function StageContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setStages((prevStages) => [...prevStages, res.data]);
         return res.data;
       }
     } catch (err) {
@@ -64,9 +58,6 @@ export function StageContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setStages((prevStages) =>
-          prevStages.map((stage) => (stage.id === id ? res.data : stage))
-        );
         return res.data;
       }
     } catch (err) {
@@ -78,7 +69,6 @@ export function StageContextProvider({ children }) {
   const deleteStage = async (id) => {
     try {
       await api.delete(`/stage/${id}`);
-      setStages((prevStages) => prevStages.filter((stage) => stage.id !== id));
       return true;
     } catch (err) {
       console.log(err);
@@ -89,8 +79,6 @@ export function StageContextProvider({ children }) {
   return (
     <StageContext.Provider
       value={{
-        stages,
-        stage,
         getStages,
         getStage,
         addStage,
