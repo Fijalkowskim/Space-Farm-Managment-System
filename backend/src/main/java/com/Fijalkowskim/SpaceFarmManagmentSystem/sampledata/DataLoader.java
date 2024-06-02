@@ -114,8 +114,15 @@ public class DataLoader implements ApplicationRunner {
                 8f,
                 new java.sql.Timestamp(Timestamp.valueOf("2023-01-20 08:00:00").getTime()), // Convert to Timestamp
                 new java.sql.Timestamp(Timestamp.valueOf("2023-02-01 08:00:00").getTime()), // Convert to Timestamp
-                plantDAORepository.findByIdWithEagerLoading(2L)
-        ));
+                plantDAORepository.findByIdWithEagerLoading(2L)));
+        cultivationDAORepository.save(new Cultivation(
+                3L,
+                new java.sql.Timestamp(Timestamp.valueOf("2024-05-01 08:00:00").getTime()), // Convert to Timestamp
+                cultivationTypeDAORepository.findByIdWithEagerLoading(2L),
+                8f,
+                new java.sql.Timestamp(Timestamp.valueOf("2024-07-20 08:00:00").getTime()), // Convert to Timestamp
+                null, // Convert to Timestamp
+                plantDAORepository.findByIdWithEagerLoading(2L)));
     }
 
     private void insertPersonData() {

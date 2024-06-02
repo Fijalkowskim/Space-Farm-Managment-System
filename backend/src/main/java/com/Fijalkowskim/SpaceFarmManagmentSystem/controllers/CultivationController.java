@@ -41,6 +41,20 @@ public class CultivationController {
     public ResponseEntity<Cultivation> getCultivationById(@PathVariable long id) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.getCultivationById(id));
     }
+
+    @GetMapping("/active/")
+    public ResponseEntity<Set<Cultivation>> getActiveCultivations() {
+        return ResponseEntity.ok(cultivationService.getActiveCultivations());
+    }
+    @GetMapping("/finished/")
+    public ResponseEntity<Set<Cultivation>> getFinishedCultivations() {
+        return ResponseEntity.ok(cultivationService.getFinishedCultivations());
+    }
+    @PostMapping("/active/{id}")
+    public ResponseEntity<Cultivation> setCultivationFinishDate(@PathVariable Long id, @RequestParam String realFinishDate) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.setCultivationFinishDate(id, realFinishDate));
+    }
+
     @PutMapping("")
     public ResponseEntity<?> addCultivation(
             @RequestBody CultivationRequest cultivationRequest,

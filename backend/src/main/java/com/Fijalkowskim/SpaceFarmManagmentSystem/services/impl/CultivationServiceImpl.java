@@ -16,6 +16,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeParseException;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Optional;
@@ -166,5 +169,33 @@ public class CultivationServiceImpl implements CultivationService {
         Optional<Station> stationOptional = stationDAORepository.findById(stationId);
         if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
         return cultivationDAORepository.findAllByStationId(stationId);
+    }
+
+    public Set<Cultivation> getActiveCultivations() {
+        return cultivationDAORepository.findAllActiveCultivations();
+    }
+
+    public Set<Cultivation> getFinishedCultivations() {
+        return cultivationDAORepository.findAllFinishedCultivations();
+    }
+
+    public Cultivation setCultivationFinishDate(long id, String realFinishDate) {
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(id);
+        if(cultivationOptional.isEmpty()){
+            throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        }
+        Cultivation cultivation = cultivationOptional.get();
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date finishDate = dateFormat.parse(realFinishDate);
+            if (finishDate.before(cultivation.getStartDate())) {
+                throw new CustomHTTPException("Finish date must be later than start date", HttpStatus.BAD_REQUEST);
+            }
+            cultivation.setRealFinishDate(finishDate);
+            cultivationDAORepository.save(cultivation);
+            return cultivation;
+        } catch (ParseException e) {
+            throw new CustomHTTPException("Date parse exception", HttpStatus.NOT_FOUND);
+        }
     }
 }
