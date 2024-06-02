@@ -9,9 +9,9 @@ import { api } from "../../api/api";
 import { usePopupContext } from "./PopupContext";
 import { useLocation, useNavigate } from "react-router-dom";
 import { ObjectCreationData } from "../../models/dataCreation/ObjectCreationData";
-import { CultivationCreateRequest } from "../../models/requestmodels/CultivationCreateRequest";
+import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
 import { useCultivationContext } from "../cultivations/CultivationContext";
-import { PlantCreateRequest } from "../../models/requestmodels/PlantCreateRequest";
+import { PlantRequest } from "../../models/requestmodels/PlantRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { useStageContext } from "../StageContext";
@@ -64,7 +64,7 @@ export function DataCreationContextProvider({ children }) {
     switch (dataType.toLowerCase()) {
       case "cultivation":
         startCreatingObject(
-          new CultivationCreateRequest(),
+          new CultivationRequest(),
           addCultivaiton,
           "/",
           "cultivation",
@@ -73,7 +73,7 @@ export function DataCreationContextProvider({ children }) {
         break;
       case "plant":
         startCreatingObject(
-          new PlantCreateRequest(),
+          new PlantRequest(),
           addPlant,
           "/",
           "plant",
