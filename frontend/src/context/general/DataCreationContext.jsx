@@ -13,6 +13,8 @@ import { CultivationCreateRequest } from "../../models/requestmodels/Cultivation
 import { useCultivationContext } from "../cultivations/CultivationContext";
 import { PlantCreateRequest } from "../../models/requestmodels/PlantCreateRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
+import { StageRequest } from "../../models/requestmodels/StageRequest";
+import { useStageContext } from "../StageContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -27,38 +29,67 @@ export function DataCreationContextProvider({ children }) {
 
   const { addCultivaiton } = useCultivationContext();
   const { addPlant } = usePlantContext();
+  const { addStage } = useStageContext();
 
   // Method for starting new obejct creation process
   const startCreatingObject = (
     objectBody,
     createMethod,
     navigateAfterCreating,
-    objectType
+    objectType,
+    argumentsFromParent
   ) => {
-    setObjectCreationQueue((prev) => [
-      new ObjectCreationData(
-        objectBody,
-        createMethod,
-        navigateAfterCreating,
-        objectType
-      ),
-      ...prev,
-    ]);
+    setObjectCreationQueue((prev) => {
+      var newBody = objectBody;
+      if (argumentsFromParent !== undefined && argumentsFromParent.length > 0) {
+        argumentsFromParent.forEach((obj) => {
+          newBody = setObjectProperty(newBody, obj.property, obj.value);
+        });
+      }
+      return [
+        new ObjectCreationData(
+          newBody,
+          createMethod,
+          navigateAfterCreating,
+          objectType
+        ),
+        ...prev,
+      ];
+    });
+
     navigate(`/create/${objectType.toLowerCase()}`);
   };
   // Simplified Method for starting new obejct creation process
-  const startCreatingObjectByType = (dataType) => {
+  const startCreatingObjectByType = (dataType, argumentsFromParent) => {
     switch (dataType.toLowerCase()) {
       case "cultivation":
         startCreatingObject(
           new CultivationCreateRequest(),
           addCultivaiton,
           "/",
-          "cultivation"
+          "cultivation",
+          argumentsFromParent
         );
         break;
       case "plant":
-        startCreatingObject(new PlantCreateRequest(), addPlant, "/", "plant");
+        startCreatingObject(
+          new PlantCreateRequest(),
+          addPlant,
+          "/",
+          "plant",
+          argumentsFromParent
+        );
+        break;
+      case "stage":
+        startCreatingObject(
+          new StageRequest(),
+          addStage,
+          `/cultivation/${
+            getObjectProperty(argumentsFromParent, "cultivationId") ?? "-1"
+          }`,
+          "stage",
+          argumentsFromParent
+        );
         break;
     }
   };
@@ -110,6 +141,19 @@ export function DataCreationContextProvider({ children }) {
           : objectCreationData;
       })
     );
+  };
+  //Method seting property in given object
+  const setObjectProperty = (object, property, newValue) => {
+    if (object === undefined || !object.hasOwnProperty(property)) return;
+
+    return { ...object, [property]: newValue };
+  };
+  //Method getting property from given object
+  const getObjectProperty = (object, property) => {
+    if (object === undefined || !object.hasOwnProperty(property))
+      return undefined;
+
+    return object[property];
   };
   //Method seting property in currently created object
   const setCurrentObjectProperty = (property, newValue) => {

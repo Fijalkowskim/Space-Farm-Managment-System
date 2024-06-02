@@ -5,6 +5,7 @@ import PageWrapper from "./PageWrapper";
 import { useDataCreationContext } from "../context/general/DataCreationContext";
 import CustomButton from "../components/general/CustomButton";
 import PlantForm from "../components/dataCreation/PlantForm";
+import StageForm from "../components/dataCreation/StageForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -22,6 +23,9 @@ function DataCreationFormWrapper() {
         break;
       case "plant":
         setPageContent(<PlantForm />);
+        break;
+      case "stage":
+        setPageContent(<StageForm />);
         break;
       default:
         navigate("/");
