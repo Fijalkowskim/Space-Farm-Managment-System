@@ -56,6 +56,14 @@ public class ControlServiceImpl implements ControlService {
     public Control addControl(ControlRequest controlRequest) {
         Optional<Stage> stage = stageDAORepository.findById(controlRequest.getStageId());
         if(stage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
+
+        Date today = new Date();
+        Date controlDate = controlRequest.getControlDate();
+
+        if (controlDate.after(today)) {
+            throw new CustomHTTPException("Control date cannot be in the future", HttpStatus.BAD_REQUEST);
+        }
+
         Control control = Control.builder()
                 .controlDate(controlRequest.getControlDate())
                 .deadSeedlings(controlRequest.getDeadSeedlings())
