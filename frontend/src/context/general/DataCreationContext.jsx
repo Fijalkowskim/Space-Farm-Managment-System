@@ -85,7 +85,10 @@ export function DataCreationContextProvider({ children }) {
           new StageRequest(),
           addStage,
           `/cultivation/${
-            getObjectProperty(argumentsFromParent, "cultivationId") ?? "-1"
+            getObjectPropertyValueFromObjectArray(
+              argumentsFromParent,
+              "cultivationId"
+            ) ?? ""
           }`,
           "stage",
           argumentsFromParent
@@ -154,6 +157,16 @@ export function DataCreationContextProvider({ children }) {
       return undefined;
 
     return object[property];
+  };
+  const getObjectPropertyValueFromObjectArray = (array, property) => {
+    if (array === undefined || !Array.isArray(array)) return undefined;
+    var propertyValue;
+    array.forEach((obj) => {
+      if (!obj.hasOwnProperty("property") || !obj.hasOwnProperty("value"))
+        return;
+      if (obj.property === property) propertyValue = obj.value;
+    });
+    return propertyValue;
   };
   //Method seting property in currently created object
   const setCurrentObjectProperty = (property, newValue) => {
