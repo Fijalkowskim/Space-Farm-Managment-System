@@ -10,12 +10,13 @@ function DataCrationObjectInput({
 }) {
   const { data, isPending } = useLoadByType(contentType);
   return (
-    <div>
+    <>
+      <h1 className="mt-2 -mb-1">{header}</h1>
       <VerticalScrollableDisplay
         className={
-          "h-80 max-w-[26rem] w-screen border-2 border-background-700 mt-2"
+          "h-80 max-w-[26rem] w-screen border-2 border-background-700 "
         }
-        header={header}
+        header={""}
         entries={data}
         contentType={contentType}
         loading={isPending}
@@ -24,7 +25,7 @@ function DataCrationObjectInput({
         disableDeleteButton={true}
         propertyName={propertyName}
       />
-    </div>
+    </>
   );
 }
 

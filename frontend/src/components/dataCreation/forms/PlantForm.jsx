@@ -1,5 +1,5 @@
 import React from "react";
-import DataCreationRegularInput from "./DataCreationRegularInput";
+import DataCreationRegularInput from "../DataCreationRegularInput";
 
 function PlantForm() {
   return (

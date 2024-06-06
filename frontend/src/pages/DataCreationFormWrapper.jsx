@@ -1,15 +1,17 @@
 import React, { useDebugValue, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import CultivationForm from "../components/dataCreation/CultivationForm";
+import CultivationForm from "../components/dataCreation/forms/CultivationForm";
 import PageWrapper from "./PageWrapper";
 import { useDataCreationContext } from "../context/general/DataCreationContext";
 import CustomButton from "../components/general/CustomButton";
-import PlantForm from "../components/dataCreation/PlantForm";
-import StageForm from "../components/dataCreation/StageForm";
+import PlantForm from "../components/dataCreation/forms/PlantForm";
+import StageForm from "../components/dataCreation/forms/StageForm";
+import LoadingBar from "../components/general/LoadingBar";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
-  const { finishCreatingObject, isCreatingObject } = useDataCreationContext();
+  const { finishCreatingObject, isCreatingObject, isLoading } =
+    useDataCreationContext();
   const [pageContent, setPageContent] = useState();
   useEffect(() => {
     if (!isCreatingObject) {
@@ -46,9 +48,13 @@ function DataCreationFormWrapper() {
       >
         <h1 className="text-2xl">Creating {creationType.toLowerCase()}</h1>
         {pageContent}
-        <CustomButton type="submit" className={"mt-4"}>
-          Create
-        </CustomButton>
+        {isLoading ? (
+          <LoadingBar />
+        ) : (
+          <CustomButton type="submit" className={"mt-4"}>
+            Create
+          </CustomButton>
+        )}
       </form>
     </PageWrapper>
   );
