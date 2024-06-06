@@ -98,6 +98,9 @@ public class PersonServiceImpl implements PersonService {
 
         Person person = personOptional.get();
         Cultivation cultivation = cultivationOptional.get();
+        if(!cultivationDAORepository.existsByCultivationIdAndPersonId(personId, cultivationId)){
+            throw new CustomHTTPException("Responsible person doesn't exist", HttpStatus.NOT_FOUND);
+        }
 
         cultivation.getResponsibleWorkers().remove(person);
         cultivationDAORepository.save(cultivation);
