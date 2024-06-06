@@ -119,10 +119,16 @@ public class PersonServiceImpl implements PersonService {
         return personDAORepository.save(newPerson);
     }
 
-    public Person changePassword(long id, String newPassword) {
+    public Person changePassword(long id, String newPassword, String oldPassword) {
         Optional<Person> personOptional = personDAORepository.findById(id);
         if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
-        personOptional.get().setPassword(newPassword);
+        Person person = personOptional.get();
+        if(person.getPassword().equals(oldPassword)) {
+            person.setPassword(newPassword);
+        }
+        else{
+            throw new CustomHTTPException("Old password is wrong", HttpStatus.UNAUTHORIZED);
+        }
         return personDAORepository.save(personOptional.get());
     }
 
