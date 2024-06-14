@@ -1,11 +1,15 @@
 import React from "react";
 import PageWrapper from "./PageWrapper";
-import CustomButton from "../components/general/CustomButton";
 import VerticalScrollableDisplay from "../components/verticalScrollableDisplay/VerticalScrollableDisplay";
-import { useCultivations } from "../hooks/cultivations/useCultivations";
+import { useFetchArrayData } from "../hooks/useFetchArrayData";
+import { useCultivationContext } from "../context/cultivations/CultivationContext";
 function Cultivations() {
-  const { activeCultivations, finishedCultivations, isPending } =
-    useCultivations();
+  const { getActiveCultivations, getFinishedCultivations } =
+    useCultivationContext();
+  const { data: activeCultivations, isPending: activeCultPending } =
+    useFetchArrayData(getActiveCultivations);
+  const { data: finishedCultivations, isPending: finishedCultPending } =
+    useFetchArrayData(getFinishedCultivations);
   return (
     <PageWrapper
       secured={true}
@@ -16,13 +20,13 @@ function Cultivations() {
           header={"Active cultivations"}
           entries={activeCultivations}
           contentType={"cultivation"}
-          loading={isPending}
+          loading={activeCultPending}
         />
         <VerticalScrollableDisplay
           header={"Finished cultivations"}
           entries={finishedCultivations}
           contentType={"cultivation"}
-          loading={isPending}
+          loading={finishedCultPending}
           disableCreateButton={true}
         />
       </div>

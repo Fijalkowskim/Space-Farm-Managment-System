@@ -43,6 +43,7 @@ function DataCreationFormWrapper() {
         className="flex flex-col gap-2 items-center justify-center w-full max-w-4xl p-2 h-full bg-background-950/80"
         onSubmit={(e) => {
           e.preventDefault();
+          window.scrollTo(0, 0);
           finishCreatingObject();
         }}
       >

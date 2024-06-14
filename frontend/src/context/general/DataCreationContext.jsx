@@ -127,11 +127,11 @@ export function DataCreationContextProvider({ children }) {
     } else {
       setIsLoading(false);
       // If couldn't create object
-      addMessage(
-        `There was an error while creating ${objectCreationData.objectType.toLowerCase()}. Check all fields.`,
-        "error",
-        -1
-      );
+      // addMessage(
+      //   `There was an error while creating ${objectCreationData.objectType.toLowerCase()}. Check all fields.`,
+      //   "error",
+      //   -1
+      // );
     }
   };
   //Method returning currently created object

@@ -24,7 +24,7 @@ public interface CultivationDAORepository  extends JpaRepository<Cultivation, Lo
     @Query("SELECT c FROM Cultivation c JOIN c.stations s WHERE s.id = :stationId")
     Set<Cultivation> findAllByStationId(@Param("stationId") long stationId);
 
-    @Query("SELECT c FROM Cultivation c WHERE c.plannedFinishDate > CURRENT_DATE AND c.realFinishDate IS NULL")
+    @Query("SELECT c FROM Cultivation c WHERE c.realFinishDate IS NULL")
     Set<Cultivation> findAllActiveCultivations();
 
     @Query("SELECT c FROM Cultivation c WHERE c.realFinishDate IS NOT NULL")

@@ -24,6 +24,15 @@ export function PopupContextProvider({ children }) {
       }, timeout);
     }
   };
+  const logError = (err) => {
+    if (err?.response?.data !== undefined) {
+      const data = err.response.data;
+      if (typeof data === "object" && data.message)
+        addMessage(data.message, "error", 3000);
+      else if (typeof data === "string" && data !== "")
+        addMessage(data.message, "error", 3000);
+    }
+  };
   const removeMessage = (id) => {
     setMessages((prev) => prev.filter((m) => m.id !== id));
   };
@@ -34,6 +43,7 @@ export function PopupContextProvider({ children }) {
         clearMessages,
         addMessage,
         removeMessage,
+        logError,
       }}
     >
       {children}

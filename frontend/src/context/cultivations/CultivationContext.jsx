@@ -6,6 +6,8 @@ import {
 import { usePersonContext } from "../PersonContext";
 import api from "../../api/api";
 import { useCultivationDetailsContext } from "./CultivationDetailsContext";
+import { usePopupContext } from "../general/PopupContext";
+import { Cultivation } from "../../models/Cultivation";
 
 const CultivationContext = createContext();
 
@@ -15,19 +17,20 @@ export function useCultivationContext() {
 
 export function CultivationContextProvider({ children }) {
   const { userData } = usePersonContext();
+  const { logError } = usePopupContext();
   const { editedCultivation, setEditedCultivation } =
     useCultivationDetailsContext();
   //************ Get methods ************
   const getActiveCultivations = async () => {
-    return exampleCultivations;
     try {
-      const res = await api.get("/cultivation/active");
+      const res = await api.get("/cultivation/active/");
       if (res.data) {
+        return res.data.map((res) => Cultivation.fromResponse(res));
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return exampleCultivations;
+    return undefined;
   };
   const getFinishedCultivations = async () => {
     return exampleFinishedCultivations;
@@ -76,7 +79,6 @@ export function CultivationContextProvider({ children }) {
   };
   //************ Put methods ************
   const addCultivaiton = async (cultivationRequest) => {
-    console.log(cultivationRequest);
     if (!userData) return false;
     try {
       const res = await api.put(
@@ -87,7 +89,7 @@ export function CultivationContextProvider({ children }) {
         return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { cn } from "../../helpers/helpers";
 import DisplayCard from "./DisplayCard";
 import LoadingBar from "../general/LoadingBar";
@@ -47,6 +47,7 @@ function VerticalScrollableDisplay({
       {loading === true ? (
         <LoadingBar variant={"parent"} />
       ) : entries !== undefined &&
+        typeof entries === "object" &&
         entries.length !== undefined &&
         entries.length > 0 ? (
         entries.map((entry) => (
