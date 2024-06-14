@@ -10,12 +10,13 @@ import { useLocation } from "react-router-dom";
 import CultivationEditForm from "../../components/cultivations/CultivationEditForm";
 import { useCultivationContext } from "../../context/cultivations/CultivationContext";
 import Modal from "../../components/general/Modal";
+import { useFetchData } from "../../hooks/useFetchData";
 
 function CultivationDetails() {
   const { id } = useParams();
-  const { cultivation, isPending } = useCultivation(id);
+  const { updateCultivation, getCultivation } = useCultivationContext();
+  const { data, isPending } = useFetchData(getCultivation, id);
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
-  const { updateCultivation } = useCultivationContext();
   const location = useLocation();
   const [currentCultivation, setCurrentCultivation] = useState(undefined);
 
@@ -24,8 +25,9 @@ function CultivationDetails() {
   }, [location]);
 
   useEffect(() => {
-    setCurrentCultivation(cultivation);
-  }, [cultivation, setCurrentCultivation]);
+    setCurrentCultivation(data);
+    console.log(data);
+  }, [data, setCurrentCultivation]);
 
   const cultivationEditFormSubmit = async (newCultivation) => {
     const resp = await updateCultivation(currentCultivation, newCultivation);

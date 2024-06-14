@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import CustomButton from "../general/CustomButton";
 
 function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
-  const [newCultivation, setNewCultivation] = useState();
+  const [newCultivation, setNewCultivation] = useState(editedCultivation);
   useEffect(() => {
     setNewCultivation(editedCultivation);
   }, [editedCultivation, setNewCultivation, visible]);
@@ -22,11 +22,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
       <input
         required
         type={"date"}
-        value={
-          newCultivation.startDate
-            ? newCultivation.startDate.toISOString().split("T")[0]
-            : newCultivation.startDate
-        }
+        value={newCultivation.startDate}
         className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
@@ -39,11 +35,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
       <input
         required
         type={"date"}
-        value={
-          newCultivation.plannedFinishDate
-            ? newCultivation.plannedFinishDate.toISOString().split("T")[0]
-            : newCultivation.plannedFinishDate
-        }
+        value={newCultivation.plannedFinishDate}
         className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({
@@ -55,11 +47,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
       <label className="capitalize -mb-1">real finish date</label>
       <input
         type={"date"}
-        value={
-          newCultivation.realFinishDate
-            ? newCultivation.realFinishDate.toISOString().split("T")[0]
-            : newCultivation.realFinishDate
-        }
+        value={newCultivation.realFinishDate}
         className="bg-background-900 p-1 mb-1 w-full text-center"
         onChange={(e) =>
           setNewCultivation((prev) => ({

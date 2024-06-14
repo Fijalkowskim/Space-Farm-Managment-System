@@ -33,38 +33,27 @@ export function CultivationContextProvider({ children }) {
     return undefined;
   };
   const getFinishedCultivations = async () => {
-    return exampleFinishedCultivations;
     try {
-      const res = await api.get("/cultivation/finished");
+      const res = await api.get("/cultivation/finished/");
       if (res.data) {
+        return res.data.map((res) => Cultivation.fromResponse(res));
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return exampleFinishedCultivations;
+    return undefined;
   };
   const getCultivation = async (id) => {
-    const foundCultivation = exampleCultivations.find(
-      (cultivation) => cultivation.id === id
-    );
-    return (
-      foundCultivation ??
-      exampleFinishedCultivations.find((cultivation) => cultivation.id === id)
-    );
+    if (id === undefined) return undefined;
     try {
       const res = await api.get(`/cultivation/${id}`);
       if (res.data) {
+        return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    // const foundCultivation = exampleCultivations.find(
-    //   (cultivation) => cultivation.id === id
-    // );
-    // return (
-    //   foundCultivation ??
-    //   exampleFinishedCultivations.find((cultivation) => cultivation.id === id)
-    // );
+    return undefined;
   };
   const getAssignedCultivations = async (userID) => {
     return exampleCultivations;

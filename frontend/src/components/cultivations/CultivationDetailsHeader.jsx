@@ -13,7 +13,7 @@ function CultivationDetailsHeader({ cultivation }) {
       <div className="flex flex-row items-end justify-center gap-4">
         <DisplayCardAttribute
           label="plant"
-          value={cultivation.plant}
+          value={cultivation.plant.name}
           className={"text-2xl"}
         />
       </div>
@@ -32,7 +32,7 @@ function CultivationDetailsHeader({ cultivation }) {
       <div className="flex flex-row items-end justify-center gap-4">
         <DisplayCardAttribute
           label="type"
-          value={cultivation.type}
+          value={cultivation.type.name}
           className={"text-xl"}
         />
       </div>
