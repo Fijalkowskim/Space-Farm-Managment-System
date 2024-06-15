@@ -16,6 +16,7 @@ function EditObjectsDisplay({
   multiselect,
   propertyName,
   selectById = false,
+  isPending,
 }) {
   const [choosingObjects, setChoosingObjects] = useState(false);
   const {
@@ -40,6 +41,7 @@ function EditObjectsDisplay({
         contentType={contentType}
         className={className}
         detailsPageDisplay={true}
+        isPending={isPending}
       />
       <CustomButton
         className={"ml-4 text-sm"}

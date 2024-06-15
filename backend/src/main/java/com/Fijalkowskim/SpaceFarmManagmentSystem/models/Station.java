@@ -1,5 +1,6 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class Station {
     private Long id;
 
     @ManyToMany(mappedBy = "stations")
+    @JsonIgnore
     private Set<Cultivation> cultivations;
 
     public Station(){

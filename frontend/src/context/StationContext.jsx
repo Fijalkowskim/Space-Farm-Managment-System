@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
-import { exampleStations } from "../exampleData/ExampleStations";
+import { usePopupContext } from "./general/PopupContext";
 
 const StationContext = createContext();
 
@@ -9,6 +9,7 @@ export function useStationContext() {
 }
 
 export function StationContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getStations = async () => {
     try {
@@ -28,9 +29,20 @@ export function StationContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
+  };
+  const getStationsByCultivation = async (id) => {
+    try {
+      const res = await api.get(`/station/cultivation/${id}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return [];
   };
   //************ Put methods ************
   const addStation = async () => {
@@ -40,7 +52,7 @@ export function StationContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -53,7 +65,7 @@ export function StationContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -65,7 +77,7 @@ export function StationContextProvider({ children }) {
         return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -74,6 +86,7 @@ export function StationContextProvider({ children }) {
     <StationContext.Provider
       value={{
         getStations,
+        getStationsByCultivation,
         getStation,
         addStation,
         deleteStation,

@@ -2,6 +2,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries;
 
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class CultivationType {
     private String name;
 
     @OneToMany(mappedBy = "type")
+    @JsonIgnore
     private Set<Cultivation> cultivations;
 
     public CultivationType() {

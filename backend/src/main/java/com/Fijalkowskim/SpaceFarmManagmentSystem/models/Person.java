@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Person {
     private WorkerType role;
 
     @ManyToMany(mappedBy = "responsibleWorkers")
+    @JsonIgnore
     private Set<Cultivation> cultivations;
 
     public Person() {

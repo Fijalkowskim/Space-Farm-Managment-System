@@ -17,6 +17,7 @@ import DataCrationObjectInput from "../../components/dataCreation/DataCrationObj
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
 import CustomButton from "../../components/general/CustomButton";
 import EditObjectsDisplay from "../../components/dataEdit/EditObjectsDisplay";
+import { useStationContext } from "../../context/StationContext";
 function CultivationDetails() {
   const { id } = useParams();
   const { updateCultivation, getCultivation } = useCultivationContext();
@@ -34,6 +35,14 @@ function CultivationDetails() {
     useDataCreationContext();
   const [changingPlant, setChangingPlant] = useState(false);
   const [changingType, setChangingType] = useState(false);
+
+  const { getStationsByCultivation } = useStationContext();
+  const { stations, stationsPending } = useFetchData(
+    getStationsByCultivation,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
 
   useEffect(() => {
     disableEditing();
@@ -168,7 +177,7 @@ function CultivationDetails() {
             className="max-w-4xl items-start"
           />
           <EditObjectsDisplay
-            entries={data.stations}
+            entries={stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
@@ -178,6 +187,7 @@ function CultivationDetails() {
             multiselect={true}
             propertyName={"stations"}
             selectById={true}
+            isPending={stationsPending}
           />
           <EditObjectsDisplay
             entries={data.stations}
