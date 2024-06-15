@@ -3,6 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.controllers;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MultipleIdRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.CultivationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -119,6 +120,12 @@ public class CultivationController {
             @RequestParam(name = "personId") long personId) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.addCultivationToPerson(cultivationId, personId));
     }
+    
+    @PostMapping("/person/{id}")
+    ResponseEntity<Cultivation> addCultivationToMultiplePersons(@RequestBody MultipleIdRequest multipleIdRequest, @PathVariable long id) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.addCultivationToMultiplePersons(id, multipleIdRequest));
+    }
+
     @DeleteMapping("/person/")
     public ResponseEntity<Cultivation> deleteCultivationFromPerson(
             @RequestParam(name = "cultivationId") long cultivationId,
@@ -135,6 +142,11 @@ public class CultivationController {
             @RequestParam(name = "stationId") long stationId
     ) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.addCultivationToStation(cultivationId, stationId));
+    }
+
+    @PostMapping("/station/{id}")
+    ResponseEntity<Cultivation> addCultivationToMultipleStations(@RequestBody MultipleIdRequest multipleIdRequest, @PathVariable long id) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.addCultivationToMultipleStations(id, multipleIdRequest));
     }
 
     @DeleteMapping("/station/") ResponseEntity<Cultivation> removeCultivationFromStation(

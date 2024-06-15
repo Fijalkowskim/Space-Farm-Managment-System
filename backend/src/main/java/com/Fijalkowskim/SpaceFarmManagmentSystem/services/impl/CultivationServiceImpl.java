@@ -9,6 +9,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepo
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MultipleIdRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -224,5 +225,35 @@ public class CultivationServiceImpl implements CultivationService {
         } catch (ParseException e) {
             throw new CustomHTTPException("Date parse exception", HttpStatus.NOT_FOUND);
         }
+    }
+
+    public Cultivation addCultivationToMultipleStations(long id, MultipleIdRequest multipleIdRequest) {
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(id);
+        if(cultivationOptional.isEmpty()){
+            throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        }
+        Cultivation cultivation = cultivationOptional.get();
+        for(long stationId:multipleIdRequest.getIds()){
+            Optional<Station> stationOptional = stationDAORepository.findById(stationId);
+            if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+            Station station = stationOptional.get();
+            cultivation.getStations().add(station);
+        }
+        return cultivationDAORepository.save(cultivation);
+    }
+
+    public Cultivation addCultivationToMultiplePersons(long id, MultipleIdRequest multipleIdRequest) {
+        Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(id);
+        if(cultivationOptional.isEmpty()){
+            throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        }
+        Cultivation cultivation = cultivationOptional.get();
+        for(long personId:multipleIdRequest.getIds()){
+            Optional<Person> personOptional = personDAORepository.findById(personId);
+            if(personOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
+            Person person = personOptional.get();
+            cultivation.getResponsibleWorkers().add(person);
+        }
+        return cultivationDAORepository.save(cultivation);
     }
 }
