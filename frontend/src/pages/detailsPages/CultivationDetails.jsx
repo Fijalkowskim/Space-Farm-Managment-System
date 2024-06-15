@@ -11,6 +11,7 @@ import CultivationEditForm from "../../components/cultivations/CultivationEditFo
 import { useCultivationContext } from "../../context/cultivations/CultivationContext";
 import Modal from "../../components/general/Modal";
 import { useFetchData } from "../../hooks/useFetchData";
+import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
 
 function CultivationDetails() {
   const { id } = useParams();
@@ -24,8 +25,17 @@ function CultivationDetails() {
   }, [location]);
 
   const cultivationEditFormSubmit = async (newCultivation) => {
-    const resp = await updateCultivation(data, newCultivation);
-    if (resp) {
+    const request = new CultivationRequest(
+      newCultivation.startDate,
+      newCultivation.plannedFinishDate,
+      newCultivation.realFinishDate,
+      newCultivation.plant,
+      newCultivation.comment,
+      newCultivation.area,
+      newCultivation.type
+    );
+    const resp = await updateCultivation(data.id, request);
+    if (resp === true) {
       window.location.reload();
     }
   };

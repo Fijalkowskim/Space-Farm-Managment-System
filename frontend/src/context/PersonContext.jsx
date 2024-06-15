@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import { exampleWorkers } from "../exampleData/ExampleWorkers";
 import { CookiesProvider, useCookies } from "react-cookie";
@@ -12,26 +12,35 @@ export function usePersonContext() {
 export function PersonContextProvider({ children }) {
   const [userData, setUserData] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isPending, setIsPending] = useState(true);
   const [userCookie, setUserCookie, removeUserCookie] = useCookies(["user"]);
 
+  useEffect(() => {
+    loginFromCookies();
+  }, []);
+
   const logIn = async (email, password) => {
+    setIsPending(true);
     try {
       const res = await api.get(
         `/person/login?login=${email}&password=${password}`
       );
       if (res.data) {
+        setIsPending(false);
         setUserDataAfterLogin(res.data);
         return true;
       }
     } catch (err) {
       console.log(err);
     }
+    setIsPending(false);
     return false;
   };
   const logOut = () => {
     removeUserCookie("user", { path: "/" });
     setUserData(null);
     setIsLoggedIn(false);
+    setIsPending(false);
   };
   //************ Get methods ************
   const getPersons = async () => {
@@ -95,11 +104,14 @@ export function PersonContextProvider({ children }) {
   };
   //************ User managment methods ************
   const loginFromCookies = async () => {
+    setIsPending(true);
     const storedUserData = userCookie["user"];
     if (storedUserData) {
       setUserDataAfterLogin(storedUserData);
+      setIsPending(false);
       return true;
     }
+    setIsPending(false);
     return false;
   };
   const setUserDataAfterLogin = (newUserData) => {
@@ -109,6 +121,7 @@ export function PersonContextProvider({ children }) {
     });
     setIsLoggedIn(true);
     setUserData(newPerson);
+    setIsPending(false);
   };
   const userFromResponse = (userResponse) => {
     return new Person(
@@ -124,6 +137,7 @@ export function PersonContextProvider({ children }) {
       value={{
         userData,
         isLoggedIn,
+        isPending,
         logIn,
         logOut,
         getPersons,

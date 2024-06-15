@@ -2,6 +2,7 @@ export class CultivationRequest {
   constructor(
     startDate = new Date(),
     plannedFinishDate = undefined,
+    realFinishDate = undefined,
     plant = undefined,
     comment = "",
     area = 0,
@@ -9,6 +10,7 @@ export class CultivationRequest {
   ) {
     this.startDate = startDate;
     this.plannedFinishDate = plannedFinishDate;
+    this.realFinishDate = realFinishDate;
     this.plant = plant;
     this.comment = comment;
     this.area = area;

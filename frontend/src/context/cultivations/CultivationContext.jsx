@@ -83,21 +83,26 @@ export function CultivationContextProvider({ children }) {
     return false;
   };
   //************ Post methods ************
-  const updateCultivation = async (previousCultivation, newCultivation) => {
-    if (previousCultivation.id !== newCultivation.id) return undefined;
-    setEditedCultivation(undefined);
-    return newCultivation;
+  const updateCultivation = async (id, cultivationRequest) => {
+    if (!userData) return false;
     try {
-      const res = await api.post(`/cultivation/${newCultivation.id}`);
+      const res = await api.post(
+        `/cultivation/${id}?userID=${userData.id}`,
+        cultivationRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
       if (res.data) {
-        previousCultivation = newCultivation;
-        return newCultivation;
+        setEditedCultivation(undefined);
+        return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    setEditedCultivation(undefined);
-    return undefined;
+    return false;
   };
   return (
     <CultivationContext.Provider

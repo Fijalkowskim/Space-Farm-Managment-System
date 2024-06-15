@@ -16,6 +16,7 @@ public class CultivationRequest {
     private float area;
 
     private Date plannedFinishDate;
+    private Date realFinishDate;
 
     //private Date realFinishDate;
 
