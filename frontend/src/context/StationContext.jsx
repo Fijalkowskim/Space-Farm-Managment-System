@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
 import { usePopupContext } from "./general/PopupContext";
+import { usePersonContext } from "./PersonContext";
 
 const StationContext = createContext();
 
@@ -10,6 +11,7 @@ export function useStationContext() {
 
 export function StationContextProvider({ children }) {
   const { logError } = usePopupContext();
+  const { userData } = usePersonContext();
   //************ Get methods ************
   const getStations = async () => {
     try {
@@ -71,8 +73,9 @@ export function StationContextProvider({ children }) {
   };
   //************ Delete methods ************
   const deleteStation = async (id) => {
+    if (!userData) return;
     try {
-      const res = await api.delete(`/station/${id}`);
+      const res = await api.delete(`/station/${id}?userID=${userData.id}`);
       if (res.data()) {
         return true;
       }

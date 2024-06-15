@@ -20,8 +20,9 @@ public class StationController {
     StationServiceImpl stationService;
     PersonServiceImpl personService;
     @Autowired
-    public StationController(StationServiceImpl stationService){
+    public StationController(StationServiceImpl stationService, PersonServiceImpl personService){
         this.stationService = stationService;
+        this.personService = personService;
     }
     @GetMapping("")
     public Page<Station> getStations(

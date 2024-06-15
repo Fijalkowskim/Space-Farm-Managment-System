@@ -12,6 +12,8 @@ import MeasureUnitCard from "./displayCards/MeasureUnitCard";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
 import CultivationTypeCard from "./displayCards/CultivationTypeCard";
+import { useDelete } from "../../hooks/useDelete";
+import LoadingBar from "../general/LoadingBar";
 function DisplayCard({
   data,
   contentType,
@@ -31,6 +33,7 @@ function DisplayCard({
   } = useDataCreationContext();
   const [loadedData, setLoadedData] = useState(data);
   const [isSelected, setIsSelected] = useState(false);
+  const { isDeleting, deleteItem } = useDelete(contentType, data?.id);
 
   useEffect(() => {
     if (selectById && data.id) {
@@ -59,6 +62,7 @@ function DisplayCard({
     );
   }, [objectCreationQueue, selectById, data, propertyName]);
 
+  if (isDeleting) return <LoadingBar />;
   return (
     <div
       className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
@@ -130,6 +134,7 @@ function DisplayCard({
             className={"w-full"}
             onClick={(e) => {
               e.stopPropagation();
+              deleteItem();
             }}
             variant={"action"}
           >

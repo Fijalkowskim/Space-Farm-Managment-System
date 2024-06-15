@@ -16,43 +16,46 @@ import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
 import { PersonContextProvider } from "../PersonContext";
 import { DataCreationContextProvider } from "./DataCreationContext";
 import { ObjectLoadingContextProvider } from "./ObjectLoadingContext";
+import { GlobalReloadContextProvider } from "./GlobalReloadContext";
 function ContextProvidersWrapper({ children }) {
   return (
-    <PersonContextProvider>
-      <PopupContextProvider>
-        <CultivationDetailContextProvider>
-          <StationContextProvider>
-            <SettingsContextProvider>
-              <CultivationContextProvider>
-                <PlantContextProvider>
-                  <StageContextProvider>
-                    <ControlContextProvider>
-                      <HarvestContextProvider>
-                        <MeasuredValueContextProvider>
-                          <ReadingContextProvider>
-                            <CultivationTypeContextProvider>
-                              <MeasureUnitContextProvider>
-                                <StageTypeContextProvider>
-                                  <DataCreationContextProvider>
-                                    <ObjectLoadingContextProvider>
-                                      {children}
-                                    </ObjectLoadingContextProvider>
-                                  </DataCreationContextProvider>
-                                </StageTypeContextProvider>
-                              </MeasureUnitContextProvider>
-                            </CultivationTypeContextProvider>
-                          </ReadingContextProvider>
-                        </MeasuredValueContextProvider>
-                      </HarvestContextProvider>
-                    </ControlContextProvider>
-                  </StageContextProvider>
-                </PlantContextProvider>
-              </CultivationContextProvider>
-            </SettingsContextProvider>
-          </StationContextProvider>
-        </CultivationDetailContextProvider>
-      </PopupContextProvider>
-    </PersonContextProvider>
+    <GlobalReloadContextProvider>
+      <PersonContextProvider>
+        <PopupContextProvider>
+          <CultivationDetailContextProvider>
+            <StationContextProvider>
+              <SettingsContextProvider>
+                <CultivationContextProvider>
+                  <PlantContextProvider>
+                    <StageContextProvider>
+                      <ControlContextProvider>
+                        <HarvestContextProvider>
+                          <MeasuredValueContextProvider>
+                            <ReadingContextProvider>
+                              <CultivationTypeContextProvider>
+                                <MeasureUnitContextProvider>
+                                  <StageTypeContextProvider>
+                                    <DataCreationContextProvider>
+                                      <ObjectLoadingContextProvider>
+                                        {children}
+                                      </ObjectLoadingContextProvider>
+                                    </DataCreationContextProvider>
+                                  </StageTypeContextProvider>
+                                </MeasureUnitContextProvider>
+                              </CultivationTypeContextProvider>
+                            </ReadingContextProvider>
+                          </MeasuredValueContextProvider>
+                        </HarvestContextProvider>
+                      </ControlContextProvider>
+                    </StageContextProvider>
+                  </PlantContextProvider>
+                </CultivationContextProvider>
+              </SettingsContextProvider>
+            </StationContextProvider>
+          </CultivationDetailContextProvider>
+        </PopupContextProvider>
+      </PersonContextProvider>
+    </GlobalReloadContextProvider>
   );
 }
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useGlobalReloadContext } from "../context/general/GlobalReloadContext";
 
 export const useFetchArrayData = (
   getMethod,
@@ -8,6 +9,7 @@ export const useFetchArrayData = (
 ) => {
   const [data, setData] = useState();
   const [isPending, setIsPending] = useState(false);
+  const { globalReload, setGlobalReload } = useGlobalReloadContext();
 
   useEffect(() => {
     const loadData = async () => {
@@ -22,6 +24,7 @@ export const useFetchArrayData = (
         }
         setData(loadedData);
         if (setRefreshData) setRefreshData(false);
+        if (globalReload) setGlobalReload(false);
       } catch (err) {
         console.log(err);
         setData([]);
@@ -29,7 +32,7 @@ export const useFetchArrayData = (
       setIsPending(false);
     };
     loadData();
-  }, [refreshData, id]);
+  }, [refreshData, id, globalReload]);
 
   return { data, isPending };
 };
