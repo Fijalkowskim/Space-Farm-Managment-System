@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 
-export const useFetchArrayData = (getMethod) => {
+export const useFetchArrayData = (
+  getMethod,
+  id,
+  refreshData,
+  setRefreshData
+) => {
   const [data, setData] = useState();
   const [isPending, setIsPending] = useState(false);
 
@@ -8,8 +13,15 @@ export const useFetchArrayData = (getMethod) => {
     const loadData = async () => {
       setIsPending(true);
       try {
-        const loadedData = await getMethod();
+        var loadedData;
+        if (id !== undefined) {
+          const parsedId = parseInt(id);
+          loadedData = await getMethod(parsedId);
+        } else {
+          loadedData = await getMethod();
+        }
         setData(loadedData);
+        if (setRefreshData) setRefreshData(false);
       } catch (err) {
         console.log(err);
         setData([]);
@@ -17,7 +29,7 @@ export const useFetchArrayData = (getMethod) => {
       setIsPending(false);
     };
     loadData();
-  }, [getMethod, setData, setIsPending]);
+  }, [refreshData, id]);
 
   return { data, isPending };
 };

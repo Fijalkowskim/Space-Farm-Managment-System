@@ -24,27 +24,44 @@ function DisplayCard({
   selectById = false,
 }) {
   const navigate = useNavigate();
-  const { setCurrentObjectProperty, getCurrentObjectProperty } =
-    useDataCreationContext();
+  const {
+    setCurrentObjectProperty,
+    getCurrentObjectProperty,
+    objectCreationQueue,
+  } = useDataCreationContext();
   const [loadedData, setLoadedData] = useState(data);
+  const [isSelected, setIsSelected] = useState(false);
   useEffect(() => {
     if (selectById && data.id) {
       setLoadedData(data.id);
     }
   }, [selectById]);
+
+  useEffect(() => {
+    if (
+      data === undefined ||
+      propertyName === undefined ||
+      getCurrentObjectProperty(propertyName) === undefined
+    )
+      return;
+    setIsSelected(
+      propertyName !== undefined &&
+        ((!selectById &&
+          getCurrentObjectProperty(propertyName)?.id === data.id) ||
+          (selectById && getCurrentObjectProperty(propertyName) === data.id) ||
+          (Array.isArray(getCurrentObjectProperty(propertyName)) &&
+            getCurrentObjectProperty(propertyName).find(
+              (obj) =>
+                (selectById && obj === data.id) ||
+                (!selectById && obj?.id === data.id)
+            )))
+    );
+  }, [objectCreationQueue]);
+
   return (
     <div
       className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
-        (propertyName !== undefined &&
-          getCurrentObjectProperty(propertyName) === data) ||
-        (Array.isArray(getCurrentObjectProperty(propertyName)) &&
-          getCurrentObjectProperty(propertyName).find(
-            (obj) =>
-              (selectById && obj === loadedData) ||
-              (!selectById && obj.id === data.id)
-          ))
-          ? "border-2 border-primary-700"
-          : ""
+        isSelected ? "border-2 border-primary-700" : ""
       }`}
       onClick={() => {
         if (multiselect !== undefined) {

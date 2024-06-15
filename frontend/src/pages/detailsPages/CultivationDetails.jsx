@@ -18,6 +18,7 @@ import { useDataCreationContext } from "../../context/general/DataCreationContex
 import CustomButton from "../../components/general/CustomButton";
 import EditObjectsDisplay from "../../components/dataEdit/EditObjectsDisplay";
 import { useStationContext } from "../../context/StationContext";
+import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 function CultivationDetails() {
   const { id } = useParams();
   const { updateCultivation, getCultivation } = useCultivationContext();
@@ -37,7 +38,7 @@ function CultivationDetails() {
   const [changingType, setChangingType] = useState(false);
 
   const { getStationsByCultivation } = useStationContext();
-  const { stations, stationsPending } = useFetchData(
+  const { data: stations, isPending: stationsPending } = useFetchArrayData(
     getStationsByCultivation,
     id,
     dataUpdated,
@@ -154,7 +155,6 @@ function CultivationDetails() {
               </CustomButton>
             </div>
           </Modal>
-
           <CultivationDetailsHeader
             cultivation={data}
             onUpdate={onObligatoryFieldUpdate}
@@ -189,12 +189,12 @@ function CultivationDetails() {
             selectById={true}
             isPending={stationsPending}
           />
-          <EditObjectsDisplay
+          {/* <EditObjectsDisplay
             entries={data.stations}
             header="ResponsibleWorkers"
             contentType="worker"
             className="max-w-4xl items-start"
-          />
+          /> */}
         </div>
       )}
     </PageWrapper>

@@ -45,7 +45,6 @@ function VerticalScrollableDisplay({
       {loading === true ? (
         <LoadingBar variant={"parent"} />
       ) : entries !== undefined &&
-        typeof entries === "object" &&
         entries.length !== undefined &&
         entries.length > 0 ? (
         entries.map((entry) => (

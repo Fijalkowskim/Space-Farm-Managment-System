@@ -249,6 +249,7 @@ export function DataCreationContextProvider({ children }) {
         startCreatingObject,
         startEditingObjectByType,
         isLoading,
+        objectCreationQueue,
       }}
     >
       {children}

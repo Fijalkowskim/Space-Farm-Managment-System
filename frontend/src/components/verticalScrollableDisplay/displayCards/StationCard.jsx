@@ -5,11 +5,11 @@ function StationCard({ data }) {
   return (
     <>
       <DisplayCardAttribute label="Station ID" value={data.id} />
-      <DisplayCardAttribute
+      {/* <DisplayCardAttribute
         label={`Number of cultivations`}
         value={data.cultivations.length}
         className={"ml-auto items-end"}
-      />
+      /> */}
     </>
   );
 }
