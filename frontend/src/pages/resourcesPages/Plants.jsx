@@ -14,6 +14,7 @@ function Plants() {
         entries={data}
         contentType={"plant"}
         loading={isPending}
+        dictionaryType={true}
       />
     </PageWrapper>
   );

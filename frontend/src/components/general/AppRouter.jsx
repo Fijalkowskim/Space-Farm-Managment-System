@@ -18,6 +18,7 @@ import WorkerDetails from "../../pages/detailsPages/WorkerDetails";
 import PlantDetails from "../../pages/detailsPages/PlantDetails";
 import DataCreationFormWrapper from "../../pages/DataCreationFormWrapper";
 import ScrollToTop from "./ScrollToTop";
+import CultivationTypeDetails from "../../pages/detailsPages/CultivationTypeDetails";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
@@ -46,7 +47,11 @@ function AppRouter() {
         <Route path="/cultivation/:id" element={<CultivationDetails />} />
         <Route path="/station/:id" element={<StationDetails />} />
         <Route path="/worker/:id" element={<WorkerDetails />} />
-        <Route path="/plant/:id" element={<PlantDetails />} />
+        {/* <Route path="/plant/:id" element={<PlantDetails />} />
+        <Route
+          path="/cultivationType/:id"
+          element={<CultivationTypeDetails />}
+        /> */}
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

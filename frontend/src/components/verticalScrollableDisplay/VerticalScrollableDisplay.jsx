@@ -19,6 +19,7 @@ function VerticalScrollableDisplay({
   disableDeleteButton,
   propertyName,
   creationArgumentsFromParent,
+  dictionaryType,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -55,6 +56,7 @@ function VerticalScrollableDisplay({
             key={entry.id}
             data={entry}
             contentType={contentType}
+            dictionaryType={dictionaryType}
             showDeleteButton={
               disableDeleteButton !== true &&
               (userData.role.toLowerCase() === "admin" ||

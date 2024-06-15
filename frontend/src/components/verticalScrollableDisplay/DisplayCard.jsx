@@ -20,6 +20,7 @@ function DisplayCard({
   disableNavigation,
   multiselect,
   propertyName,
+  dictionaryType,
 }) {
   const navigate = useNavigate();
   const { setCurrentObjectProperty, getCurrentObjectProperty } =
@@ -58,7 +59,7 @@ function DisplayCard({
           }
           return;
         }
-        if (!disableNavigation) {
+        if (!disableNavigation && !dictionaryType) {
           navigate(data.id ? `/${contentType}/${data.id}` : "/");
         }
       }}

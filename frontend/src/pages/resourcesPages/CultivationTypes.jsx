@@ -14,6 +14,7 @@ function CultivationTypes() {
         entries={data}
         contentType={"cultivationType"}
         loading={isPending}
+        dictionaryType={true}
       />
     </PageWrapper>
   );

@@ -95,6 +95,7 @@ function CultivationDetails() {
                 disableCreating={true}
               />
               <CustomButton
+                className={"mt-2"}
                 onClick={(e) => {
                   e.preventDefault();
                   finishCreatingObject();
@@ -122,6 +123,7 @@ function CultivationDetails() {
                 disableCreating={true}
               />
               <CustomButton
+                className={"mt-2"}
                 onClick={(e) => {
                   e.preventDefault();
                   finishCreatingObject();

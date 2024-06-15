@@ -28,13 +28,13 @@ function CultivationDetailsHeader({
       </div>
       {/* Plant */}
       <div className="w-full flex flex-row -mt-1 gap-4">
-        <NavLink to={`/plant/${cultivation.plant.id}`}>
+        {/* <NavLink to={`/plant/${cultivation.plant.id}`}>
           <CustomButton variant="action" className={"text-sm w-40"}>
             Go to plant page
           </CustomButton>
-        </NavLink>
+        </NavLink> */}
         <CustomButton
-          variant=""
+          variant="action"
           className={"text-sm w-32"}
           onClick={() => {
             setChangingPlant(true);
@@ -60,13 +60,13 @@ function CultivationDetailsHeader({
         />
       </div>
       <div className="w-full flex flex-row -mt-1 gap-4">
-        <NavLink to={`/cultivationType/${cultivation.type.id}`}>
+        {/* <NavLink to={`/cultivationType/${cultivation.type.id}`}>
           <CustomButton variant="action" className={"text-sm w-40"}>
             Go to type page
           </CustomButton>
-        </NavLink>
+        </NavLink> */}
         <CustomButton
-          variant=""
+          variant="action"
           className={"text-sm w-32"}
           onClick={() => {
             setChangingType(true);

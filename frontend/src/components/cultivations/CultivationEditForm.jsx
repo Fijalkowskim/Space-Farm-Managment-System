@@ -67,6 +67,18 @@ function CultivationEditForm({ editedCultivation, onSubmit }) {
           }))
         }
       />
+      <CustomButton
+        className={"text-xs"}
+        type="button"
+        onClick={() => {
+          setNewCultivation((prev) => ({
+            ...prev,
+            realFinishDate: "",
+          }));
+        }}
+      >
+        Clear real finish date
+      </CustomButton>
       <label className="capitalize -mb-1">area</label>
       <input
         type={"number"}

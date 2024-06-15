@@ -15,6 +15,7 @@ function StageTypes() {
         entries={data}
         contentType={"stageType"}
         loading={isPending}
+        dictionaryType={true}
       />
     </PageWrapper>
   );

@@ -14,6 +14,7 @@ function MeasureUnits() {
         entries={data}
         contentType={"measureUnit"}
         loading={isPending}
+        dictionaryType={true}
       />
     </PageWrapper>
   );

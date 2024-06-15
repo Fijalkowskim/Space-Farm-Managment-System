@@ -28,7 +28,7 @@ function PlantDetails() {
         <LoadingBar variant={"fullPage"} />
       ) : (
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
-          <h1 className="text-4xl mt-2">Plant {currentPlant.id}</h1>
+          <h1 className="text-4xl mt-2">{currentPlant.name}</h1>
           <PlantCultivationsDisplay plant={currentPlant} />
         </div>
       )}
