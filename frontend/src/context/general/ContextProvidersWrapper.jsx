@@ -14,12 +14,12 @@ import { CultivationTypeContextProvider } from "../dictionaries/CultivationTypeC
 import { MeasureUnitContextProvider } from "../dictionaries/MeasureUnitContext";
 import { StageTypeContextProvider } from "../dictionaries/StageTypeContext";
 import { PersonContextProvider } from "../PersonContext";
-import { DataCreationContextProvider } from "../general/DataCreationContext";
+import { DataCreationContextProvider } from "./DataCreationContext";
 import { ObjectLoadingContextProvider } from "./ObjectLoadingContext";
 function ContextProvidersWrapper({ children }) {
   return (
-    <PopupContextProvider>
-      <PersonContextProvider>
+    <PersonContextProvider>
+      <PopupContextProvider>
         <CultivationDetailContextProvider>
           <StationContextProvider>
             <SettingsContextProvider>
@@ -51,8 +51,8 @@ function ContextProvidersWrapper({ children }) {
             </SettingsContextProvider>
           </StationContextProvider>
         </CultivationDetailContextProvider>
-      </PersonContextProvider>
-    </PopupContextProvider>
+      </PopupContextProvider>
+    </PersonContextProvider>
   );
 }
 

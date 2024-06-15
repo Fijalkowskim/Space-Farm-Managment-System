@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-export const useFetchData = (getMethod, id) => {
+export const useFetchData = (getMethod, id, retrigger, setRetrigger) => {
   const [data, setData] = useState();
   const [isPending, setIsPending] = useState(false);
 
@@ -16,9 +16,10 @@ export const useFetchData = (getMethod, id) => {
         console.log(err);
       }
       setIsPending(false);
+      if (setRetrigger) setRetrigger(false);
     };
     loadData();
-  }, [getMethod, id, setData, setIsPending]);
+  }, [id, retrigger]);
 
   return { data, isPending };
 };

@@ -17,10 +17,17 @@ import { usePopupContext } from "../../context/general/PopupContext";
 function CultivationDetails() {
   const { id } = useParams();
   const { updateCultivation, getCultivation } = useCultivationContext();
-  const { data, isPending } = useFetchData(getCultivation, id);
+  const [dataUpdated, setDataUpdated] = useState(false);
+  const { data, isPending } = useFetchData(
+    getCultivation,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
   const location = useLocation();
   const { addMessage } = usePopupContext();
+  const navigate = useNavigate();
   useEffect(() => {
     disableEditing();
   }, [location]);
@@ -38,6 +45,7 @@ function CultivationDetails() {
     const resp = await updateCultivation(data.id, request);
     if (resp === true) {
       addMessage("Cultivation updated successfully.");
+      setDataUpdated(true);
     }
   };
   return (

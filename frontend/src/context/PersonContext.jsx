@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import api from "../api/api";
-import { exampleWorkers } from "../exampleData/ExampleWorkers";
-import { CookiesProvider, useCookies } from "react-cookie";
+import { useCookies } from "react-cookie";
 import { Person } from "../models/Person";
 const PersonContext = React.createContext();
 

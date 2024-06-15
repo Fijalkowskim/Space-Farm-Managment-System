@@ -78,12 +78,12 @@ public class CultivationServiceImpl implements CultivationService {
         }
         if(cultivationRequest.getPlannedFinishDate() != null &&
                 oldCultivation.get().getPlannedFinishDate() != null &&
-                cultivationRequest.getPlannedFinishDate().before(oldCultivation.get().getPlannedFinishDate())){
+                cultivationRequest.getPlannedFinishDate().before(oldCultivation.get().getStartDate())){
             throw new CustomHTTPException("Planned finish date cannot be earlier then start date", HttpStatus.BAD_REQUEST);
         }
         if(cultivationRequest.getRealFinishDate() != null &&
            oldCultivation.get().getRealFinishDate() != null &&
-                cultivationRequest.getRealFinishDate().before(oldCultivation.get().getRealFinishDate())){
+                cultivationRequest.getRealFinishDate().before(oldCultivation.get().getStartDate())){
             throw new CustomHTTPException("Real finish date cannot be earlier then start date", HttpStatus.BAD_REQUEST);
         }
         Cultivation cultivation = Cultivation.builder()
