@@ -7,6 +7,7 @@ function DataCrationObjectInput({
   header,
   contentType,
   propertyName,
+  disableCreating = false,
 }) {
   const { data, isPending } = useLoadByType(contentType);
   return (
@@ -24,6 +25,7 @@ function DataCrationObjectInput({
         disableNavigation={true}
         disableDeleteButton={true}
         propertyName={propertyName}
+        disableCreateButton={disableCreating}
       />
     </>
   );

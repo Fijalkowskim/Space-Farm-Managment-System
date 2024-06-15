@@ -4,9 +4,18 @@ import DisplayCardAttribute from "../verticalScrollableDisplay/DisplayCardAttrib
 import { NavLink } from "react-router-dom";
 import CustomButton from "../general/CustomButton";
 import { useCultivationDetailsContext } from "../../context/cultivations/CultivationDetailsContext";
+import { useDataCreationContext } from "../../context/general/DataCreationContext";
+import { useCultivationContext } from "../../context/cultivations/CultivationContext";
 
-function CultivationDetailsHeader({ cultivation }) {
+function CultivationDetailsHeader({
+  cultivation,
+  onUpdate,
+  setChangingPlant,
+  setChangingType,
+}) {
   const { setEditedCultivation } = useCultivationDetailsContext();
+  const { startCreatingObject } = useDataCreationContext();
+  const { updateCultivation } = useCultivationContext();
   return (
     <div className="flex flex-col justify-center items-start w-full max-w-4xl bg-background-950/50 p-4 gap-2">
       <h1 className="text-3xl">Cultivation {cultivation.id}</h1>
@@ -19,12 +28,26 @@ function CultivationDetailsHeader({ cultivation }) {
       </div>
       {/* Plant */}
       <div className="w-full flex flex-row -mt-1 gap-4">
-        <NavLink to="/">
+        <NavLink to={`/plant/${cultivation.plant.id}`}>
           <CustomButton variant="action" className={"text-sm w-40"}>
             Go to plant page
           </CustomButton>
         </NavLink>
-        <CustomButton variant="" className={"text-sm w-32"}>
+        <CustomButton
+          variant=""
+          className={"text-sm w-32"}
+          onClick={() => {
+            setChangingPlant(true);
+            startCreatingObject(
+              cultivation,
+              onUpdate,
+              `/cultivation/${cultivation.id}`,
+              "cultivation",
+              undefined,
+              false
+            );
+          }}
+        >
           Change plant
         </CustomButton>
       </div>
@@ -37,12 +60,26 @@ function CultivationDetailsHeader({ cultivation }) {
         />
       </div>
       <div className="w-full flex flex-row -mt-1 gap-4">
-        <NavLink to="/">
+        <NavLink to={`/cultivationType/${cultivation.type.id}`}>
           <CustomButton variant="action" className={"text-sm w-40"}>
             Go to type page
           </CustomButton>
         </NavLink>
-        <CustomButton variant="" className={"text-sm w-32"}>
+        <CustomButton
+          variant=""
+          className={"text-sm w-32"}
+          onClick={() => {
+            setChangingType(true);
+            startCreatingObject(
+              cultivation,
+              onUpdate,
+              `/cultivation/${cultivation.id}`,
+              "cultivation",
+              undefined,
+              false
+            );
+          }}
+        >
           Change type
         </CustomButton>
       </div>

@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSettingsContext } from "../../context/general/SettingsContext";
 
-function Modal({ children, onClose, visible }) {
+function Modal({ children, onClose: onForcedClose, visible }) {
   const { setDisableScroll } = useSettingsContext();
   const closeModal = () => {
-    onClose();
+    onForcedClose();
     setDisableScroll(false);
   };
 

@@ -13,7 +13,9 @@ import Modal from "../../components/general/Modal";
 import { useFetchData } from "../../hooks/useFetchData";
 import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
 import { usePopupContext } from "../../context/general/PopupContext";
-
+import DataCrationObjectInput from "../../components/dataCreation/DataCrationObjectInput";
+import { useDataCreationContext } from "../../context/general/DataCreationContext";
+import CustomButton from "../../components/general/CustomButton";
 function CultivationDetails() {
   const { id } = useParams();
   const { updateCultivation, getCultivation } = useCultivationContext();
@@ -27,7 +29,11 @@ function CultivationDetails() {
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
   const location = useLocation();
   const { addMessage } = usePopupContext();
-  const navigate = useNavigate();
+  const { cancelCreatingObject, finishCreatingObject } =
+    useDataCreationContext();
+  const [changingPlant, setChangingPlant] = useState(false);
+  const [changingType, setChangingType] = useState(false);
+
   useEffect(() => {
     disableEditing();
   }, [location]);
@@ -48,6 +54,11 @@ function CultivationDetails() {
       setDataUpdated(true);
     }
   };
+  const onObligatoryFieldUpdate = async (newBody) => {
+    setChangingPlant(false);
+    setChangingType(false);
+    cultivationEditFormSubmit(newBody);
+  };
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>
       {data === undefined && !isPending ? (
@@ -67,7 +78,66 @@ function CultivationDetails() {
             />
           </Modal>
 
-          <CultivationDetailsHeader cultivation={data} />
+          <Modal
+            visible={changingPlant}
+            onClose={() => {
+              setChangingPlant(false);
+              cancelCreatingObject();
+            }}
+          >
+            <div className="p-4 bg-background-900 flex flex-col items-center justify-center">
+              <h1>Select new plant</h1>
+              <DataCrationObjectInput
+                multiselect={false}
+                header=""
+                contentType={"plant"}
+                propertyName={"plant"}
+                disableCreating={true}
+              />
+              <CustomButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  finishCreatingObject();
+                }}
+              >
+                Select
+              </CustomButton>
+            </div>
+          </Modal>
+
+          <Modal
+            visible={changingType}
+            onClose={() => {
+              setChangingType(false);
+              cancelCreatingObject();
+            }}
+          >
+            <div className="p-4 bg-background-900 flex flex-col items-center justify-center">
+              <h1>Select new type</h1>
+              <DataCrationObjectInput
+                multiselect={false}
+                header=""
+                contentType={"cultivationType"}
+                propertyName={"type"}
+                disableCreating={true}
+              />
+              <CustomButton
+                onClick={(e) => {
+                  e.preventDefault();
+                  finishCreatingObject();
+                }}
+              >
+                Select
+              </CustomButton>
+            </div>
+          </Modal>
+
+          <CultivationDetailsHeader
+            cultivation={data}
+            onUpdate={onObligatoryFieldUpdate}
+            setChangingPlant={setChangingPlant}
+            setChangingType={setChangingType}
+          />
           <VerticalScrollableDisplay
             entries={data.stages}
             header="Stages"

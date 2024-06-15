@@ -34,13 +34,18 @@ export function DataCreationContextProvider({ children }) {
   const { addStage } = useStageContext();
   const { addStageType } = useStageTypeContext();
 
+  const cancelCreatingObject = () => {
+    if (objectCreationQueue.length <= 0) return;
+    setObjectCreationQueue((prev) => (prev.length <= 1 ? [] : prev.slice(1)));
+  };
   // Method for starting new obejct creation process
   const startCreatingObject = (
     objectBody,
     createMethod,
     navigateAfterCreating,
     objectType,
-    argumentsFromParent
+    argumentsFromParent,
+    navigation = true
   ) => {
     setObjectCreationQueue((prev) => {
       var newBody = objectBody;
@@ -59,8 +64,7 @@ export function DataCreationContextProvider({ children }) {
         ...prev,
       ];
     });
-
-    navigate(`/create/${objectType.toLowerCase()}`);
+    if (navigation) navigate(`/create/${objectType.toLowerCase()}`);
   };
   // Simplified Method for starting new obejct creation process
   const startCreatingObjectByType = (dataType, argumentsFromParent) => {
@@ -216,6 +220,8 @@ export function DataCreationContextProvider({ children }) {
         setCurrentObjectProperty,
         getCurrentObjectProperty,
         isCreatingObject,
+        cancelCreatingObject,
+        startCreatingObject,
         isLoading,
       }}
     >
