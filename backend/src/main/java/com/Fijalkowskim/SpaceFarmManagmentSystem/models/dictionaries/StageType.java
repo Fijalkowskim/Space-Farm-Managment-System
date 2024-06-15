@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -18,6 +19,7 @@ public class StageType {
     private String name;
 
     @OneToMany(mappedBy = "stageType")
+    @JsonIgnore
     private Set<Stage> stages;
 
     public StageType() {

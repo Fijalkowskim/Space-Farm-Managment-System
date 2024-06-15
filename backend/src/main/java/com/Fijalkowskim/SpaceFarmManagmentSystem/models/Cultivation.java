@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -44,6 +45,7 @@ public class Cultivation {
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "stationId")
     )
+    @JsonIgnore
     private Set<Station> stations;
 
     @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -51,6 +53,7 @@ public class Cultivation {
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "workerId")
     )
+    @JsonIgnore
     private Set<Person> responsibleWorkers;
 
     @Nullable
