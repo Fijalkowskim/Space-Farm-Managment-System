@@ -108,9 +108,9 @@ public class CultivationController {
         }
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized: User does not have permission to perform this action.");
     }
-    @GetMapping("/person/")
-    public ResponseEntity<Set<Cultivation>> getCultvitationsByPersonId(
-            @RequestParam(name = "personId") long personId) throws CustomHTTPException {
+    @GetMapping("/person/{personId}")
+    public ResponseEntity<Set<Cultivation>> getCultivationsByPersonId(
+            @PathVariable long personId) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.getCultvitationsByPersonId(personId));
     }
     @PutMapping("/person/")
@@ -125,8 +125,8 @@ public class CultivationController {
             @RequestParam(name = "personId") long personId) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.deleteCultivationFromPerson(cultivationId, personId));
     }
-    @GetMapping("/station/") ResponseEntity<Set<Cultivation>> getCultivationsByStationId(
-            @RequestParam(name = "stationId") long stationId
+    @GetMapping("/station/{stationId}") ResponseEntity<Set<Cultivation>> getCultivationsByStationId(
+            @PathVariable long stationId
     ){
         return ResponseEntity.ok(cultivationService.getCultivationsByStageId(stationId));
     }
