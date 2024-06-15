@@ -16,6 +16,7 @@ import { usePopupContext } from "../../context/general/PopupContext";
 import DataCrationObjectInput from "../../components/dataCreation/DataCrationObjectInput";
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
 import CustomButton from "../../components/general/CustomButton";
+import EditObjectsDisplay from "../../components/dataEdit/EditObjectsDisplay";
 function CultivationDetails() {
   const { id } = useParams();
   const { updateCultivation, getCultivation } = useCultivationContext();
@@ -38,7 +39,7 @@ function CultivationDetails() {
     disableEditing();
   }, [location]);
 
-  const cultivationEditFormSubmit = async (newCultivation) => {
+  const cultivationBasicEditFormSubmit = async (newCultivation) => {
     const request = new CultivationRequest(
       newCultivation.startDate,
       newCultivation.plannedFinishDate,
@@ -48,17 +49,28 @@ function CultivationDetails() {
       newCultivation.area,
       newCultivation.type
     );
+
     const resp = await updateCultivation(data.id, request);
     if (resp === true) {
       addMessage("Cultivation updated successfully.");
       setDataUpdated(true);
     }
   };
+  const onWholeCultivationUpdate = async (newCultivation) => {
+    console.log(newCultivation);
+    const resp = await updateCultivation(data.id, newCultivation);
+    if (resp === true) {
+      addMessage("Cultivation updated successfully.");
+      setDataUpdated(true);
+    }
+  };
+
   const onObligatoryFieldUpdate = async (newBody) => {
     setChangingPlant(false);
     setChangingType(false);
-    cultivationEditFormSubmit(newBody);
+    cultivationBasicEditFormSubmit(newBody);
   };
+
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>
       {data === undefined && !isPending ? (
@@ -74,7 +86,7 @@ function CultivationDetails() {
           <Modal visible={editedCultivation} onClose={disableEditing}>
             <CultivationEditForm
               editedCultivation={data}
-              onSubmit={cultivationEditFormSubmit}
+              onSubmit={cultivationBasicEditFormSubmit}
             />
           </Modal>
 
@@ -145,7 +157,6 @@ function CultivationDetails() {
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
-            detailsPageDisplay={true}
             creationArgumentsFromParent={[
               { property: "cultivationId", value: data.id },
             ]}
@@ -155,21 +166,24 @@ function CultivationDetails() {
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
-            detailsPageDisplay={true}
           />
-          <VerticalScrollableDisplay
+          <EditObjectsDisplay
             entries={data.stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
-            detailsPageDisplay={true}
+            parentBody={data}
+            parentType={"cultivation"}
+            onChoosingFinished={onWholeCultivationUpdate}
+            multiselect={true}
+            propertyName={"stations"}
+            selectById={true}
           />
-          <VerticalScrollableDisplay
-            entries={data.responsibleWorkers}
+          <EditObjectsDisplay
+            entries={data.stations}
             header="ResponsibleWorkers"
             contentType="worker"
             className="max-w-4xl items-start"
-            detailsPageDisplay={true}
           />
         </div>
       )}

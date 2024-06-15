@@ -66,6 +66,31 @@ export function DataCreationContextProvider({ children }) {
     });
     if (navigation) navigate(`/create/${objectType.toLowerCase()}`);
   };
+  const startEditingObjectByType = (objectBody, createMethod, objectType) => {
+    var newObject;
+    switch (objectType.toLowerCase()) {
+      case "cultivation":
+        newObject = {
+          ...objectBody,
+          stations:
+            objectBody.stations === undefined ||
+            objectBody.stations.length === 0
+              ? []
+              : objectBody.stations.map((entry) => entry.id),
+        };
+        break;
+      default:
+        return;
+    }
+    startCreatingObject(
+      newObject,
+      createMethod,
+      undefined,
+      objectType,
+      undefined,
+      false
+    );
+  };
   // Simplified Method for starting new obejct creation process
   const startCreatingObjectByType = (dataType, argumentsFromParent) => {
     switch (dataType.toLowerCase()) {
@@ -222,6 +247,7 @@ export function DataCreationContextProvider({ children }) {
         isCreatingObject,
         cancelCreatingObject,
         startCreatingObject,
+        startEditingObjectByType,
         isLoading,
       }}
     >

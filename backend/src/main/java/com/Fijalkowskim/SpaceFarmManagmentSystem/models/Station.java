@@ -1,5 +1,6 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Builder;

@@ -3,6 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Station;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
@@ -16,13 +17,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeParseException;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Transactional
 @Service
@@ -86,6 +85,24 @@ public class CultivationServiceImpl implements CultivationService {
                 cultivationRequest.getRealFinishDate().before(oldCultivation.get().getStartDate())){
             throw new CustomHTTPException("Real finish date cannot be earlier then start date", HttpStatus.BAD_REQUEST);
         }
+        Set<Station> newStations = cultivationRequest.getStations() == null || cultivationRequest.getStations().length == 0 ?
+                oldCultivation.get().getStations() :
+                Arrays.stream(cultivationRequest.getStations())
+                        .map(stationId -> {
+                            Optional<Station> foundStation = stationDAORepository.findById(stationId);
+                            return foundStation.orElseThrow(() -> new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST));
+                        })
+                        .collect(Collectors.toSet());
+
+        Set<Person> newResponsibleWorkers = cultivationRequest.getResponsibleWorkers() == null || cultivationRequest.getResponsibleWorkers().length == 0 ?
+                oldCultivation.get().getResponsibleWorkers() :
+                Arrays.stream(cultivationRequest.getResponsibleWorkers())
+                        .map(stationId -> {
+                            Optional<Person> foundWorker = personDAORepository.findById(stationId);
+                            return foundWorker.orElseThrow(() -> new CustomHTTPException("Given responsible worker not found", HttpStatus.BAD_REQUEST));
+                        })
+                        .collect(Collectors.toSet());
+
         Cultivation cultivation = Cultivation.builder()
                 .startDate(cultivationRequest.getStartDate())
                 .type(cultivationRequest.getType())
@@ -95,8 +112,8 @@ public class CultivationServiceImpl implements CultivationService {
                 .plant(cultivationRequest.getPlant())
                 .stages(oldCultivation.get().getStages())
                 .harvests(oldCultivation.get().getHarvests())
-                .stations(oldCultivation.get().getStations())
-                .responsibleWorkers(oldCultivation.get().getResponsibleWorkers())
+                .stations(newStations)
+                .responsibleWorkers(newResponsibleWorkers)
                 .comment(cultivationRequest.getComment())
                 .id(oldCultivation.get().getId())
                 .build();

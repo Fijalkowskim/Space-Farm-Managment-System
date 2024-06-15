@@ -39,14 +39,14 @@ public class Cultivation {
     @OneToMany(mappedBy = "cultivation")
     private Set<Harvest> harvests;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "stationId")
     )
     private Set<Station> stations;
 
-    @ManyToMany
+    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "workerId")

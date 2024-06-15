@@ -13,6 +13,7 @@ function VerticalScrollableDisplay({
   contentType,
   loading,
   detailsPageDisplay,
+  addExisiting,
   disableCreateButton,
   disableNavigation,
   multiselect,
@@ -20,6 +21,7 @@ function VerticalScrollableDisplay({
   propertyName,
   creationArgumentsFromParent,
   dictionaryType,
+  selectById = false,
 }) {
   const { userData } = usePersonContext();
   if (!userData) return;
@@ -38,11 +40,6 @@ function VerticalScrollableDisplay({
             dataType={contentType}
             argumentsFromParent={creationArgumentsFromParent}
           />
-        )}
-        {detailsPageDisplay === true && (
-          <CustomButton className={"w-full text-base"} variant={"action"}>
-            Add existing
-          </CustomButton>
         )}
       </div>
       {loading === true ? (
@@ -70,6 +67,7 @@ function VerticalScrollableDisplay({
             disableNavigation={disableNavigation}
             multiselect={multiselect}
             propertyName={propertyName}
+            selectById={selectById}
           />
         ))
       ) : (

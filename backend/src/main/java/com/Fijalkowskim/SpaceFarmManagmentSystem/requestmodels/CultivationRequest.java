@@ -10,25 +10,17 @@ import java.util.Set;
 @Data
 public class CultivationRequest {
     private Date startDate;
-
     private CultivationType type;
-
     private float area;
-
     private Date plannedFinishDate;
     private Date realFinishDate;
-
-    //private Date realFinishDate;
-
     private Plant plant;
+    private String comment;
+    private Long[] stations;
+    private Long[] responsibleWorkers;
 
     //private Set<Stage> stages;
-
     //private Set<Harvest> harvests;
-
     //private Set<Station> stations;
-
     //private Set<Person> responsibleWorkers;
-
-    private String comment;
 }

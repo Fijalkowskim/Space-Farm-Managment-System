@@ -21,10 +21,17 @@ function DisplayCard({
   multiselect,
   propertyName,
   dictionaryType,
+  selectById = false,
 }) {
   const navigate = useNavigate();
   const { setCurrentObjectProperty, getCurrentObjectProperty } =
     useDataCreationContext();
+  const [loadedData, setLoadedData] = useState(data);
+  useEffect(() => {
+    if (selectById && data.id) {
+      setLoadedData(data.id);
+    }
+  }, [selectById]);
   return (
     <div
       className={`flex flex-row items-start flex-nowrap justify-between gap-4 p-4 text-text-50 bg-background-800 hover:bg-background-800/80 transition-colors rounded-sm shadow-sm w-full text-base relative cursor-pointer ${
@@ -32,7 +39,9 @@ function DisplayCard({
           getCurrentObjectProperty(propertyName) === data) ||
         (Array.isArray(getCurrentObjectProperty(propertyName)) &&
           getCurrentObjectProperty(propertyName).find(
-            (obj) => obj.id === data.id
+            (obj) =>
+              (selectById && obj === loadedData) ||
+              (!selectById && obj.id === data.id)
           ))
           ? "border-2 border-primary-700"
           : ""
@@ -42,19 +51,29 @@ function DisplayCard({
           if (multiselect === true) {
             const oldProperty = getCurrentObjectProperty(propertyName);
             if (oldProperty === undefined) {
-              setCurrentObjectProperty(propertyName, [data]);
+              setCurrentObjectProperty(propertyName, [loadedData]);
             } else {
               setCurrentObjectProperty(
                 propertyName,
-                oldProperty.find((obj) => obj.id === data.id)
-                  ? oldProperty.filter((obj) => obj.id !== data.id)
-                  : [...oldProperty, data]
+                oldProperty.find(
+                  (obj) =>
+                    (selectById && obj === loadedData) ||
+                    (!selectById && obj.id === data.id)
+                )
+                  ? oldProperty.filter(
+                      (obj) =>
+                        (selectById && obj !== loadedData) ||
+                        (!selectById && obj.id !== data.id)
+                    )
+                  : [...oldProperty, loadedData]
               );
             }
           } else {
             setCurrentObjectProperty(
               propertyName,
-              getCurrentObjectProperty(propertyName) === data ? undefined : data
+              getCurrentObjectProperty(propertyName) === loadedData
+                ? undefined
+                : loadedData
             );
           }
           return;

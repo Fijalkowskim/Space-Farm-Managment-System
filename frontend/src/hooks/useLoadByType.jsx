@@ -27,6 +27,9 @@ export const useLoadByType = (dataType) => {
         case "cultivationtype":
           loadingMethod = getCultivationTypes;
           break;
+        case "station":
+          loadingMethod = getStations;
+          break;
         default:
           setIsPending(false);
           setData(undefined);
