@@ -10,7 +10,7 @@ function LoginPanel() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isPending, setIsPending] = useState(false);
-  const { logIn, loginFromCookies } = usePersonContext();
+  const { logIn } = usePersonContext();
   const { addMessage } = usePopupContext();
   const onSumbit = async () => {
     setIsPending(true);
@@ -20,10 +20,6 @@ function LoginPanel() {
     }
     setIsPending(false);
   };
-
-  // useEffect(() => {
-  //   loginFromCookies();
-  // }, []);
 
   return (
     <form

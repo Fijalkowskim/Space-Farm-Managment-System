@@ -14,15 +14,13 @@ export function PopupContextProvider({ children }) {
     setMessages([]);
   };
 
-  const addMessage = (message, type, timeout) => {
+  const addMessage = (message, type = "info", timeout = 3000) => {
     const newId = uuidv4();
     setMessages((prev) => [...prev, new PopupMessage(newId, message, type)]);
-    if (timeout) {
-      if (timeout <= 0) timeout = 3000;
-      setTimeout(() => {
-        setMessages((prev) => prev.filter((mess) => mess.id !== newId));
-      }, timeout);
-    }
+    if (timeout <= 0) timeout = 3000;
+    setTimeout(() => {
+      setMessages((prev) => prev.filter((mess) => mess.id !== newId));
+    }, timeout);
   };
   const logError = (err) => {
     if (err?.response?.data !== undefined) {

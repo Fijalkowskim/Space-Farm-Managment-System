@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import PageWrapper from "../PageWrapper";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useCultivation } from "../../hooks/cultivations/useCultivation";
 import LoadingBar from "../../components/general/LoadingBar";
 import CultivationDetailsHeader from "../../components/cultivations/CultivationDetailsHeader";
@@ -12,6 +12,7 @@ import { useCultivationContext } from "../../context/cultivations/CultivationCon
 import Modal from "../../components/general/Modal";
 import { useFetchData } from "../../hooks/useFetchData";
 import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
+import { usePopupContext } from "../../context/general/PopupContext";
 
 function CultivationDetails() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ function CultivationDetails() {
   const { data, isPending } = useFetchData(getCultivation, id);
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
   const location = useLocation();
-
+  const { addMessage } = usePopupContext();
   useEffect(() => {
     disableEditing();
   }, [location]);
@@ -36,7 +37,7 @@ function CultivationDetails() {
     );
     const resp = await updateCultivation(data.id, request);
     if (resp === true) {
-      window.location.reload();
+      addMessage("Cultivation updated successfully.");
     }
   };
   return (
