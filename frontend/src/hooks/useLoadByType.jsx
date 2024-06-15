@@ -5,6 +5,7 @@ import { useStationContext } from "../context/StationContext";
 import { usePersonContext } from "../context/PersonContext";
 import { usePlantContext } from "../context/dictionaries/PlantContext";
 import { useCultivationTypeContext } from "../context/dictionaries/CultivationTypeContext";
+import { useStageTypeContext } from "../context/dictionaries/StageTypeContext";
 
 export const useLoadByType = (dataType) => {
   const [data, setData] = useState();
@@ -15,6 +16,7 @@ export const useLoadByType = (dataType) => {
   const { getPersons } = usePersonContext();
   const { getPlants } = usePlantContext();
   const { getCultivationTypes } = useCultivationTypeContext();
+  const { getStageTypes } = useStageTypeContext();
 
   useEffect(() => {
     const loadData = async () => {
@@ -29,6 +31,9 @@ export const useLoadByType = (dataType) => {
           break;
         case "station":
           loadingMethod = getStations;
+          break;
+        case "stageType":
+          loadingMethod = getStageTypes;
           break;
         default:
           setIsPending(false);

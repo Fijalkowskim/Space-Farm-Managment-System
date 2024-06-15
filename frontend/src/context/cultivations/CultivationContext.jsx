@@ -55,16 +55,17 @@ export function CultivationContextProvider({ children }) {
     }
     return undefined;
   };
-  const getAssignedCultivations = async (userID) => {
-    return exampleCultivations;
+  const getAssignedCultivations = async () => {
+    if (!userData) return undefined;
     try {
-      const res = await api.get(`/cultivation/user/${userID}`);
+      const res = await api.get(`/cultivation/person/${userData.id}`);
       if (res.data) {
+        return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return exampleCultivations;
+    return undefined;
   };
   //************ Put methods ************
   const addCultivaiton = async (cultivationRequest) => {

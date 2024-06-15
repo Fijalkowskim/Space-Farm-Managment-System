@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDataCreationContext } from "../../context/general/DataCreationContext";
 import { cn } from "../../helpers/helpers";
 import { useNavigate } from "react-router-dom";
-
+import { formatDate } from "../../helpers/helpers";
 function DataCreationRegularInput({ property, label, ...props }) {
   const { getCurrentObjectProperty, setCurrentObjectProperty } =
     useDataCreationContext();
@@ -22,7 +22,11 @@ function DataCreationRegularInput({ property, label, ...props }) {
         onChange={(e) => {
           setCurrentObjectProperty(property, e.target.value);
         }}
-        value={getCurrentObjectProperty(property)}
+        value={
+          props.type == "date"
+            ? formatDate(getCurrentObjectProperty(property))
+            : getCurrentObjectProperty(property)
+        }
       />
     </>
   );
