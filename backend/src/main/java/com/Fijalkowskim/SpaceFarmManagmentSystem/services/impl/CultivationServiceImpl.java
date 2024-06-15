@@ -11,6 +11,7 @@ import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StationDAOReposito
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MultipleIdRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.services.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -30,12 +31,14 @@ public class CultivationServiceImpl implements CultivationService {
     private final CultivationDAORepository cultivationDAORepository;
     private final PersonDAORepository personDAORepository;
     private final StationDAORepository stationDAORepository;
+    private final StationServiceImpl stationService;
 
     @Autowired
-    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository, StationDAORepository stationDAORepository) {
+    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository, StationDAORepository stationDAORepository, StationServiceImpl stationService) {
         this.cultivationDAORepository = cultivationDAORepository;
         this.personDAORepository = personDAORepository;
         this.stationDAORepository = stationDAORepository;
+        this.stationService = stationService;
     }
 
     public Page<Cultivation> getCultivations(PageRequest pageRequest){
@@ -86,8 +89,9 @@ public class CultivationServiceImpl implements CultivationService {
                 cultivationRequest.getRealFinishDate().before(oldCultivation.get().getStartDate())){
             throw new CustomHTTPException("Real finish date cannot be earlier then start date", HttpStatus.BAD_REQUEST);
         }
-        Set<Station> newStations = cultivationRequest.getStations() == null || cultivationRequest.getStations().length == 0 ?
+        Set<Station> newStations = cultivationRequest.getStations() == null ?
                 oldCultivation.get().getStations() :
+                cultivationRequest.getStations().length == 0 ? new HashSet<>() :
                 Arrays.stream(cultivationRequest.getStations())
                         .map(stationId -> {
                             Optional<Station> foundStation = stationDAORepository.findById(stationId);
@@ -95,8 +99,9 @@ public class CultivationServiceImpl implements CultivationService {
                         })
                         .collect(Collectors.toSet());
 
-        Set<Person> newResponsibleWorkers = cultivationRequest.getResponsibleWorkers() == null || cultivationRequest.getResponsibleWorkers().length == 0 ?
+        Set<Person> newResponsibleWorkers = cultivationRequest.getResponsibleWorkers() == null ?
                 oldCultivation.get().getResponsibleWorkers() :
+                cultivationRequest.getResponsibleWorkers().length == 0 ? new HashSet<>() :
                 Arrays.stream(cultivationRequest.getResponsibleWorkers())
                         .map(stationId -> {
                             Optional<Person> foundWorker = personDAORepository.findById(stationId);
@@ -118,6 +123,7 @@ public class CultivationServiceImpl implements CultivationService {
                 .comment(cultivationRequest.getComment())
                 .id(oldCultivation.get().getId())
                 .build();
+
         return cultivationDAORepository.save(cultivation);
     }
 
@@ -232,13 +238,25 @@ public class CultivationServiceImpl implements CultivationService {
         if(cultivationOptional.isEmpty()){
             throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
         }
+//        Set<Station> newStations = Arrays.stream(multipleIdRequest.getIds())
+//                .forEach(stationId -> {
+//                    Optional<Station> foundStation = stationDAORepository.findById(stationId);
+//                    if(foundStation.isEmpty()) throw new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST);
+//                    stationService.updateStation()
+//                });
         Cultivation cultivation = cultivationOptional.get();
-        for(long stationId:multipleIdRequest.getIds()){
-            Optional<Station> stationOptional = stationDAORepository.findById(stationId);
-            if(stationOptional.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
-            Station station = stationOptional.get();
-            cultivation.getStations().add(station);
-        }
+
+        Set<Station> newStations = Arrays.stream(multipleIdRequest.getIds())
+                .mapToObj(stationId -> {
+                    Optional<Station> foundStation = stationDAORepository.findById(stationId);
+                    return foundStation.orElseThrow(() -> new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST));
+                })
+                .collect(Collectors.toSet());
+
+        Set<Long> existingIds = stationDAORepository.findAllByCultivationId(id).stream().map(Station::getId).collect(Collectors.toSet());
+        newStations = newStations.stream().filter(s->!existingIds.contains(s.getId())).collect(Collectors.toSet());
+
+        cultivation.setStations(newStations);
         return cultivationDAORepository.save(cultivation);
     }
 

@@ -21,7 +21,8 @@ import { useStationContext } from "../../context/StationContext";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 function CultivationDetails() {
   const { id } = useParams();
-  const { updateCultivation, getCultivation } = useCultivationContext();
+  const { updateCultivation, getCultivation, updateCultivaitonStations } =
+    useCultivationContext();
   const [dataUpdated, setDataUpdated] = useState(false);
   const { data, isPending } = useFetchData(
     getCultivation,
@@ -67,10 +68,16 @@ function CultivationDetails() {
     }
   };
   const onWholeCultivationUpdate = async (newCultivation) => {
-    console.log(newCultivation);
     const resp = await updateCultivation(data.id, newCultivation);
     if (resp === true) {
       addMessage("Cultivation updated successfully.");
+      setDataUpdated(true);
+    }
+  };
+  const onStationsChanged = async (newStationsReques) => {
+    const resp = await updateCultivaitonStations(data.id, newStationsReques);
+    if (resp === true) {
+      addMessage("Stations updated successfully.");
       setDataUpdated(true);
     }
   };
@@ -176,19 +183,21 @@ function CultivationDetails() {
             contentType="harvest"
             className="max-w-4xl items-start"
           />
-          <EditObjectsDisplay
-            entries={stations}
-            header="Stations"
-            contentType="station"
-            className="max-w-4xl items-start"
-            parentBody={data}
-            parentType={"cultivation"}
-            onChoosingFinished={onWholeCultivationUpdate}
-            multiselect={true}
-            propertyName={"stations"}
-            selectById={true}
-            isPending={stationsPending}
-          />
+          {data && (
+            <EditObjectsDisplay
+              entries={stations}
+              header="Stations"
+              contentType="station"
+              className="max-w-4xl items-start"
+              isPending={stationsPending}
+              parentType={"cultivation"}
+              parentBody={{ ids: stations?.map((s) => s.id) }}
+              multiselect={true}
+              propertyName={"ids"}
+              selectById={true}
+              onChoosingFinished={onStationsChanged}
+            />
+          )}
           {/* <EditObjectsDisplay
             entries={data.stations}
             header="ResponsibleWorkers"

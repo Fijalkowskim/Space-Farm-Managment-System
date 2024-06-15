@@ -22,7 +22,7 @@ function CultivationDetailsHeader({
       <div className="flex flex-row items-end justify-center gap-4">
         <DisplayCardAttribute
           label="plant"
-          value={cultivation.plant.name}
+          value={cultivation?.plant?.name}
           className={"text-2xl"}
         />
       </div>

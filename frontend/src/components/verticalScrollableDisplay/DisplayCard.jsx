@@ -31,9 +31,12 @@ function DisplayCard({
   } = useDataCreationContext();
   const [loadedData, setLoadedData] = useState(data);
   const [isSelected, setIsSelected] = useState(false);
+
   useEffect(() => {
     if (selectById && data.id) {
       setLoadedData(data.id);
+    } else {
+      setLoadedData(data);
     }
   }, [selectById]);
 
@@ -45,18 +48,16 @@ function DisplayCard({
     )
       return;
     setIsSelected(
-      propertyName !== undefined &&
-        ((!selectById &&
-          getCurrentObjectProperty(propertyName)?.id === data.id) ||
-          (selectById && getCurrentObjectProperty(propertyName) === data.id) ||
-          (Array.isArray(getCurrentObjectProperty(propertyName)) &&
-            getCurrentObjectProperty(propertyName).find(
-              (obj) =>
-                (selectById && obj === data.id) ||
-                (!selectById && obj?.id === data.id)
-            )))
+      (!selectById && getCurrentObjectProperty(propertyName)?.id === data.id) ||
+        (selectById && getCurrentObjectProperty(propertyName) === data.id) ||
+        (Array.isArray(getCurrentObjectProperty(propertyName)) &&
+          getCurrentObjectProperty(propertyName).find(
+            (obj) =>
+              (selectById && obj === data.id) ||
+              (!selectById && obj?.id === data.id)
+          ))
     );
-  }, [objectCreationQueue]);
+  }, [objectCreationQueue, selectById, data, propertyName]);
 
   return (
     <div

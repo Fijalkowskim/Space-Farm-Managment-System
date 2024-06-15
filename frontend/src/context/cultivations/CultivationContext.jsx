@@ -104,6 +104,27 @@ export function CultivationContextProvider({ children }) {
     }
     return false;
   };
+  const updateCultivaitonStations = async (id, stationsIdRequest) => {
+    if (!userData) return false;
+    try {
+      console.log(stationsIdRequest);
+      const res = await api.post(
+        `/cultivation/station/${id}`,
+        stationsIdRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return false;
+  };
   return (
     <CultivationContext.Provider
       value={{
@@ -113,6 +134,7 @@ export function CultivationContextProvider({ children }) {
         getAssignedCultivations,
         addCultivaiton,
         updateCultivation,
+        updateCultivaitonStations,
       }}
     >
       {children}

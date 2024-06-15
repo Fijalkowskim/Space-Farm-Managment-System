@@ -15,7 +15,7 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "stations")
+    @ManyToMany(mappedBy = "stations", fetch = FetchType.EAGER)
     @JsonIgnore
     private Set<Cultivation> cultivations;
 

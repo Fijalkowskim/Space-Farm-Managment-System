@@ -11,4 +11,5 @@ import java.util.Set;
 public interface StationDAORepository extends JpaRepository<Station, Long> {
     @Query("SELECT s FROM Station s JOIN s.cultivations c WHERE c.id = :id")
     Set<Station> findAllByCultivationId(@Param("id") Long id);
+
 }

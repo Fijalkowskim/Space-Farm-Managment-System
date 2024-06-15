@@ -40,15 +40,14 @@ public class Cultivation {
     @OneToMany(mappedBy = "cultivation")
     private Set<Harvest> harvests;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "stationId")
     )
-    @JsonIgnore
     private Set<Station> stations;
 
-    @ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @ManyToMany
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "workerId")
