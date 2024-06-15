@@ -1,11 +1,22 @@
 import React, { useEffect, useState } from "react";
 import CustomButton from "../general/CustomButton";
 
-function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
+function CultivationEditForm({ editedCultivation, onSubmit }) {
   const [newCultivation, setNewCultivation] = useState(editedCultivation);
+
+  const formatDate = (date) => {
+    if (!date) return "";
+    return new Date(date).toISOString().split("T")[0];
+  };
+
   useEffect(() => {
-    setNewCultivation(editedCultivation);
-  }, [editedCultivation, setNewCultivation, visible]);
+    setNewCultivation({
+      ...editedCultivation,
+      startDate: formatDate(editedCultivation.startDate),
+      plannedFinishDate: formatDate(editedCultivation.plannedFinishDate),
+      realFinishDate: formatDate(editedCultivation.realFinishDate),
+    });
+  }, [editedCultivation, setNewCultivation]);
   if (!newCultivation) return;
   return (
     <form
@@ -27,7 +38,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            startDate: new Date(e.target.value),
+            startDate: e.target.value,
           }))
         }
       />
@@ -40,7 +51,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            plannedFinishDate: new Date(e.target.value),
+            plannedFinishDate: e.target.value,
           }))
         }
       />
@@ -52,7 +63,7 @@ function CultivationEditForm({ editedCultivation, onSubmit, visible }) {
         onChange={(e) =>
           setNewCultivation((prev) => ({
             ...prev,
-            realFinishDate: new Date(e.target.value),
+            realFinishDate: e.target.value,
           }))
         }
       />

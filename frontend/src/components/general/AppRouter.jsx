@@ -17,11 +17,13 @@ import { usePersonContext } from "../../context/PersonContext";
 import WorkerDetails from "../../pages/detailsPages/WorkerDetails";
 import PlantDetails from "../../pages/detailsPages/PlantDetails";
 import DataCreationFormWrapper from "../../pages/DataCreationFormWrapper";
+import ScrollToTop from "./ScrollToTop";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
     <>
       {isLoggedIn && <Navbar />}
+      <ScrollToTop />
       <Routes>
         <Route
           path="/"

@@ -18,26 +18,20 @@ function CultivationDetails() {
   const { data, isPending } = useFetchData(getCultivation, id);
   const { disableEditing, editedCultivation } = useCultivationDetailsContext();
   const location = useLocation();
-  const [currentCultivation, setCurrentCultivation] = useState(undefined);
 
   useEffect(() => {
     disableEditing();
   }, [location]);
 
-  useEffect(() => {
-    setCurrentCultivation(data);
-    console.log(data);
-  }, [data, setCurrentCultivation]);
-
   const cultivationEditFormSubmit = async (newCultivation) => {
-    const resp = await updateCultivation(currentCultivation, newCultivation);
+    const resp = await updateCultivation(data, newCultivation);
     if (resp) {
-      setCurrentCultivation(resp);
+      window.location.reload();
     }
   };
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>
-      {currentCultivation === undefined && !isPending ? (
+      {data === undefined && !isPending ? (
         <div className="-mt-20 h-screen flex items-center justify-center">
           <h1 className="text-xl text-center">
             There is no cultivation with given id.
@@ -49,39 +43,38 @@ function CultivationDetails() {
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
           <Modal visible={editedCultivation} onClose={disableEditing}>
             <CultivationEditForm
-              editedCultivation={currentCultivation}
-              visible={editedCultivation}
+              editedCultivation={data}
               onSubmit={cultivationEditFormSubmit}
             />
           </Modal>
 
-          <CultivationDetailsHeader cultivation={currentCultivation} />
+          <CultivationDetailsHeader cultivation={data} />
           <VerticalScrollableDisplay
-            entries={currentCultivation.stages}
+            entries={data.stages}
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
             creationArgumentsFromParent={[
-              { property: "cultivationId", value: currentCultivation.id },
+              { property: "cultivationId", value: data.id },
             ]}
           />
           <VerticalScrollableDisplay
-            entries={currentCultivation.harvests}
+            entries={data.harvests}
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
           />
           <VerticalScrollableDisplay
-            entries={currentCultivation.stations}
+            entries={data.stations}
             header="Stations"
             contentType="station"
             className="max-w-4xl items-start"
             detailsPageDisplay={true}
           />
           <VerticalScrollableDisplay
-            entries={currentCultivation.responsibleWorkers}
+            entries={data.responsibleWorkers}
             header="ResponsibleWorkers"
             contentType="worker"
             className="max-w-4xl items-start"
