@@ -12,8 +12,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.HashSet;
 import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -49,5 +50,8 @@ public class StationServiceImpl implements StationService {
         Optional<Station> station = stationDAORepository.findById(id);
         if(station.isEmpty()) throw new CustomHTTPException("Station not found", HttpStatus.NOT_FOUND);
         return stationDAORepository.save(station.get());
+    }
+    public Set<Station> getStationsByCultivationId(Long cultivationId){
+        return stationDAORepository.findAllByCultivationId((cultivationId));
     }
 }

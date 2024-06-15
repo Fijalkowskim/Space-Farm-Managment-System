@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl.PersonServiceImpl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping( value = "/api/station")
 @CrossOrigin("http://localhost:3000")
@@ -33,6 +35,11 @@ public class StationController {
     public ResponseEntity<Station> getStation(
             @PathVariable long id) throws CustomHTTPException {
         return ResponseEntity.ok(stationService.getStationById(id));
+    }
+    @GetMapping("/cultivation/{cultivationId}")
+    public  ResponseEntity<Set<Station>> getStationsByCultivationId(
+            @PathVariable long cultivationId) {
+        return ResponseEntity.ok(stationService.getStationsByCultivationId(cultivationId));
     }
 
     @DeleteMapping("/{id}")
