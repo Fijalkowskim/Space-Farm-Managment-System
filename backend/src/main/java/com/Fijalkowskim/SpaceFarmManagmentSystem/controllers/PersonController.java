@@ -79,6 +79,7 @@ public class PersonController {
             @PathVariable long id,
             @RequestParam(name = "userID") long userID) throws CustomHTTPException
     {
+        if(id == userID) throw  new CustomHTTPException("You cannot delete your account", HttpStatus.BAD_REQUEST);
         if (personService.getPersonById(userID).getRole() == WorkerType.ADMIN) {
             personService.deletePerson(id);
             return ResponseEntity.ok("Person has been deleted successfully.");

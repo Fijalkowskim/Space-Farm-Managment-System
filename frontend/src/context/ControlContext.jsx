@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
+import { usePopupContext } from "./general/PopupContext";
 
 const ControlContext = createContext();
 
@@ -11,7 +12,7 @@ export function ControlContextProvider({ children }) {
   const [controls, setControls] = useState([]);
   const [control, setControl] = useState(null);
   const [controlReadings, setControlReadings] = useState([]);
-
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getControls = async () => {
     try {
@@ -51,13 +52,14 @@ export function ControlContextProvider({ children }) {
   };
   const deleteControl = async (id) => {
     try {
-      await api.delete(`/control/${id}`);
-      setControls((prevControls) => prevControls.filter((control) => control.id !== id));
-      return true;
+      const res = await api.delete(`/control/${id}`);
+      if (res.data()) {
+        return true;
+      }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return false;
+    return null;
   };
   const addControl = async (controlRequest) => {
     try {
@@ -84,7 +86,9 @@ export function ControlContextProvider({ children }) {
       });
       if (res.data) {
         setControls((prevControls) =>
-          prevControls.map((control) => (control.id === id ? res.data : control))
+          prevControls.map((control) =>
+            control.id === id ? res.data : control
+          )
         );
         return res.data;
       }
@@ -93,7 +97,6 @@ export function ControlContextProvider({ children }) {
     }
     return null;
   };
-
 
   return (
     <ControlContext.Provider

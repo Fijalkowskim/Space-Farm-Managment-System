@@ -20,8 +20,8 @@ import { GlobalReloadContextProvider } from "./GlobalReloadContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <GlobalReloadContextProvider>
-      <PersonContextProvider>
-        <PopupContextProvider>
+      <PopupContextProvider>
+        <PersonContextProvider>
           <CultivationDetailContextProvider>
             <StationContextProvider>
               <SettingsContextProvider>
@@ -53,8 +53,8 @@ function ContextProvidersWrapper({ children }) {
               </SettingsContextProvider>
             </StationContextProvider>
           </CultivationDetailContextProvider>
-        </PopupContextProvider>
-      </PersonContextProvider>
+        </PersonContextProvider>
+      </PopupContextProvider>
     </GlobalReloadContextProvider>
   );
 }

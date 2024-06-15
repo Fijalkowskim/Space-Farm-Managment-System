@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import api from "../api/api";
 import { useCookies } from "react-cookie";
 import { Person } from "../models/Person";
+import { usePopupContext } from "./general/PopupContext";
 const PersonContext = React.createContext();
 
 export function usePersonContext() {
@@ -12,6 +13,7 @@ export function PersonContextProvider({ children }) {
   const [userData, setUserData] = useState(undefined);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isPending, setIsPending] = useState(true);
+  const { logError } = usePopupContext();
   const [userCookie, setUserCookie, removeUserCookie] = useCookies(["user"]);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export function PersonContextProvider({ children }) {
         return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     setIsPending(false);
     return false;
@@ -49,7 +51,7 @@ export function PersonContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return undefined;
   };
@@ -60,7 +62,7 @@ export function PersonContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return undefined;
   };
@@ -71,7 +73,7 @@ export function PersonContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return undefined;
   };
@@ -84,7 +86,7 @@ export function PersonContextProvider({ children }) {
         return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };
@@ -97,9 +99,19 @@ export function PersonContextProvider({ children }) {
         return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
+  };
+  const deletePerson = async (id) => {
+    if (!userData) return;
+    try {
+      const res = await api.delete(`/person/${id}?userID=${userData.id}`);
+      return true;
+    } catch (err) {
+      logError(err);
+    }
+    return null;
   };
   //************ User managment methods ************
   const loginFromCookies = async () => {
@@ -144,6 +156,7 @@ export function PersonContextProvider({ children }) {
         loginFromCookies,
         getResponsibleWorkers,
         addPerson,
+        deletePerson,
       }}
     >
       {children}

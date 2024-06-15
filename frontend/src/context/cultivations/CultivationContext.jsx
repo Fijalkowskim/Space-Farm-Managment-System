@@ -126,6 +126,19 @@ export function CultivationContextProvider({ children }) {
     }
     return false;
   };
+  //************ Delete methods ************
+  const deleteCultivation = async (id) => {
+    if (!userData) return;
+    try {
+      const res = await api.delete(`/cultivation/${id}?userID=${userData.id}`);
+      if (res.data()) {
+        return true;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return null;
+  };
   return (
     <CultivationContext.Provider
       value={{

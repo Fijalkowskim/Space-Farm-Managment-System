@@ -13,7 +13,7 @@ export function MeasuredValueContextProvider({ children }) {
     try {
       const res = await api.get("/measuredValue");
       if (res.data) {
-        return res.data.content; 
+        return res.data.content;
       }
     } catch (err) {
       console.log(err);
@@ -47,7 +47,7 @@ export function MeasuredValueContextProvider({ children }) {
 
   const updateMeasuredValue = async (id, measuredValueRequest) => {
     try {
-      const res = await api.post(`/measuredValue/${id}`, measuredValueRequest,{
+      const res = await api.post(`/measuredValue/${id}`, measuredValueRequest, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -64,9 +64,7 @@ export function MeasuredValueContextProvider({ children }) {
   const deleteMeasuredValue = async (id) => {
     try {
       const res = await api.delete(`/measuredValue/${id}`);
-      if (res.status === 200) {
-        return true;
-      }
+      return true;
     } catch (err) {
       console.log(err);
     }

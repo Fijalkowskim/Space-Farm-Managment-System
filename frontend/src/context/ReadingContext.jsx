@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
-
+import { usePopupContext } from "./general/PopupContext";
 const ReadingContext = createContext();
 
 export function useReadingContext() {
@@ -10,6 +10,7 @@ export function useReadingContext() {
 export function ReadingContextProvider({ children }) {
   const [readings, setReadings] = useState([]);
   const [reading, setReading] = useState(null);
+  const { logError } = usePopupContext();
 
   //************ Get methods ************
   const getReadings = async () => {
@@ -42,13 +43,13 @@ export function ReadingContextProvider({ children }) {
   const addReading = async (readingRequest) => {
     try {
       const res = await api.put("/reading", readingRequest, {
-        headers:{
+        headers: {
           "Content-Type": "application/json",
-        }
+        },
       });
       if (res.data) {
         setReadings((prevReadings) => [...prevReadings, res.data]);
-        return res.data
+        return res.data;
       }
     } catch (err) {
       console.log(err);
@@ -65,7 +66,9 @@ export function ReadingContextProvider({ children }) {
       });
       if (res.data) {
         setReadings((prevReadings) =>
-            prevReadings.map((reading) => (reading.id === id ? res.data : reading))
+          prevReadings.map((reading) =>
+            reading.id === id ? res.data : reading
+          )
         );
         return res.data;
       }
@@ -78,7 +81,9 @@ export function ReadingContextProvider({ children }) {
   const deleteReading = async (id) => {
     try {
       await api.delete(`/reading/${id}`);
-      setReadings((prevReadings) => prevReadings.filter((reading) => reading.id !== id));
+      setReadings((prevReadings) =>
+        prevReadings.filter((reading) => reading.id !== id)
+      );
       return true;
     } catch (err) {
       console.log(err);

@@ -1,17 +1,69 @@
 import { useState, useEffect } from "react";
-import { useStationContext } from "../context/StationContext";
-import { usePopupContext } from "../context/general/PopupContext";
 import { useGlobalReloadContext } from "../context/general/GlobalReloadContext";
-export const useDelete = (contentType, id, setReload) => {
+import { usePopupContext } from "../context/general/PopupContext";
+import { useStationContext } from "../context/StationContext";
+import { useControlContext } from "../context/ControlContext";
+import { useCultivationTypeContext } from "../context/dictionaries/CultivationTypeContext";
+import { useStageContext } from "../context/StageContext";
+import { useMeasureUnitContext } from "../context/dictionaries/MeasureUnitContext";
+import { useHarvestContext } from "../context/HarvestContext";
+import { useMeasuredValueContext } from "../context/MeasuredValueContext";
+import { usePersonContext } from "../context/PersonContext";
+import { usePlantContext } from "../context/dictionaries/PlantContext";
+import { useReadingContext } from "../context/ReadingContext";
+import { useStageTypeContext } from "../context/dictionaries/StageTypeContext";
+
+export const useDelete = (contentType, id) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const { logError } = usePopupContext();
+  const { setGlobalReload } = useGlobalReloadContext();
 
   const { deleteStation } = useStationContext();
-  const { setGlobalReload } = useGlobalReloadContext();
+  const { deleteControl } = useControlContext();
+  const { deleteCultivationType } = useCultivationTypeContext();
+  const { deleteStage } = useStageContext();
+  const { deleteMeasureUnit } = useMeasureUnitContext();
+  const { deleteHarvest } = useHarvestContext();
+  const { deleteMeasuredValue } = useMeasuredValueContext();
+  const { deletePerson } = usePersonContext();
+  const { deletePlant } = usePlantContext();
+  const { deleteReading } = useReadingContext();
+  const { deleteStageType } = useStageTypeContext();
+
   var deleteMethod;
   switch (contentType) {
     case "station":
       deleteMethod = deleteStation;
+      break;
+    case "control":
+      deleteMethod = deleteControl;
+      break;
+    case "cultivationType":
+      deleteMethod = deleteCultivationType;
+      break;
+    case "stage":
+      deleteMethod = deleteStage;
+      break;
+    case "measureUnit":
+      deleteMethod = deleteMeasureUnit;
+      break;
+    case "harvest":
+      deleteMethod = deleteHarvest;
+      break;
+    case "measuredValue":
+      deleteMethod = deleteMeasuredValue;
+      break;
+    case "worker":
+      deleteMethod = deletePerson;
+      break;
+    case "plant":
+      deleteMethod = deletePlant;
+      break;
+    case "reading":
+      deleteMethod = deleteReading;
+      break;
+    case "stageTypes":
+      deleteMethod = deleteStageType;
       break;
   }
   const deleteItem = async () => {

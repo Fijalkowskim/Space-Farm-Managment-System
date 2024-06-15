@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
+import { usePopupContext } from "./general/PopupContext";
 
 const HarvestContext = createContext();
 
@@ -9,13 +10,13 @@ export function useHarvestContext() {
 
 export function HarvestContextProvider({ children }) {
   const [harvests, setHarvests] = useState([]);
-
+  const { logError } = usePopupContext();
   //************ Get methods ************
-   const getHarvests = async () => {
+  const getHarvests = async () => {
     try {
       const res = await api.get("/harvest");
       if (res.data) {
-        setHarvests(res.data.content);  // Assuming res.data.content contains the list of harvests
+        setHarvests(res.data.content); // Assuming res.data.content contains the list of harvests
         return res.data.content;
       }
     } catch (err) {
@@ -68,14 +69,11 @@ export function HarvestContextProvider({ children }) {
   const deleteHarvest = async (id) => {
     try {
       const res = await api.delete(`/harvest/${id}`);
-      if (res.status === 200) {
-        setHarvests(harvests.filter((harvest) => harvest.id !== id));
-        return true;
-      }
+      return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return false;
+    return null;
   };
 
   return (

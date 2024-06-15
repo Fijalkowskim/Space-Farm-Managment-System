@@ -76,9 +76,7 @@ export function StationContextProvider({ children }) {
     if (!userData) return;
     try {
       const res = await api.delete(`/station/${id}?userID=${userData.id}`);
-      if (res.data()) {
-        return true;
-      }
+      return true;
     } catch (err) {
       logError(err);
     }
