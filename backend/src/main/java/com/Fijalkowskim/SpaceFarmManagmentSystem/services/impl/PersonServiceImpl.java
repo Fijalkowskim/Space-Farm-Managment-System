@@ -48,6 +48,10 @@ public class PersonServiceImpl implements PersonService {
 
     public void deletePerson(long id) throws CustomHTTPException{
         Optional<Person> person = personDAORepository.findById(id);
+        Optional<Cultivation> cultivation = cultivationDAORepository.findByPersonId(id);
+        if(cultivation.isPresent()){
+            throw new CustomHTTPException("Person assigned to cultivation", HttpStatus.NOT_FOUND);
+        }
         if(person.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         personDAORepository.delete(person.get());
     }

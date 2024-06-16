@@ -39,4 +39,10 @@ public interface CultivationDAORepository  extends JpaRepository<Cultivation, Lo
 
     @Query("SELECT c FROM Cultivation c WHERE c.plant.id = :id")
     Optional<Cultivation> findCultivationPlantById(Long id);
+
+    @Query("SELECT c FROM Cultivation c JOIN c.responsibleWorkers p WHERE p.id = :id")
+    Optional<Cultivation> findByPersonId(long id);
+
+    @Query("SELECT c FROM Cultivation c JOIN c.stations s WHERE s.id = :id")
+    Optional<Cultivation> findCultivationStationById(Long id);
 }

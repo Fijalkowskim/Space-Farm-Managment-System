@@ -67,6 +67,14 @@ public class CultivationServiceImpl implements CultivationService {
     }
     public void deleteCultivation(long id) throws CustomHTTPException{
         Optional<Cultivation> cultivation = cultivationDAORepository.findById(id);
+        Optional<Person> person = personDAORepository.findByCultivationId(id);
+        Optional<Station> station = stationDAORepository.findByCultivationId(id);
+        if(station.isPresent()){
+            throw new CustomHTTPException("Cultivation assigned to station", HttpStatus.FOUND);
+        }
+        if(person.isPresent()){
+            throw new CustomHTTPException("Cultivation assigned to person", HttpStatus.FOUND);
+        }
         if(cultivation.isEmpty()){
             throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
         }
