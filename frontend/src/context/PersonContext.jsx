@@ -68,7 +68,7 @@ export function PersonContextProvider({ children }) {
   };
   const getResponsibleWorkers = async (cultivationId) => {
     try {
-      const res = await api.get(`/responsible/${cultivationId}`);
+      const res = await api.get(`person/responsible/${cultivationId}`);
       if (res.data) {
         return res.data;
       }

@@ -35,6 +35,9 @@ export const useLoadByType = (dataType) => {
         case "stageType":
           loadingMethod = getStageTypes;
           break;
+        case "worker":
+          loadingMethod = getPersons;
+          break;
         default:
           setIsPending(false);
           setData(undefined);

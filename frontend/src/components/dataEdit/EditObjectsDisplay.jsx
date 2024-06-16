@@ -52,7 +52,7 @@ function EditObjectsDisplay({
       </CustomButton>
       <Modal visible={choosingObjects} onClose={onModalClosed}>
         <div className="p-4 bg-background-900 flex flex-col items-center justify-center max-h-[26rem]">
-          <h1>Stations</h1>
+          <h1>{header}</h1>
           <DataCrationObjectInput
             multiselect={multiselect}
             header=""

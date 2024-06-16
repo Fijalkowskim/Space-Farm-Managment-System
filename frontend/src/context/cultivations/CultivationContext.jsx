@@ -108,10 +108,29 @@ export function CultivationContextProvider({ children }) {
   const updateCultivaitonStations = async (id, stationsIdRequest) => {
     if (!userData) return false;
     try {
-      console.log(stationsIdRequest);
       const res = await api.post(
         `/cultivation/station/${id}`,
         stationsIdRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return false;
+  };
+  const updateCultivaitonWorkers = async (id, workersIdRequest) => {
+    if (!userData) return false;
+    try {
+      const res = await api.post(
+        `/cultivation/person/${id}`,
+        workersIdRequest,
         {
           headers: {
             "Content-Type": "application/json",
@@ -149,6 +168,7 @@ export function CultivationContextProvider({ children }) {
         addCultivaiton,
         updateCultivation,
         updateCultivaitonStations,
+        updateCultivaitonWorkers,
       }}
     >
       {children}

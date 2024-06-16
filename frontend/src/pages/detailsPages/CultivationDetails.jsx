@@ -19,10 +19,15 @@ import CustomButton from "../../components/general/CustomButton";
 import EditObjectsDisplay from "../../components/dataEdit/EditObjectsDisplay";
 import { useStationContext } from "../../context/StationContext";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import { usePersonContext } from "../../context/PersonContext";
 function CultivationDetails() {
   const { id } = useParams();
-  const { updateCultivation, getCultivation, updateCultivaitonStations } =
-    useCultivationContext();
+  const {
+    updateCultivation,
+    getCultivation,
+    updateCultivaitonStations,
+    updateCultivaitonWorkers,
+  } = useCultivationContext();
   const [dataUpdated, setDataUpdated] = useState(false);
   const { data, isPending } = useFetchData(
     getCultivation,
@@ -39,8 +44,16 @@ function CultivationDetails() {
   const [changingType, setChangingType] = useState(false);
 
   const { getStationsByCultivation } = useStationContext();
+  const { getResponsibleWorkers } = usePersonContext();
+
   const { data: stations, isPending: stationsPending } = useFetchArrayData(
     getStationsByCultivation,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
+  const { data: workers, isPending: workersPending } = useFetchArrayData(
+    getResponsibleWorkers,
     id,
     dataUpdated,
     setDataUpdated
@@ -78,6 +91,13 @@ function CultivationDetails() {
     const resp = await updateCultivaitonStations(data.id, newStationsReques);
     if (resp === true) {
       addMessage("Stations updated successfully.");
+      setDataUpdated(true);
+    }
+  };
+  const onWorkersChanged = async (newWorkersReques) => {
+    const resp = await updateCultivaitonWorkers(data.id, newWorkersReques);
+    if (resp === true) {
+      addMessage("Workers updated successfully.");
       setDataUpdated(true);
     }
   };
@@ -184,26 +204,35 @@ function CultivationDetails() {
             className="max-w-4xl items-start"
           />
           {data && (
-            <EditObjectsDisplay
-              entries={stations}
-              header="Stations"
-              contentType="station"
-              className="max-w-4xl items-start"
-              isPending={stationsPending}
-              parentType={"cultivation"}
-              parentBody={{ ids: stations?.map((s) => s.id) }}
-              multiselect={true}
-              propertyName={"ids"}
-              selectById={true}
-              onChoosingFinished={onStationsChanged}
-            />
+            <>
+              <EditObjectsDisplay
+                entries={stations}
+                header="Stations"
+                contentType="station"
+                className="max-w-4xl items-start"
+                isPending={stationsPending}
+                parentType={"cultivation"}
+                parentBody={{ ids: stations?.map((s) => s.id) }}
+                multiselect={true}
+                propertyName={"ids"}
+                selectById={true}
+                onChoosingFinished={onStationsChanged}
+              />
+              <EditObjectsDisplay
+                entries={workers}
+                header="Responsible workers"
+                contentType="worker"
+                className="max-w-4xl items-start"
+                isPending={workersPending}
+                parentType={"cultivation"}
+                parentBody={{ ids: workers?.map((s) => s.id) }}
+                multiselect={true}
+                propertyName={"ids"}
+                selectById={true}
+                onChoosingFinished={onWorkersChanged}
+              />
+            </>
           )}
-          {/* <EditObjectsDisplay
-            entries={data.stations}
-            header="ResponsibleWorkers"
-            contentType="worker"
-            className="max-w-4xl items-start"
-          /> */}
         </div>
       )}
     </PageWrapper>
