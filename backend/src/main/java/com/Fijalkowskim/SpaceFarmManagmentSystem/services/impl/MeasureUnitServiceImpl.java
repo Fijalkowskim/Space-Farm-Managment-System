@@ -1,8 +1,10 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.MeasuredValue;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.CultivationType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.MeasureUnit;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasureUnitDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasuredValueDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MeasureUnitRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.MeasureUnitService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,10 +21,12 @@ import java.util.Optional;
 @Service
 public class MeasureUnitServiceImpl implements MeasureUnitService {
     private final MeasureUnitDAORepository measureUnitDAORepository;
+    private final MeasuredValueDAORepository measuredValueDAORepository;
 
     @Autowired
-    public MeasureUnitServiceImpl(MeasureUnitDAORepository measureUnitDAORepository) {
+    public MeasureUnitServiceImpl(MeasureUnitDAORepository measureUnitDAORepository, MeasuredValueDAORepository measuredValueDAORepository) {
         this.measureUnitDAORepository = measureUnitDAORepository;
+        this.measuredValueDAORepository = measuredValueDAORepository;
     }
 
     public Page<MeasureUnit> getAllMeasureUnits(PageRequest pageRequest) {
@@ -59,6 +63,10 @@ public class MeasureUnitServiceImpl implements MeasureUnitService {
     }
     public void deleteMeasureUnit(long id) throws CustomHTTPException {
         Optional<MeasureUnit> measureUnit = measureUnitDAORepository.findById(id);
+        Optional<MeasuredValue> measuredValue = measuredValueDAORepository.findByUnitId(id);
+        if(measuredValue.isPresent()){
+            throw new CustomHTTPException("Measure unit assigned to measured value", HttpStatus.FOUND);
+        }
         if (measureUnit.isEmpty()){
             throw new CustomHTTPException("Measure unit not found", HttpStatus.NOT_FOUND);
         }

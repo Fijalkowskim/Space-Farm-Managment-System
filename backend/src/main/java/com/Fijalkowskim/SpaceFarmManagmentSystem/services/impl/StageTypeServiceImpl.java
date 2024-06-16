@@ -3,6 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StageTypeDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.StageTypeRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.StageTypeService;
@@ -20,10 +21,12 @@ import java.util.Optional;
 @Service
 public class StageTypeServiceImpl implements StageTypeService {
     private final StageTypeDAORepository stageTypeDAORepository;
+    private final StageDAORepository stageDAORepository;
 
     @Autowired
-    public StageTypeServiceImpl(StageTypeDAORepository stageTypeDAORepository) {
+    public StageTypeServiceImpl(StageTypeDAORepository stageTypeDAORepository, StageDAORepository stageDAORepository) {
         this.stageTypeDAORepository = stageTypeDAORepository;
+        this.stageDAORepository = stageDAORepository;
     }
 
     public Page<StageType> getAllStageTypes(PageRequest pageRequest) {
@@ -61,6 +64,10 @@ public class StageTypeServiceImpl implements StageTypeService {
 
     public void deleteStageType(long id) throws CustomHTTPException {
         Optional<StageType> stageType = stageTypeDAORepository.findById(id);
+        Optional<Stage> stage = stageDAORepository.findByStageId(id);
+        if(stage.isPresent()){
+            throw new CustomHTTPException("Stage type assigned to stage", HttpStatus.FOUND);
+        }
         if(stageType.isEmpty()) {
             throw new CustomHTTPException("Stage type not found", HttpStatus.NOT_FOUND);
         }

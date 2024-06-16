@@ -78,6 +78,10 @@ public class ReadingServiceImpl implements ReadingService {
 
     public void deleteReading(long id) {
         Optional<Reading> reading = readingDAORepository.findById(id);
+        Optional<Control> control = controlDAORepository.findByReadingId(id);
+        if(control.isPresent()){
+            throw new CustomHTTPException("Reading is assigned to control", HttpStatus.FOUND);
+        }
         if(reading.isEmpty()) throw new CustomHTTPException("Reading not found", HttpStatus.NOT_FOUND);
         readingDAORepository.delete(reading.get());
     }

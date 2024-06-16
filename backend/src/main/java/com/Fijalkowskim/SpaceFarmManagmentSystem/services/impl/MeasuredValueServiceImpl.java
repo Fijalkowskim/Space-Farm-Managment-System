@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasuredValueDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.ReadingDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MeasuredValueRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.MeasuredValueService;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.MeasuredValue;
@@ -25,10 +26,12 @@ import java.util.Optional;
 @Service
 public class MeasuredValueServiceImpl implements MeasuredValueService {
     private final MeasuredValueDAORepository measuredValueDAORepository;
+    private final ReadingDAORepository readingDAORepository;
 
     @Autowired
-    public MeasuredValueServiceImpl(MeasuredValueDAORepository measuredValueDAORepository) {
+    public MeasuredValueServiceImpl(MeasuredValueDAORepository measuredValueDAORepository, ReadingDAORepository readingDAORepository) {
         this.measuredValueDAORepository = measuredValueDAORepository;
+        this.readingDAORepository = readingDAORepository;
     }
 
     public Page<MeasuredValue> getMeasuredValues(Pageable pageable){
@@ -58,6 +61,10 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
     }
     public void deleteMeasuredValue(Long id) throws CustomHTTPException {
         Optional<MeasuredValue> measuredValue = measuredValueDAORepository.findById(id);
+        Optional<Reading> reading = readingDAORepository.findByMeasureValueId(id);
+        if(reading.isPresent()){
+            throw new CustomHTTPException("MeasuredValue is assigned to reading", HttpStatus.FOUND);
+        }
         if(measuredValue.isEmpty()) throw new CustomHTTPException("MeasuredValue not found", HttpStatus.NOT_FOUND);
         measuredValueDAORepository.delete(measuredValue.get());
     }

@@ -68,6 +68,10 @@ public class HarvestServiceImpl implements HarvestService {
 
     public void deleteHarvest(long id) {
         Optional<Harvest> harvest = harvestDAORepository.findById(id);
+        Optional<Cultivation> cultivation = cultivationDAORepository.findCultivationHarvestById(id);
+        if(cultivation.isPresent()){
+            throw new CustomHTTPException("Harvest assigned to cultivation", HttpStatus.FOUND);
+        }
         if(harvest.isEmpty()) throw new CustomHTTPException("Harvest not found", HttpStatus.NOT_FOUND);
         harvestDAORepository.delete(harvest.get());
     }

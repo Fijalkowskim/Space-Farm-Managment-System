@@ -1,6 +1,8 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Plant;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PlantDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PlantRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.PlantService;
@@ -20,10 +22,12 @@ import java.util.Optional;
 @Service
 public class PlantServiceImpl implements PlantService {
     private final PlantDAORepository plantDAORepository;
+    private final CultivationDAORepository cultivationDAORepository;
 
     @Autowired
-    public PlantServiceImpl(PlantDAORepository plantDAORepository) {
+    public PlantServiceImpl(PlantDAORepository plantDAORepository, CultivationDAORepository cultivationDAORepository) {
         this.plantDAORepository = plantDAORepository;
+        this.cultivationDAORepository = cultivationDAORepository;
     }
 
     public Page<Plant> getPlants(Pageable pageable){
@@ -53,6 +57,10 @@ public class PlantServiceImpl implements PlantService {
     }
     public void deletePlant(Long id) throws CustomHTTPException {
         Optional<Plant> plant = plantDAORepository.findById(id);
+        Optional<Cultivation> cultivation = cultivationDAORepository.findCultivationPlantById(id);
+        if(cultivation.isPresent()){
+            throw new CustomHTTPException("Plant assigned to cultivation", HttpStatus.FOUND);
+        }
         if(plant.isEmpty()) throw new CustomHTTPException("Plant not found", HttpStatus.NOT_FOUND);
         plantDAORepository.delete(plant.get());
     }

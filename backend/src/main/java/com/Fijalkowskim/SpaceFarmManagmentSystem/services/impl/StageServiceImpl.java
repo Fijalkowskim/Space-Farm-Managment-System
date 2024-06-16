@@ -36,6 +36,10 @@ public class StageServiceImpl implements StageService {
     @Override
     public void deleteStage(long id) {
         Optional<Stage> optionalStage = stageDAORepository.findById(id);
+        Optional<Cultivation> optionalCultivation = cultivationDAORepository.findCultivationStageById(id);
+        if(optionalCultivation.isPresent()) {
+            throw new CustomHTTPException("Stage assigned to cultivation", HttpStatus.FOUND);
+        }
         if(optionalStage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
         stageDAORepository.deleteById(id);
     }

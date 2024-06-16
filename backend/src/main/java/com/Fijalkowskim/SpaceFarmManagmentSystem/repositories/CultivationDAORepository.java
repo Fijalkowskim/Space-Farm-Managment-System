@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
 import java.util.Set;
 
 @Repository
@@ -29,4 +30,13 @@ public interface CultivationDAORepository  extends JpaRepository<Cultivation, Lo
 
     @Query("SELECT c FROM Cultivation c WHERE c.realFinishDate IS NOT NULL")
     Set<Cultivation> findAllFinishedCultivations();
+
+    @Query("SELECT s FROM Stage s WHERE s.cultivation.id = :id")
+    Optional<Cultivation> findCultivationStageById(long id);
+
+    @Query("SELECT h FROM Harvest h WHERE h.cultivation.id = :id")
+    Optional<Cultivation> findCultivationHarvestById(long id);
+
+    @Query("SELECT c FROM Cultivation c WHERE c.plant.id = :id")
+    Optional<Cultivation> findCultivationPlantById(Long id);
 }
