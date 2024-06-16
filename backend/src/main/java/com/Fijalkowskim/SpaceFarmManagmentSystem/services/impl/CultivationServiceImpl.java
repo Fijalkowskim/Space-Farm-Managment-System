@@ -235,28 +235,40 @@ public class CultivationServiceImpl implements CultivationService {
 
     public Cultivation addCultivationToMultipleStations(long id, MultipleIdRequest multipleIdRequest) {
         Optional<Cultivation> cultivationOptional = cultivationDAORepository.findById(id);
-        if(cultivationOptional.isEmpty()){
+        if (cultivationOptional.isEmpty()) {
             throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
         }
-//        Set<Station> newStations = Arrays.stream(multipleIdRequest.getIds())
-//                .forEach(stationId -> {
-//                    Optional<Station> foundStation = stationDAORepository.findById(stationId);
-//                    if(foundStation.isEmpty()) throw new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST);
-//                    stationService.updateStation()
-//                });
         Cultivation cultivation = cultivationOptional.get();
 
         Set<Station> newStations = Arrays.stream(multipleIdRequest.getIds())
                 .mapToObj(stationId -> {
                     Optional<Station> foundStation = stationDAORepository.findById(stationId);
-                    return foundStation.orElseThrow(() -> new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST));
+                    if (foundStation.isEmpty()) throw new CustomHTTPException("Given station not found", HttpStatus.BAD_REQUEST);
+                    return foundStation.get();
                 })
                 .collect(Collectors.toSet());
 
-        Set<Long> existingIds = stationDAORepository.findAllByCultivationId(id).stream().map(Station::getId).collect(Collectors.toSet());
-        newStations = newStations.stream().filter(s->!existingIds.contains(s.getId())).collect(Collectors.toSet());
+        Set<Station> existingStations = new HashSet<>(cultivation.getStations());
 
-        cultivation.setStations(newStations);
+        // Remove old associations
+        for (Station station : existingStations) {
+            if (!newStations.contains(station)) {
+                cultivation.removeStation(station.getId());
+            }
+        }
+
+        // Add new associations
+        for (Station station : newStations) {
+            if (!existingStations.contains(station)) {
+                cultivation.addStation(station);
+            }
+        }
+
+        // Save all updated stations in one go
+        stationDAORepository.saveAll(existingStations);
+        stationDAORepository.saveAll(newStations);
+
+        // Save the updated cultivation
         return cultivationDAORepository.save(cultivation);
     }
 

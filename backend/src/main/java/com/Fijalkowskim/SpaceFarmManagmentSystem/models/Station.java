@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.Builder;
+
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -15,9 +17,14 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "stations", fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "stations", fetch = FetchType.EAGER,cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JsonIgnore
     private Set<Cultivation> cultivations;
+
+
 
     public Station(){
     }
@@ -29,5 +36,18 @@ public class Station {
     public Station(Long id, Set<Cultivation> cultivations){
         this.id = id;
         this.cultivations = cultivations;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Station station = (Station) o;
+        return Objects.equals(id, station.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
