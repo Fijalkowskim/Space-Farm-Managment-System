@@ -7,11 +7,12 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Data
-@Entity
 @Builder
+@Entity
 public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +28,10 @@ public class Person {
 
     private WorkerType role;
 
-    @ManyToMany(mappedBy = "responsibleWorkers")
+    @ManyToMany(mappedBy = "responsibleWorkers", fetch = FetchType.LAZY,cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE
+    })
     @JsonIgnore
     private Set<Cultivation> cultivations;
 
@@ -53,4 +57,16 @@ public class Person {
         this.cultivations = cultivations;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return Objects.equals(id, person.id) && Objects.equals(name, person.name) && Objects.equals(surname, person.surname) && Objects.equals(login, person.login) && Objects.equals(password, person.password) && role == person.role;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, surname, login, password, role);
+    }
 }

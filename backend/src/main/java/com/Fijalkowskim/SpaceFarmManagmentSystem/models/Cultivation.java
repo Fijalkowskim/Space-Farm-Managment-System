@@ -49,13 +49,12 @@ public class Cultivation {
     )
     private Set<Station> stations = new HashSet<>();
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             joinColumns = @JoinColumn(name = "cultivationId"),
             inverseJoinColumns = @JoinColumn(name = "workerId")
     )
-    @JsonIgnore
-    private Set<Person> responsibleWorkers;
+    private Set<Person> responsibleWorkers = new HashSet<>();
 
     @Nullable
     private String comment;
@@ -67,10 +66,23 @@ public class Cultivation {
     }
 
     public void removeStation(Long stationId) {
-        Station station = this.stations.stream().filter(t -> t.getId() == stationId).findFirst().orElse(null);
+        Station station = this.stations.stream().filter(t -> Objects.equals(t.getId(), stationId)).findFirst().orElse(null);
         if (station != null) {
             this.stations.remove(station);
             station.getCultivations().remove(this);
+        }
+    }
+
+    public void addPerson(Person person) {
+        this.responsibleWorkers.add(person);
+        person.getCultivations().add(this);
+    }
+
+    public void removePerson(Long personId) {
+        Person person = this.responsibleWorkers.stream().filter(t -> Objects.equals(t.getId(), personId)).findFirst().orElse(null);
+        if (person != null) {
+            this.responsibleWorkers.remove(person);
+            person.getCultivations().remove(this);
         }
     }
 

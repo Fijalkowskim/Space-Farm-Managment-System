@@ -120,11 +120,6 @@ public class CultivationController {
             @RequestParam(name = "personId") long personId) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.addCultivationToPerson(cultivationId, personId));
     }
-    
-    @PostMapping("/person/{id}")
-    ResponseEntity<Cultivation> addCultivationToMultiplePersons(@RequestBody MultipleIdRequest multipleIdRequest, @PathVariable long id) throws CustomHTTPException {
-        return ResponseEntity.ok(cultivationService.addCultivationToMultiplePersons(id, multipleIdRequest));
-    }
 
     @DeleteMapping("/person/")
     public ResponseEntity<Cultivation> deleteCultivationFromPerson(
@@ -147,6 +142,10 @@ public class CultivationController {
     @PostMapping("/station/{id}")
     ResponseEntity<Cultivation> addCultivationToMultipleStations(@RequestBody MultipleIdRequest multipleIdRequest, @PathVariable long id) throws CustomHTTPException {
         return ResponseEntity.ok(cultivationService.addCultivationToMultipleStations(id, multipleIdRequest));
+    }
+    @PostMapping("/person/{id}")
+    ResponseEntity<Cultivation> addCultivationToMultiplePersons(@RequestBody MultipleIdRequest multipleIdRequest, @PathVariable long id) throws CustomHTTPException {
+        return ResponseEntity.ok(cultivationService.addCultivationToMultiplePersons(id, multipleIdRequest));
     }
 
     @DeleteMapping("/station/") ResponseEntity<Cultivation> removeCultivationFromStation(

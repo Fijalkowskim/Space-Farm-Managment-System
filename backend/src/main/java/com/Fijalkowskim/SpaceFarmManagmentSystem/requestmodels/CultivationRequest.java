@@ -16,11 +16,4 @@ public class CultivationRequest {
     private Date realFinishDate;
     private Plant plant;
     private String comment;
-    private Long[] stations;
-    private Long[] responsibleWorkers;
-
-    //private Set<Stage> stages;
-    //private Set<Harvest> harvests;
-    //private Set<Station> stations;
-    //private Set<Person> responsibleWorkers;
 }

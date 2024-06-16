@@ -17,7 +17,7 @@ public class Station {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToMany(mappedBy = "stations", fetch = FetchType.EAGER,cascade = {
+    @ManyToMany(mappedBy = "stations", fetch = FetchType.LAZY,cascade = {
             CascadeType.PERSIST,
             CascadeType.MERGE
     })
