@@ -131,6 +131,7 @@ public class PersonServiceImpl implements PersonService {
         if(personOptional.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
         Person person = personOptional.get();
         if(person.getPassword().equals(oldPassword)) {
+            if(oldPassword.equals(newPassword)) throw new CustomHTTPException("Passwords must differ", HttpStatus.BAD_REQUEST);
             person.setPassword(newPassword);
         }
         else{

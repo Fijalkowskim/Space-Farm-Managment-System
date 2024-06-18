@@ -134,6 +134,21 @@ export function PersonContextProvider({ children }) {
     setUserData(newPerson);
     setIsPending(false);
   };
+  const changePassword = async (oldPassword, newPassword) => {
+    if (!userData) return;
+    try {
+      const res = await api.post(
+        `/person/changepassword/${userData.id}?newPassword=${newPassword}&oldPassword=${oldPassword}`
+      );
+      if (res) {
+        return true;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return null;
+  };
+
   const userFromResponse = (userResponse) => {
     return new Person(
       userResponse.id,
@@ -157,6 +172,7 @@ export function PersonContextProvider({ children }) {
         getResponsibleWorkers,
         addPerson,
         deletePerson,
+        changePassword,
       }}
     >
       {children}

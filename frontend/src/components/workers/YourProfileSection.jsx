@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { usePersonContext } from "../../context/PersonContext";
 import CustomButton from "../general/CustomButton";
 import ProfileAttribute from "./ProfileAttribute";
+import Modal from "../general/Modal";
+import ChangePasswordForm from "./ChangePasswordForm";
 function ProfileSection({ worker }) {
   const { logOut, userData } = usePersonContext();
   const [isWorkerOwner, setIsWorkerOwner] = useState(false);
+  const [changingPassword, setChangingPassword] = useState(false);
   useEffect(() => {
     if (!worker || !userData) return;
     setIsWorkerOwner(worker.id === userData.id);
@@ -39,12 +42,22 @@ function ProfileSection({ worker }) {
           <CustomButton
             className={" w-40 md:ml-auto ml-0 leading-5"}
             variant="action"
-            onClick={() => {}}
+            onClick={() => {
+              setChangingPassword(true);
+            }}
           >
             Change password
           </CustomButton>
         )}
       </div>
+      <Modal
+        visible={changingPassword}
+        onClose={() => {
+          setChangingPassword(false);
+        }}
+      >
+        <ChangePasswordForm onSuccess={() => setChangingPassword(false)} />
+      </Modal>
     </div>
   );
 }
