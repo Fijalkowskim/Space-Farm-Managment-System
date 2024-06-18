@@ -2,6 +2,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.WorkerType;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.PersonCreateRequest;
@@ -14,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.naming.directory.InvalidSearchControlsException;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -49,6 +51,9 @@ public class PersonServiceImpl implements PersonService {
     public void deletePerson(long id) throws CustomHTTPException{
         Optional<Person> person = personDAORepository.findById(id);
         Optional<Cultivation> cultivation = cultivationDAORepository.findByPersonId(id);
+        if(person.get().getRole().equals(WorkerType.ADMIN)){
+            throw new CustomHTTPException("Can't delete admin", HttpStatus.FOUND);
+        }
         if(cultivation.isPresent()){
             throw new CustomHTTPException("Person assigned to cultivation", HttpStatus.NOT_FOUND);
         }
