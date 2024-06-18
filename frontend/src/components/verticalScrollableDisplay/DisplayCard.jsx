@@ -16,6 +16,7 @@ import CultivationTypeCard from "./displayCards/CultivationTypeCard";
 import { useDelete } from "../../hooks/useDelete";
 import LoadingBar from "../general/LoadingBar";
 import HarvestCard from "./displayCards/HarvestCard";
+import ReadingCard from "./displayCards/ReadingCard";
 function DisplayCard({
   data,
   contentType,
@@ -123,7 +124,7 @@ function DisplayCard({
         ) : contentType === "station" ? (
           <StationCard data={data} />
         ) : contentType === "reading" ? (
-          <div>Reading Card</div>
+          <ReadingCard data={data} />
         ) : contentType === "measureUnit" ? (
           <MeasureUnitCard data={data} />
         ) : contentType === "cultivationType" ? (
