@@ -94,6 +94,7 @@ function ControlDetails() {
             creationArgumentsFromParent={[
               { property: "controlId", value: data.id },
             ]}
+            disableNavigation={true}
           />
         </div>
       )}

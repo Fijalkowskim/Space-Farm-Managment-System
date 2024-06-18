@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
 import { usePopupContext } from "./general/PopupContext";
+import { ReadingRequest } from "../models/requestmodels/ReadingRequest";
 const ReadingContext = createContext();
 
 export function useReadingContext() {
@@ -76,6 +77,25 @@ export function ReadingContextProvider({ children }) {
     }
     return false;
   };
+  const updateReadingUnit = async (oldReading, newUnitId) => {
+    try {
+      const res = await api.post(
+        `/reading/${oldReading.id}`,
+        new ReadingRequest(oldReading.value, newUnitId, oldReading.controlId),
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.data) {
+        return true;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return false;
+  };
   //************ Delete methods ************
   const deleteReading = async (id) => {
     try {
@@ -95,6 +115,7 @@ export function ReadingContextProvider({ children }) {
         updateReading,
         deleteReading,
         getReadingsByControl,
+        updateReadingUnit,
       }}
     >
       {children}

@@ -17,6 +17,7 @@ function MeasuredValues() {
         contentType={"measuredValue"}
         className={"max-w-4xl"}
         loading={isPending}
+        disableNavigation={true}
       />
     </PageWrapper>
   );

@@ -22,7 +22,7 @@ function ReadingDetails() {
   const [dataUpdated, setDataUpdated] = useState(false);
 
   const { id } = useParams();
-  const { updateReading, getReading } = useReadingContext();
+  const { updateReading, getReading, updateReadingUnit } = useReadingContext();
   const location = useLocation();
   const { addMessage } = usePopupContext();
   const { cancelCreatingObject, finishCreatingObject } =
@@ -53,7 +53,12 @@ function ReadingDetails() {
   };
   const onObligatoryFieldUpdate = async (newBody) => {
     setChangingUnit(false);
-    ReadingBasicEditFormSubmit(newBody);
+    const resp = await updateReadingUnit(data.id, newBody.measuredValueId);
+    if (resp === true) {
+      addMessage("Reading updated successfully.");
+      setDataUpdated(true);
+      disableEditing();
+    }
   };
   return (
     <PageWrapper secured={true} className={"h-fit min-h-0"}>

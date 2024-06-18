@@ -5,9 +5,10 @@ function MeasuredValueCard({ data }) {
   return (
     <>
       <DisplayCardAttribute label="ID" value={data.id} />
+      <DisplayCardAttribute label={`Name`} value={data.name} />
       <DisplayCardAttribute
-        label={`Name`}
-        value={data.name}
+        label={`Unit`}
+        value={data.measureUnit?.name}
         className={"ml-auto items-end"}
       />
     </>
