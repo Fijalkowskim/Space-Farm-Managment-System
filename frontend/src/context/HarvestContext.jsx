@@ -9,18 +9,16 @@ export function useHarvestContext() {
 }
 
 export function HarvestContextProvider({ children }) {
-  const [harvests, setHarvests] = useState([]);
   const { logError } = usePopupContext();
   //************ Get methods ************
   const getHarvests = async () => {
     try {
       const res = await api.get("/harvest");
       if (res.data) {
-        setHarvests(res.data.content); // Assuming res.data.content contains the list of harvests
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return [];
   };
@@ -32,20 +30,30 @@ export function HarvestContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
+  };
+  const getHarvestByCultivation = async (id) => {
+    try {
+      const res = await api.get(`/harvest/cultivation/${id}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return [];
   };
 
   const addHarvest = async (harvestRequest) => {
     try {
       const res = await api.put("/harvest", harvestRequest);
       if (res.data) {
-        setHarvests([...harvests, res.data]);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -54,14 +62,10 @@ export function HarvestContextProvider({ children }) {
     try {
       const res = await api.post(`/harvest/${id}`, harvestRequest);
       if (res.data) {
-        const updatedHarvests = harvests.map((harvest) =>
-          harvest.id === id ? res.data : harvest
-        );
-        setHarvests(updatedHarvests);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -84,6 +88,7 @@ export function HarvestContextProvider({ children }) {
         addHarvest,
         updateHarvest,
         deleteHarvest,
+        getHarvestByCultivation,
       }}
     >
       {children}

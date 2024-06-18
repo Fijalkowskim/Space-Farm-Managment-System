@@ -20,7 +20,13 @@ import EditObjectsDisplay from "../../components/dataEdit/EditObjectsDisplay";
 import { useStationContext } from "../../context/StationContext";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
 import { usePersonContext } from "../../context/PersonContext";
+import { useStageContext } from "../../context/StageContext";
+import { useHarvestContext } from "../../context/HarvestContext";
 function CultivationDetails() {
+  const [changingPlant, setChangingPlant] = useState(false);
+  const [changingType, setChangingType] = useState(false);
+  const [dataUpdated, setDataUpdated] = useState(false);
+
   const { id } = useParams();
   const {
     updateCultivation,
@@ -28,24 +34,26 @@ function CultivationDetails() {
     updateCultivaitonStations,
     updateCultivaitonWorkers,
   } = useCultivationContext();
-  const [dataUpdated, setDataUpdated] = useState(false);
+  const { disableEditing, editedCultivation } = useCultivationDetailsContext();
+  const location = useLocation();
+  const { addMessage } = usePopupContext();
+  const { cancelCreatingObject, finishCreatingObject } =
+    useDataCreationContext();
+
+  const { getStationsByCultivation } = useStationContext();
+
+  const { getResponsibleWorkers } = usePersonContext();
+
+  const { getStageByCultivation } = useStageContext();
+
+  const { getHarvestByCultivation } = useHarvestContext();
+
   const { data, isPending } = useFetchData(
     getCultivation,
     id,
     dataUpdated,
     setDataUpdated
   );
-  const { disableEditing, editedCultivation } = useCultivationDetailsContext();
-  const location = useLocation();
-  const { addMessage } = usePopupContext();
-  const { cancelCreatingObject, finishCreatingObject } =
-    useDataCreationContext();
-  const [changingPlant, setChangingPlant] = useState(false);
-  const [changingType, setChangingType] = useState(false);
-
-  const { getStationsByCultivation } = useStationContext();
-  const { getResponsibleWorkers } = usePersonContext();
-
   const { data: stations, isPending: stationsPending } = useFetchArrayData(
     getStationsByCultivation,
     id,
@@ -54,6 +62,18 @@ function CultivationDetails() {
   );
   const { data: workers, isPending: workersPending } = useFetchArrayData(
     getResponsibleWorkers,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
+  const { data: stages, isPending: stagesPending } = useFetchArrayData(
+    getStageByCultivation,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
+  const { data: harvests, isPending: harvestsPending } = useFetchArrayData(
+    getHarvestByCultivation,
     id,
     dataUpdated,
     setDataUpdated
@@ -75,13 +95,6 @@ function CultivationDetails() {
     );
 
     const resp = await updateCultivation(data.id, request);
-    if (resp === true) {
-      addMessage("Cultivation updated successfully.");
-      setDataUpdated(true);
-    }
-  };
-  const onWholeCultivationUpdate = async (newCultivation) => {
-    const resp = await updateCultivation(data.id, newCultivation);
     if (resp === true) {
       addMessage("Cultivation updated successfully.");
       setDataUpdated(true);
@@ -189,7 +202,8 @@ function CultivationDetails() {
             setChangingType={setChangingType}
           />
           <VerticalScrollableDisplay
-            entries={data.stages}
+            entries={stages}
+            isPending={stagesPending}
             header="Stages"
             contentType="stage"
             className="max-w-4xl items-start"
@@ -198,7 +212,8 @@ function CultivationDetails() {
             ]}
           />
           <VerticalScrollableDisplay
-            entries={data.harvests}
+            entries={harvests}
+            isPending={harvestsPending}
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"

@@ -1,6 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import { exampleStages } from "../exampleData/ExampleStages";
 import api from "../api/api";
+import { usePopupContext } from "./general/PopupContext";
 
 const StageContext = createContext();
 
@@ -9,6 +10,7 @@ export function useStageContext() {
 }
 
 export function StageContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getStages = async () => {
     try {
@@ -17,7 +19,7 @@ export function StageContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return exampleStages;
   };
@@ -29,9 +31,20 @@ export function StageContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return exampleStages.find((stage) => stage.id === id);
+  };
+  const getStageByCultivation = async (id) => {
+    try {
+      const res = await api.get(`/stage/cultivation/${id}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return [];
   };
 
   const addStage = async (stageRequest) => {
@@ -45,7 +58,7 @@ export function StageContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -61,7 +74,7 @@ export function StageContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -71,7 +84,7 @@ export function StageContextProvider({ children }) {
       await api.delete(`/stage/${id}`);
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };
@@ -84,6 +97,7 @@ export function StageContextProvider({ children }) {
         addStage,
         updateStage,
         deleteStage,
+        getStageByCultivation,
       }}
     >
       {children}
