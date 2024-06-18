@@ -6,6 +6,7 @@ import { useDataCreationContext } from "../context/general/DataCreationContext";
 import CustomButton from "../components/general/CustomButton";
 import PlantForm from "../components/dataCreation/forms/PlantForm";
 import StageForm from "../components/dataCreation/forms/StageForm";
+import HarvestForm from "../components/dataCreation/forms/HarvestForm";
 import LoadingBar from "../components/general/LoadingBar";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
@@ -28,6 +29,8 @@ function DataCreationFormWrapper() {
         break;
       case "stage":
         setPageContent(<StageForm />);
+      case "harvest":
+        setPageContent(<HarvestForm />);
         break;
       default:
         navigate("/");
