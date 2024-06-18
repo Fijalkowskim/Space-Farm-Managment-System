@@ -12,6 +12,7 @@ import { ObjectCreationData } from "../../models/dataCreation/ObjectCreationData
 import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
 import { useCultivationContext } from "../cultivations/CultivationContext";
 import { PlantRequest } from "../../models/requestmodels/PlantRequest";
+import { CultivationTypeRequest } from "../../models/requestmodels/CultivationTypeRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
@@ -20,6 +21,7 @@ import { useStageContext } from "../StageContext";
 import { useStageTypeContext } from "../dictionaries/StageTypeContext";
 import { useHarvestContext } from "../HarvestContext";
 import { usePersonContext } from "../PersonContext";
+import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -39,6 +41,7 @@ export function DataCreationContextProvider({ children }) {
   const { addStageType } = useStageTypeContext();
   const { addHarvest } = useHarvestContext();
   const { addPerson } = usePersonContext();
+  const { addCultivationType } = useCultivationTypeContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -101,8 +104,17 @@ export function DataCreationContextProvider({ children }) {
         startCreatingObject(
           new PlantRequest(),
           addPlant,
-          "/",
+          "/plants",
           "plant",
+          argumentsFromParent
+        );
+        break;
+      case "cultivationtype":
+        startCreatingObject(
+          new CultivationTypeRequest(),
+          addCultivationType,
+          "/cultivation-types",
+          "cultivationType",
           argumentsFromParent
         );
         break;

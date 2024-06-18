@@ -16,7 +16,7 @@ function DataCrationObjectInput({
       <h1 className="mt-2 -mb-1">{header}</h1>
       <VerticalScrollableDisplay
         className={
-          "h-80 max-w-[30rem] w-screen border-2 border-background-700 "
+          "max-h-[30rem] max-w-[30rem] w-screen border-2 border-background-700 "
         }
         header={""}
         entries={data}
