@@ -37,9 +37,11 @@ public class Cultivation {
     private Plant plant;
 
     @OneToMany(mappedBy = "cultivation")
+    @JsonIgnore
     private Set<Stage> stages;
 
     @OneToMany(mappedBy = "cultivation")
+    @JsonIgnore
     private Set<Harvest> harvests;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})

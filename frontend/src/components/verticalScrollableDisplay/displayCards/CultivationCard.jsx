@@ -32,7 +32,12 @@ function CultivationCard({ data }) {
       <DisplayCardAttribute label="Plant" value={data.plant.name} />
       <DisplayCardAttribute label="Type" value={data.type.name} />
       <DisplayCardAttribute label="Area" value={`${data.area} ha`} />
-      <DisplayCardAttribute label="Comment" value={data.comment ?? "-"} />
+      <DisplayCardAttribute
+        label="Comment"
+        value={
+          data.comment !== undefined && data.comment !== "" ? data.comment : "-"
+        }
+      />
     </div>
   );
 }

@@ -32,7 +32,7 @@ export const useLoadByType = (dataType) => {
         case "station":
           loadingMethod = getStations;
           break;
-        case "stageType":
+        case "stagetype":
           loadingMethod = getStageTypes;
           break;
         case "worker":
@@ -43,6 +43,7 @@ export const useLoadByType = (dataType) => {
           setData(undefined);
           return;
       }
+
       if (loadingMethod === undefined) {
         setIsPending(false);
         setData(undefined);
