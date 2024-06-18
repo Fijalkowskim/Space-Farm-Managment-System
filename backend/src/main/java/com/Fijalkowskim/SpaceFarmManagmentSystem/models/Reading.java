@@ -3,7 +3,7 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
-
+import org.springframework.data.repository.cdi.Eager;
 
 
 @Data
@@ -16,7 +16,7 @@ Reading {
     private Long id;
 
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "measuredValueId")
     private MeasuredValue measuredValue;
 
