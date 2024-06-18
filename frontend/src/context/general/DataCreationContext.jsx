@@ -12,7 +12,9 @@ import { ObjectCreationData } from "../../models/dataCreation/ObjectCreationData
 import { CultivationRequest } from "../../models/requestmodels/CultivationRequest";
 import { useCultivationContext } from "../cultivations/CultivationContext";
 import { PlantRequest } from "../../models/requestmodels/PlantRequest";
+import { MeasureUnitRequest } from "../../models/requestmodels/MeasureUnitRequest";
 import { CultivationTypeRequest } from "../../models/requestmodels/CultivationTypeRequest";
+import { StageTypeRequest } from "../../models/requestmodels/StageTypeRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
@@ -22,6 +24,7 @@ import { useStageTypeContext } from "../dictionaries/StageTypeContext";
 import { useHarvestContext } from "../HarvestContext";
 import { usePersonContext } from "../PersonContext";
 import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContext";
+import { useMeasureUnitContext } from "../dictionaries/MeasureUnitContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -42,6 +45,7 @@ export function DataCreationContextProvider({ children }) {
   const { addHarvest } = useHarvestContext();
   const { addPerson } = usePersonContext();
   const { addCultivationType } = useCultivationTypeContext();
+  const { addMeasureUnit } = useMeasureUnitContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -115,6 +119,24 @@ export function DataCreationContextProvider({ children }) {
           addCultivationType,
           "/cultivation-types",
           "cultivationType",
+          argumentsFromParent
+        );
+        break;
+      case "stagetype":
+        startCreatingObject(
+          new StageTypeRequest(),
+          addStageType,
+          "/stage-types",
+          "stageType",
+          argumentsFromParent
+        );
+        break;
+      case "measureunit":
+        startCreatingObject(
+          new MeasureUnitRequest(),
+          addMeasureUnit,
+          "/measure-units",
+          "measureUnit",
           argumentsFromParent
         );
         break;

@@ -10,6 +10,8 @@ import HarvestForm from "../components/dataCreation/forms/HarvestForm";
 import LoadingBar from "../components/general/LoadingBar";
 import PersonForm from "../components/dataCreation/forms/PersonForm";
 import CultivationTypeForm from "../components/dataCreation/forms/CultivationTypeForm";
+import StageTypeForm from "../components/dataCreation/forms/StageTypeForm";
+import MeasureUnitForm from "../components/dataCreation/forms/MeasureUnitForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -31,6 +33,12 @@ function DataCreationFormWrapper() {
         break;
       case "cultivationtype":
         setPageContent(<CultivationTypeForm />);
+        break;
+      case "stagetype":
+        setPageContent(<StageTypeForm />);
+        break;
+      case "measureunit":
+        setPageContent(<MeasureUnitForm />);
         break;
       case "stage":
         setPageContent(<StageForm />);
