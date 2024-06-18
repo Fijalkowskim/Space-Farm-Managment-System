@@ -17,6 +17,7 @@ import { PersonContextProvider } from "../PersonContext";
 import { DataCreationContextProvider } from "./DataCreationContext";
 import { ObjectLoadingContextProvider } from "./ObjectLoadingContext";
 import { GlobalReloadContextProvider } from "./GlobalReloadContext";
+import { StageDetailContextProvider } from "../StageDetailsContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <GlobalReloadContextProvider>
@@ -37,7 +38,9 @@ function ContextProvidersWrapper({ children }) {
                                   <StageTypeContextProvider>
                                     <DataCreationContextProvider>
                                       <ObjectLoadingContextProvider>
-                                        {children}
+                                        <StageDetailContextProvider>
+                                          {children}
+                                        </StageDetailContextProvider>
                                       </ObjectLoadingContextProvider>
                                     </DataCreationContextProvider>
                                   </StageTypeContextProvider>
