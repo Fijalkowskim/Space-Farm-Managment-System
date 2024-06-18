@@ -63,10 +63,6 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
     }
     public void deleteMeasuredValue(Long id) throws CustomHTTPException {
         Optional<MeasuredValue> measuredValue = measuredValueDAORepository.findById(id);
-        Optional<Reading> reading = readingDAORepository.findByMeasureValueId(id);
-        if(reading.isPresent()){
-            throw new CustomHTTPException("MeasuredValue is assigned to reading", HttpStatus.FOUND);
-        }
         if(measuredValue.isEmpty()) throw new CustomHTTPException("MeasuredValue not found", HttpStatus.NOT_FOUND);
         measuredValueDAORepository.delete(measuredValue.get());
     }

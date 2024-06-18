@@ -49,10 +49,6 @@ public class ControlServiceImpl implements ControlService {
 
     public void deleteControl(long id) {
         Optional<Control> control = controlDAORepository.findById(id);
-        Optional<Stage> stage = stageDAORepository.findByStageId(id);
-        if(stage.isPresent()){
-            throw new CustomHTTPException("Control assigned to stage", HttpStatus.FOUND);
-        }
         if(control.isEmpty()) throw new CustomHTTPException("Control not found", HttpStatus.NOT_FOUND);
         controlDAORepository.deleteById(id);
     }
