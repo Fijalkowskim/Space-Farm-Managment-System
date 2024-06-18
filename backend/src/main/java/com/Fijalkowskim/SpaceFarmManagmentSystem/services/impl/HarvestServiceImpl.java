@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -74,5 +75,9 @@ public class HarvestServiceImpl implements HarvestService {
         }
         if(harvest.isEmpty()) throw new CustomHTTPException("Harvest not found", HttpStatus.NOT_FOUND);
         harvestDAORepository.delete(harvest.get());
+    }
+
+    public Set<Harvest> getStagesByCultivationId(long cultivationId) {
+        return harvestDAORepository.findAllByCultivationId(cultivationId);
     }
 }
