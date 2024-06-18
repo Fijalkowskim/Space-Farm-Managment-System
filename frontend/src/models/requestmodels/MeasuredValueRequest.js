@@ -1,6 +1,6 @@
 export class MeasuredValueRequest {
-  constructor(name, measureUnit) {
+  constructor(name, measureUnitId) {
     this.name = name;
-    this.measureUnit = measureUnit;
+    this.measureUnitId = measureUnitId;
   }
 }
