@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../../api/api";
+import { usePopupContext } from "../general/PopupContext";
 
 const StageTypeContext = createContext();
 
@@ -8,6 +9,7 @@ export function useStageTypeContext() {
 }
 
 export function StageTypeContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getStageTypes = async () => {
     try {
@@ -16,7 +18,7 @@ export function StageTypeContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -27,7 +29,7 @@ export function StageTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -47,7 +49,7 @@ export function StageTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -67,7 +69,7 @@ export function StageTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -77,7 +79,7 @@ export function StageTypeContextProvider({ children }) {
       await api.delete(`/dictionaries/stage-types/${id}`);
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };

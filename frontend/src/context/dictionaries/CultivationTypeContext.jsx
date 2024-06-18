@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../../api/api";
+import { usePopupContext } from "../general/PopupContext";
 
 const CultivationTypeContext = createContext();
 
@@ -8,6 +9,7 @@ export function useCultivationTypeContext() {
 }
 
 export function CultivationTypeContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getCultivationTypes = async () => {
     try {
@@ -16,7 +18,7 @@ export function CultivationTypeContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -29,7 +31,7 @@ export function CultivationTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -49,7 +51,7 @@ export function CultivationTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -69,7 +71,7 @@ export function CultivationTypeContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -79,7 +81,7 @@ export function CultivationTypeContextProvider({ children }) {
       await api.delete(`/dictionaries/cultivation-types/${id}`);
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };

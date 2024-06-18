@@ -12,6 +12,7 @@ import { usePersonContext } from "../context/PersonContext";
 import { usePlantContext } from "../context/dictionaries/PlantContext";
 import { useReadingContext } from "../context/ReadingContext";
 import { useStageTypeContext } from "../context/dictionaries/StageTypeContext";
+import { useCultivationContext } from "../context/cultivations/CultivationContext";
 
 export const useDelete = (contentType, id) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -20,6 +21,7 @@ export const useDelete = (contentType, id) => {
 
   const { deleteStation } = useStationContext();
   const { deleteControl } = useControlContext();
+  const { deleteCultivation } = useCultivationContext();
   const { deleteCultivationType } = useCultivationTypeContext();
   const { deleteStage } = useStageContext();
   const { deleteMeasureUnit } = useMeasureUnitContext();
@@ -32,6 +34,9 @@ export const useDelete = (contentType, id) => {
 
   var deleteMethod;
   switch (contentType) {
+    case "cultivation":
+      deleteMethod = deleteCultivation;
+      break;
     case "station":
       deleteMethod = deleteStation;
       break;
@@ -62,7 +67,7 @@ export const useDelete = (contentType, id) => {
     case "reading":
       deleteMethod = deleteReading;
       break;
-    case "stageTypes":
+    case "stageType":
       deleteMethod = deleteStageType;
       break;
   }

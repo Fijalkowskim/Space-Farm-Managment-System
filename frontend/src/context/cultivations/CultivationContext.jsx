@@ -169,6 +169,7 @@ export function CultivationContextProvider({ children }) {
         updateCultivation,
         updateCultivaitonStations,
         updateCultivaitonWorkers,
+        deleteCultivation,
       }}
     >
       {children}
