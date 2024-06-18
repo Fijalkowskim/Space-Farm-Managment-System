@@ -12,7 +12,6 @@ import { useStageDetailsContext } from "../../context/StageDetailsContext";
 function StageDetailsHeader({ stage, onUpdate, setChangingType }) {
   const { setEditedStage } = useStageDetailsContext();
   const { startCreatingObject } = useDataCreationContext();
-  const { updateStage } = useStageContext();
   return (
     <div className="flex flex-col justify-center items-start w-full max-w-4xl bg-background-950/50 p-4 gap-2">
       <h1 className="text-3xl">Stage {stage.id}</h1>

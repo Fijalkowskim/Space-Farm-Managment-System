@@ -70,13 +70,13 @@ export function StageContextProvider({ children }) {
           "Content-Type": "application/json",
         },
       });
-      if (res.data) {
-        return res.data;
+      if (res) {
+        return true;
       }
     } catch (err) {
       logError(err);
     }
-    return null;
+    return false;
   };
 
   const deleteStage = async (id) => {

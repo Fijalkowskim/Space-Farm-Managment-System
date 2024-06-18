@@ -24,8 +24,7 @@ function StageDetails() {
   const { addMessage } = usePopupContext();
   const { cancelCreatingObject, finishCreatingObject } =
     useDataCreationContext();
-  const { disableEditing, editedCultivation, editedStage } =
-    useStageDetailsContext();
+  const { disableEditing, editedStage } = useStageDetailsContext();
 
   const { data, isPending } = useFetchData(
     getStage,
@@ -49,8 +48,9 @@ function StageDetails() {
     );
     const resp = await updateStage(data.id, request);
     if (resp === true) {
-      addMessage("Cultivation updated successfully.");
+      addMessage("Stage updated successfully.");
       setDataUpdated(true);
+      disableEditing();
     }
   };
   const onObligatoryFieldUpdate = async (newBody) => {
