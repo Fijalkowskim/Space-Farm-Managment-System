@@ -122,7 +122,7 @@ function DisplayCard({
           <StationCard data={data} />
         ) : contentType === "reading" ? (
           <div>Reading Card</div>
-        ) : contentType === "measuredUnit" ? (
+        ) : contentType === "measureUnit" ? (
           <MeasureUnitCard data={data} />
         ) : contentType === "cultivationType" ? (
           <CultivationTypeCard data={data} />
