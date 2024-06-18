@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../api/api";
+import { usePopupContext } from "./general/PopupContext";
 
 const MeasuredValueContext = createContext();
 
@@ -8,6 +9,7 @@ export function useMeasuredValueContext() {
 }
 
 export function MeasuredValueContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getMeasuredValues = async () => {
     try {
@@ -16,7 +18,7 @@ export function MeasuredValueContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return [];
   };
@@ -28,7 +30,7 @@ export function MeasuredValueContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -40,7 +42,7 @@ export function MeasuredValueContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -56,7 +58,7 @@ export function MeasuredValueContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -66,7 +68,7 @@ export function MeasuredValueContextProvider({ children }) {
       const res = await api.delete(`/measuredValue/${id}`);
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };

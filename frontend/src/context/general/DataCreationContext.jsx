@@ -29,6 +29,8 @@ import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContex
 import { useMeasureUnitContext } from "../dictionaries/MeasureUnitContext";
 import { useControlContext } from "../ControlContext";
 import { useReadingContext } from "../ReadingContext";
+import { MeasuredValueRequest } from "../../models/requestmodels/MeasuredValueRequest";
+import { useMeasuredValueContext } from "../MeasuredValueContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -50,6 +52,7 @@ export function DataCreationContextProvider({ children }) {
   const { addPerson } = usePersonContext();
   const { addCultivationType } = useCultivationTypeContext();
   const { addMeasureUnit } = useMeasureUnitContext();
+  const { addMeasuredValue } = useMeasuredValueContext();
   const { addControl } = useControlContext();
   const { addReading } = useReadingContext();
 
@@ -143,6 +146,15 @@ export function DataCreationContextProvider({ children }) {
           addMeasureUnit,
           "/measure-units",
           "measureUnit",
+          argumentsFromParent
+        );
+        break;
+      case "measuredvalue":
+        startCreatingObject(
+          new MeasuredValueRequest(),
+          addMeasuredValue,
+          "/measuredValues",
+          "measuredValue",
           argumentsFromParent
         );
         break;

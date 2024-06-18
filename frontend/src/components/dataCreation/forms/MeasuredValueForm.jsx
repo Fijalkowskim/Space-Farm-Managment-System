@@ -14,8 +14,8 @@ function MeasuredValueForm() {
       <DataCrationObjectInput
         multiselect={false}
         header={"Measure unit"}
-        propertyName={"measureUnit"}
-        contentType={"measureUnitId"}
+        propertyName={"measureUnitId"}
+        contentType={"measureUnit"}
         selectById={true}
       />
     </>

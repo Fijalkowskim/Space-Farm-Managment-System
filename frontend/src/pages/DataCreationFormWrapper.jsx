@@ -14,6 +14,7 @@ import StageTypeForm from "../components/dataCreation/forms/StageTypeForm";
 import MeasureUnitForm from "../components/dataCreation/forms/MeasureUnitForm";
 import ControlForm from "../components/dataCreation/forms/ControlForm";
 import ReadingForm from "../components/dataCreation/forms/ReadingForm";
+import MeasuredValueForm from "../components/dataCreation/forms/MeasuredValueForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -41,6 +42,9 @@ function DataCreationFormWrapper() {
         break;
       case "measureunit":
         setPageContent(<MeasureUnitForm />);
+        break;
+      case "measuredvalue":
+        setPageContent(<MeasuredValueForm />);
         break;
       case "stage":
         setPageContent(<StageForm />);
