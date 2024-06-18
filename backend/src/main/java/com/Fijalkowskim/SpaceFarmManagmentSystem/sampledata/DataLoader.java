@@ -22,7 +22,6 @@ public class DataLoader implements ApplicationRunner {
     private final MeasureUnitDAORepository measureUnitDAORepository;
     private final PersonDAORepository personDAORepository;
     private final PlantDAORepository plantDAORepository;
-    private final ReadingDAORepository readingDAORepository;
     private final StageDAORepository stageDAORepository;
     private final StageTypeDAORepository stageTypeDAORepository;
     private final StationDAORepository stationDAORepository;
@@ -35,7 +34,6 @@ public class DataLoader implements ApplicationRunner {
                       MeasureUnitDAORepository measureUnitDAORepository,
                       PersonDAORepository personDAORepository,
                       PlantDAORepository plantDAORepository,
-                      ReadingDAORepository readingDAORepository,
                       StageDAORepository stageDAORepository,
                       StageTypeDAORepository stageTypeDAORepository,
                       StationDAORepository stationDAORepository) {
@@ -47,7 +45,6 @@ public class DataLoader implements ApplicationRunner {
         this.measureUnitDAORepository = measureUnitDAORepository;
         this.personDAORepository = personDAORepository;
         this.plantDAORepository = plantDAORepository;
-        this.readingDAORepository = readingDAORepository;
         this.stageDAORepository = stageDAORepository;
         this.stageTypeDAORepository = stageTypeDAORepository;
         this.stationDAORepository = stationDAORepository;
@@ -64,7 +61,6 @@ public class DataLoader implements ApplicationRunner {
         insertPersonData();
         insertStageData();
         insertControlData();
-        insertReadingData();
         insertMeasuredValueData();
         insertHarvestData();
     }
@@ -169,13 +165,6 @@ public class DataLoader implements ApplicationRunner {
         measuredValueDAORepository.save(new MeasuredValue(2L, "Measurement 2", measureUnitDAORepository.findByIdWithEagerLoading(2L)));
         measuredValueDAORepository.save(new MeasuredValue(3L, "Measurement 3", measureUnitDAORepository.findByIdWithEagerLoading(3L)));
     }
-
-    private void insertReadingData() {
-        readingDAORepository.save(new Reading(1L, measuredValueDAORepository.findByIdWithEagerLoading(1L), 10, controlDAORepository.findByIdWithEagerLoading(1L)));
-        readingDAORepository.save(new Reading(2L, measuredValueDAORepository.findByIdWithEagerLoading(2L), 15, controlDAORepository.findByIdWithEagerLoading(2L)));
-        readingDAORepository.save(new Reading(3L, measuredValueDAORepository.findByIdWithEagerLoading(3L), 20, controlDAORepository.findByIdWithEagerLoading(3L)));
-    }
-
 
     private void insertHarvestData() {
         harvestDAORepository.save(new Harvest(1L, new java.sql.Timestamp(Timestamp.valueOf("2023-01-25 08:00:00").getTime()), cultivationDAORepository.findByIdWithEagerLoading(1L), Boolean.TRUE));
