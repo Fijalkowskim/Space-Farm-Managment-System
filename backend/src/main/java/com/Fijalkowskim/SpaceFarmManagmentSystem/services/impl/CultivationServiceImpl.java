@@ -2,16 +2,14 @@ package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.exceptions.CustomHTTPException;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Cultivation;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Harvest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Person;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Station;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.CultivationDAORepository;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.PersonDAORepository;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.StationDAORepository;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.models.Stage;
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.*;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.CultivationRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MultipleIdRequest;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.services.CultivationService;
-import com.Fijalkowskim.SpaceFarmManagmentSystem.services.StationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,7 +17,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -31,12 +28,16 @@ public class CultivationServiceImpl implements CultivationService {
     private final CultivationDAORepository cultivationDAORepository;
     private final PersonDAORepository personDAORepository;
     private final StationDAORepository stationDAORepository;
+    private final StageDAORepository stageDAORepository;
+    private final HarvestDAORepository harvestDAORepository;
 
     @Autowired
-    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository, StationDAORepository stationDAORepository) {
+    public CultivationServiceImpl(CultivationDAORepository cultivationDAORepository, PersonDAORepository personDAORepository, StationDAORepository stationDAORepository, StageDAORepository stageDAORepository,HarvestDAORepository harvestDAORepository) {
         this.cultivationDAORepository = cultivationDAORepository;
         this.personDAORepository = personDAORepository;
         this.stationDAORepository = stationDAORepository;
+        this.stageDAORepository = stageDAORepository;
+        this.harvestDAORepository = harvestDAORepository;
     }
 
     public Page<Cultivation> getCultivations(PageRequest pageRequest){
@@ -69,11 +70,20 @@ public class CultivationServiceImpl implements CultivationService {
         Optional<Cultivation> cultivation = cultivationDAORepository.findById(id);
         Optional<Person> person = personDAORepository.findByCultivationId(id);
         Optional<Station> station = stationDAORepository.findByCultivationId(id);
+        Optional<Stage> stage = stageDAORepository.findByCultivationId(id);
+        Optional<Harvest> harvest = harvestDAORepository.findByCultivationId(id);
+
         if(station.isPresent()){
             throw new CustomHTTPException("Cultivation assigned to station", HttpStatus.FOUND);
         }
         if(person.isPresent()){
             throw new CustomHTTPException("Cultivation assigned to person", HttpStatus.FOUND);
+        }
+        if(stage.isPresent()){
+            throw new CustomHTTPException("Cultivation assigned to Stage", HttpStatus.FOUND);
+        }
+        if(harvest.isPresent()){
+            throw new CustomHTTPException("Cultivation assigned to harvest", HttpStatus.FOUND);
         }
         if(cultivation.isEmpty()){
             throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);

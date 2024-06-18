@@ -18,4 +18,7 @@ public interface StageDAORepository extends JpaRepository<Stage, Long> {
 
     @Query("SELECT s FROM Stage s JOIN s.cultivation c WHERE c.id = :cultivationId")
     Set<Stage> findAllByCultivationId(@Param("cultivationId") long cultivationId);
+
+    @Query("SELECT s FROM Stage s JOIN s.cultivation c WHERE c.id = :cultivationId")
+    Optional<Stage> findByCultivationId(@Param("cultivationId") long cultivationId);
 }
