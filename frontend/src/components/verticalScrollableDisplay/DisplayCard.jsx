@@ -14,6 +14,7 @@ import { useDataCreationContext } from "../../context/general/DataCreationContex
 import CultivationTypeCard from "./displayCards/CultivationTypeCard";
 import { useDelete } from "../../hooks/useDelete";
 import LoadingBar from "../general/LoadingBar";
+import HarvestCard from "./displayCards/HarvestCard";
 function DisplayCard({
   data,
   contentType,
@@ -117,7 +118,7 @@ function DisplayCard({
         ) : contentType === "plant" ? (
           <PlantCard data={data} />
         ) : contentType === "harvest" ? (
-          <div>Harvest Card</div>
+          <HarvestCard data={data} />
         ) : contentType === "station" ? (
           <StationCard data={data} />
         ) : contentType === "reading" ? (

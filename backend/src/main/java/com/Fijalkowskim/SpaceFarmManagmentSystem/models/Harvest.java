@@ -1,5 +1,6 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -19,6 +20,7 @@ public class Harvest {
 
     @ManyToOne
     @JoinColumn(name = "cultivationId")
+    @JsonIgnore
     private Cultivation cultivation;
 
     private Boolean successfulHarvest;

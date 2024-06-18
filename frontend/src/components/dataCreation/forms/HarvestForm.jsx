@@ -14,6 +14,7 @@ function HarvestForm() {
         property={"successfulHarvest"}
         label="Successful Harvest"
         type="checkbox"
+        bool={true}
       />
       <DataCreationRegularInput
         property={"comment"}

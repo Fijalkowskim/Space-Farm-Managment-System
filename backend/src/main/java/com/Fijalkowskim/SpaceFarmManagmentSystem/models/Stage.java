@@ -1,6 +1,7 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
 import com.Fijalkowskim.SpaceFarmManagmentSystem.models.dictionaries.StageType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -27,6 +28,7 @@ public class Stage {
 
     @ManyToOne
     @JoinColumn(name = "cultivationId")
+    @JsonIgnore
     private Cultivation cultivation;
 
     @OneToMany(mappedBy = "stage")
