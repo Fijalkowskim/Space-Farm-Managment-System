@@ -15,6 +15,7 @@ function CultivationDetailsHeader({
 }) {
   const { setEditedCultivation } = useCultivationDetailsContext();
   const { startCreatingObject } = useDataCreationContext();
+  const { updateCultivation } = useCultivationContext();
   return (
     <div className="flex flex-col justify-center items-start w-full max-w-4xl bg-background-950/50 p-4 gap-2">
       <h1 className="text-3xl">Cultivation {cultivation.id}</h1>
