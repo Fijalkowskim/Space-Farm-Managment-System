@@ -48,6 +48,7 @@ public class StageServiceImpl implements StageService {
     public Stage updateStage(long id, StageRequest stageRequest) {
         Optional<Stage> optionalStage = stageDAORepository.findById(id);
         if(optionalStage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
+        if(stageRequest.getStageType() == null) throw new CustomHTTPException("Stage type can't be empty", HttpStatus.BAD_REQUEST);
         Stage stage = Stage.builder()
                 .id(optionalStage.get().getId())
                 .cultivation(optionalStage.get().getCultivation())
@@ -64,6 +65,7 @@ public class StageServiceImpl implements StageService {
     public Stage addStage(StageRequest stageRequest) {
         Optional<Cultivation> cultivation = cultivationDAORepository.findById(stageRequest.getCultivationId());
         if(cultivation.isEmpty()) throw new CustomHTTPException("Cultivation not found", HttpStatus.NOT_FOUND);
+        if(stageRequest.getStageType() == null) throw new CustomHTTPException("Stage type can't be empty", HttpStatus.BAD_REQUEST);
         Stage stage = Stage.builder()
                 .stageType(stageRequest.getStageType())
                 .startStageDate(stageRequest.getStartStageDate())

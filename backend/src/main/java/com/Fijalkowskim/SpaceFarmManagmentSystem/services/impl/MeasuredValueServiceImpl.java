@@ -43,6 +43,7 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
         return MeasuredValue.get();
     }
     public MeasuredValue addMeasuredValue(MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
+        if(measuredValueRequest.getMeasureUnit() == null) throw new CustomHTTPException("Measure unit can't be empty", HttpStatus.BAD_REQUEST);
         MeasuredValue measuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
                 .measureUnit(measuredValueRequest.getMeasureUnit())
@@ -52,6 +53,7 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
     public MeasuredValue updateMeasuredValue(long id, MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
         Optional<MeasuredValue> oldMeasuredValue = measuredValueDAORepository.findById(id);
         if(oldMeasuredValue.isEmpty()) throw new CustomHTTPException("MeasuredValue not found", HttpStatus.NOT_FOUND);
+        if(measuredValueRequest.getMeasureUnit() == null) throw new CustomHTTPException("Measure unit can't be empty", HttpStatus.BAD_REQUEST);
         MeasuredValue newMeasuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
                 .measureUnit(measuredValueRequest.getMeasureUnit())

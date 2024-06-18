@@ -57,6 +57,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     public Person addPerson(PersonCreateRequest personRequest) throws CustomHTTPException {
+        if(personRequest.getRole() == null) throw new CustomHTTPException("Role can't be empty", HttpStatus.BAD_REQUEST);
         Person person = Person.builder()
                 .name(personRequest.getName())
                 .surname(personRequest.getSurname())
@@ -114,6 +115,7 @@ public class PersonServiceImpl implements PersonService {
     public Person updatePerson(long id, PersonCreateRequest personRequest) throws CustomHTTPException{
         Optional<Person> oldPerson = personDAORepository.findById(id);
         if(oldPerson.isEmpty()) throw new CustomHTTPException("Person not found", HttpStatus.NOT_FOUND);
+        if(personRequest.getRole() == null) throw new CustomHTTPException("Role can't be empty", HttpStatus.BAD_REQUEST);
         Person newPerson = Person.builder()
                 .name(personRequest.getName())
                 .surname(personRequest.getSurname())
