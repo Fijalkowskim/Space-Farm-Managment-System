@@ -9,20 +9,16 @@ export function useControlContext() {
 }
 
 export function ControlContextProvider({ children }) {
-  const [controls, setControls] = useState([]);
-  const [control, setControl] = useState(null);
-  const [controlReadings, setControlReadings] = useState([]);
   const { logError } = usePopupContext();
   //************ Get methods ************
   const getControls = async () => {
     try {
       const res = await api.get("/control");
       if (res.data) {
-        setControls(res.data.content);
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return [];
   };
@@ -30,23 +26,32 @@ export function ControlContextProvider({ children }) {
     try {
       const res = await api.get(`/control/${id}`);
       if (res.data) {
-        setControl(res.data);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
+  };
+  const getControlsByStage = async (id) => {
+    try {
+      const res = await api.get(`/control/stage/${id}`);
+      if (res.data) {
+        return res.data;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return [];
   };
   const getControlReadings = async (id, page = 0, pageSize = 20) => {
     try {
       const res = await api.get(`/control/${id}/readings`);
       if (res.data) {
-        setControlReadings(res.data.content);
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return [];
   };
@@ -69,11 +74,10 @@ export function ControlContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setControls((prevControls) => [...prevControls, res.data]);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -85,15 +89,10 @@ export function ControlContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setControls((prevControls) =>
-          prevControls.map((control) =>
-            control.id === id ? res.data : control
-          )
-        );
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -101,15 +100,13 @@ export function ControlContextProvider({ children }) {
   return (
     <ControlContext.Provider
       value={{
-        controls,
-        control,
-        controlReadings,
         getControls,
         getControl,
         getControlReadings,
         deleteControl,
         addControl,
         updateControl,
+        getControlsByStage,
       }}
     >
       {children}

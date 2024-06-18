@@ -14,6 +14,9 @@ import StageEditForm from "../../components/cultivations/StageEditForm";
 import DataCrationObjectInput from "../../components/dataCreation/DataCrationObjectInput";
 import CustomButton from "../../components/general/CustomButton";
 import StageDetailsHeader from "../../components/cultivations/StageDetailsHeader";
+import { useControlContext } from "../../context/ControlContext";
+import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 function StageDetails() {
   const [changingType, setChangingType] = useState(false);
   const [dataUpdated, setDataUpdated] = useState(false);
@@ -25,9 +28,16 @@ function StageDetails() {
   const { cancelCreatingObject, finishCreatingObject } =
     useDataCreationContext();
   const { disableEditing, editedStage } = useStageDetailsContext();
+  const { getControlsByStage } = useControlContext();
 
   const { data, isPending } = useFetchData(
     getStage,
+    id,
+    dataUpdated,
+    setDataUpdated
+  );
+  const { data: controls, isPending: controlsPending } = useFetchArrayData(
+    getControlsByStage,
     id,
     dataUpdated,
     setDataUpdated
@@ -106,6 +116,16 @@ function StageDetails() {
             stage={data}
             onUpdate={onObligatoryFieldUpdate}
             setChangingType={setChangingType}
+          />
+          <VerticalScrollableDisplay
+            entries={controls}
+            isPending={controlsPending}
+            header="Controls"
+            contentType="control"
+            className="max-w-4xl items-start"
+            creationArgumentsFromParent={[
+              { property: "stageId", value: data.id },
+            ]}
           />
         </div>
       )}
