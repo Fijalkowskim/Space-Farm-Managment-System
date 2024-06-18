@@ -15,8 +15,9 @@ function ReadingForm() {
       <DataCrationObjectInput
         multiselect={false}
         header={"Measured value"}
-        propertyName={"type"}
-        contentType={"cultivationType"}
+        propertyName={"measuredValueId"}
+        contentType={"measuredValue"}
+        selectById={true}
       />
     </>
   );
