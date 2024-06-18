@@ -1,5 +1,6 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.services.impl;
 
+import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasureUnitDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.MeasuredValueDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.repositories.ReadingDAORepository;
 import com.Fijalkowskim.SpaceFarmManagmentSystem.requestmodels.MeasuredValueRequest;
@@ -25,13 +26,15 @@ import java.util.Optional;
 @Transactional
 @Service
 public class MeasuredValueServiceImpl implements MeasuredValueService {
+    private final MeasureUnitDAORepository measureUnitDAORepository;;
     private final MeasuredValueDAORepository measuredValueDAORepository;
     private final ReadingDAORepository readingDAORepository;
 
     @Autowired
-    public MeasuredValueServiceImpl(MeasuredValueDAORepository measuredValueDAORepository, ReadingDAORepository readingDAORepository) {
+    public MeasuredValueServiceImpl(MeasuredValueDAORepository measuredValueDAORepository, ReadingDAORepository readingDAORepository, MeasureUnitDAORepository measureUnitDAORepository) {
         this.measuredValueDAORepository = measuredValueDAORepository;
         this.readingDAORepository = readingDAORepository;
+        this.measureUnitDAORepository = measureUnitDAORepository;
     }
 
     public Page<MeasuredValue> getMeasuredValues(Pageable pageable){
@@ -43,20 +46,22 @@ public class MeasuredValueServiceImpl implements MeasuredValueService {
         return MeasuredValue.get();
     }
     public MeasuredValue addMeasuredValue(MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
-        if(measuredValueRequest.getMeasureUnit() == null) throw new CustomHTTPException("Measure unit can't be empty", HttpStatus.BAD_REQUEST);
+        Optional<MeasureUnit> optionalMeasureUnit = measureUnitDAORepository.findById(measuredValueRequest.getMeasureUnitId());
+        if(optionalMeasureUnit.isEmpty()) throw new CustomHTTPException("Measure not found", HttpStatus.NOT_FOUND);
         MeasuredValue measuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
-                .measureUnit(measuredValueRequest.getMeasureUnit())
+                .measureUnit(optionalMeasureUnit.get())
                 .build();
         return measuredValueDAORepository.save(measuredValue);
     }
     public MeasuredValue updateMeasuredValue(long id, MeasuredValueRequest measuredValueRequest) throws CustomHTTPException {
         Optional<MeasuredValue> oldMeasuredValue = measuredValueDAORepository.findById(id);
+        Optional<MeasureUnit> optionalMeasureUnit = measureUnitDAORepository.findById(measuredValueRequest.getMeasureUnitId());
+        if(optionalMeasureUnit.isEmpty()) throw new CustomHTTPException("Measure not found", HttpStatus.NOT_FOUND);
         if(oldMeasuredValue.isEmpty()) throw new CustomHTTPException("MeasuredValue not found", HttpStatus.NOT_FOUND);
-        if(measuredValueRequest.getMeasureUnit() == null) throw new CustomHTTPException("Measure unit can't be empty", HttpStatus.BAD_REQUEST);
         MeasuredValue newMeasuredValue = MeasuredValue.builder()
                 .name(measuredValueRequest.getName())
-                .measureUnit(measuredValueRequest.getMeasureUnit())
+                .measureUnit(optionalMeasureUnit.get())
                 .id(oldMeasuredValue.get().getId())
                 .build();
         return measuredValueDAORepository.save(newMeasuredValue);

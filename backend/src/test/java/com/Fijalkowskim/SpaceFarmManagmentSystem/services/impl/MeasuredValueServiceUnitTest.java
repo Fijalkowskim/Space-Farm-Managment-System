@@ -77,7 +77,7 @@ public class MeasuredValueServiceUnitTest {
         // Mocking data
         MeasuredValueRequest measuredValueRequest = new MeasuredValueRequest();
         measuredValueRequest.setName("Temperature");
-        measuredValueRequest.setMeasureUnit(new MeasureUnit(1L, "Celsius"));
+        measuredValueRequest.setMeasureUnitId(1L);
 
         MeasuredValue measuredValue = new MeasuredValue();
         measuredValue.setName("Temperature");
@@ -96,7 +96,7 @@ public class MeasuredValueServiceUnitTest {
         long id = 1L;
         MeasuredValueRequest measuredValueRequest = new MeasuredValueRequest();
         measuredValueRequest.setName("Temperature");
-        measuredValueRequest.setMeasureUnit(new MeasureUnit(1L, "Celsius"));
+        measuredValueRequest.setMeasureUnitId(1L);
 
         MeasuredValue oldMeasuredValue = new MeasuredValue();
         oldMeasuredValue.setId(id);

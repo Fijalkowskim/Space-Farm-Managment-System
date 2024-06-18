@@ -8,5 +8,5 @@ import lombok.Data;
 public class MeasuredValueRequest {
     private String name;
 
-    private MeasureUnit measureUnit;
+    private long measureUnitId;
 }
