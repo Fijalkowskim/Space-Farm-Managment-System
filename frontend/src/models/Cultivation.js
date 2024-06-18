@@ -14,15 +14,15 @@ export class Cultivation {
     comment
   ) {
     this.id = id;
-    this.startDate = new Date(startDate);
+    this.startDate = new Date(Date.parse(startDate));
     this.type = type;
     this.harvests = harvests;
     this.plant = plant;
     this.stages = stages;
     this.stations = stations;
     this.area = area;
-    this.plannedFinishDate = new Date(plannedFinishDate);
-    this.realFinishDate = new Date(realFinishDate);
+    this.plannedFinishDate = new Date(Date.parse(plannedFinishDate));
+    this.realFinishDate = new Date(Date.parse(realFinishDate));
     this.responsibleWorkers = responsibleWorkers;
     this.comment = comment;
   }

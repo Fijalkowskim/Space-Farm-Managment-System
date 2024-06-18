@@ -60,7 +60,7 @@ export function CultivationContextProvider({ children }) {
     try {
       const res = await api.get(`/cultivation/person/${userData.id}`);
       if (res.data) {
-        return res.data;
+        return res.data.map((res) => Cultivation.fromResponse(res));
       }
     } catch (err) {
       logError(err);

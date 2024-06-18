@@ -3,7 +3,9 @@ import { format } from "date-fns";
 import { NavLink } from "react-router-dom";
 import DisplayCardAttribute from "../DisplayCardAttribute";
 function CultivationCard({ data }) {
-  const finished = data.realFinishDate !== undefined;
+  const finished =
+    data.realFinishDate !== undefined &&
+    new Date(data.realFinishDate) <= new Date();
   if (data === null) return;
   return (
     <div className="flex flex-row md:flex-nowrap flex-wrap items-center justify-start gap-6 w-full">
@@ -11,15 +13,20 @@ function CultivationCard({ data }) {
       <DisplayCardAttribute
         className="w-24"
         label="Start date"
-        value={format(data.startDate, "yyyy-MM-dd")}
+        value={
+          data.startDate ? format(data.startDate, "yyyy-MM-dd") : undefined
+        }
       />
       <DisplayCardAttribute
         className="w-36"
         label={finished ? "Finish date" : "Planned finish date"}
-        value={format(
-          finished ? data.realFinishDate : data.plannedFinishDate,
-          "yyyy-MM-dd"
-        )}
+        value={
+          finished && data.realFinishDate
+            ? format(data.realFinishDate, "yyyy-MM-dd")
+            : !finished && data.plannedFinishDate
+            ? format(data.plannedFinishDate, "yyyy-MM-dd")
+            : undefined
+        }
       />
 
       <DisplayCardAttribute label="Plant" value={data.plant.name} />

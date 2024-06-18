@@ -141,7 +141,7 @@ function DisplayCard({
             <FaRegTrashAlt />
           </CustomButton>
         )}
-        {showRemoveButton === true && (
+        {/* {showRemoveButton === true && (
           <CustomButton
             className={"w-full"}
             onClick={(e) => {
@@ -151,7 +151,7 @@ function DisplayCard({
           >
             <IoIosRemoveCircleOutline />
           </CustomButton>
-        )}
+        )} */}
       </div>
     </div>
   );
