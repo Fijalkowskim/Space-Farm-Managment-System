@@ -20,6 +20,7 @@ import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { ControlRequest } from "../../models/requestmodels/ControlRequest";
 import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
 import { PersonCreateRequest } from "../../models/requestmodels/PersonCreateRequest";
+import { ReadingRequest } from "../../models/requestmodels/ReadingRequest";
 import { useStageContext } from "../StageContext";
 import { useStageTypeContext } from "../dictionaries/StageTypeContext";
 import { useHarvestContext } from "../HarvestContext";
@@ -27,6 +28,7 @@ import { usePersonContext } from "../PersonContext";
 import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContext";
 import { useMeasureUnitContext } from "../dictionaries/MeasureUnitContext";
 import { useControlContext } from "../ControlContext";
+import { useReadingContext } from "../ReadingContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -49,6 +51,7 @@ export function DataCreationContextProvider({ children }) {
   const { addCultivationType } = useCultivationTypeContext();
   const { addMeasureUnit } = useMeasureUnitContext();
   const { addControl } = useControlContext();
+  const { addReading } = useReadingContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -191,6 +194,20 @@ export function DataCreationContextProvider({ children }) {
             ) ?? ""
           }`,
           "control",
+          argumentsFromParent
+        );
+        break;
+      case "reading":
+        startCreatingObject(
+          new ReadingRequest(),
+          addReading,
+          `/control/${
+            getObjectPropertyValueFromObjectArray(
+              argumentsFromParent,
+              "controlId"
+            ) ?? ""
+          }`,
+          "reading",
           argumentsFromParent
         );
         break;

@@ -8,6 +8,7 @@ import { usePersonContext } from "../../context/PersonContext";
 const navlinks = [
   { name: "Cultivations", to: "/" },
   { name: "Stations", to: "/stations" },
+  { name: "Measured Values", to: "/measuredValues" },
   { name: "Workers", to: "/workers", onlyFor: ["admin", "manager"] },
   { name: "Resources", to: "/resources" },
   { name: "Profile", to: "/profile" },

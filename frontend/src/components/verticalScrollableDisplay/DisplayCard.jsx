@@ -17,6 +17,7 @@ import { useDelete } from "../../hooks/useDelete";
 import LoadingBar from "../general/LoadingBar";
 import HarvestCard from "./displayCards/HarvestCard";
 import ReadingCard from "./displayCards/ReadingCard";
+import MeasuredValueCard from "./displayCards/MeasuredValueCard";
 function DisplayCard({
   data,
   contentType,
@@ -127,6 +128,8 @@ function DisplayCard({
           <ReadingCard data={data} />
         ) : contentType === "measureUnit" ? (
           <MeasureUnitCard data={data} />
+        ) : contentType === "measuredValue" ? (
+          <MeasuredValueCard data={data} />
         ) : contentType === "cultivationType" ? (
           <CultivationTypeCard data={data} />
         ) : contentType === "control" ? (

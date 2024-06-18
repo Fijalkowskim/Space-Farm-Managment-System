@@ -21,6 +21,7 @@ import ScrollToTop from "./ScrollToTop";
 import CultivationTypeDetails from "../../pages/detailsPages/CultivationTypeDetails";
 import StageDetails from "../../pages/detailsPages/StageDetails";
 import ControlDetails from "../../pages/detailsPages/ControlDetails";
+import MeasuredValues from "../../pages/MeasuredValues";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
@@ -34,6 +35,7 @@ function AppRouter() {
         />
         <Route path="/resources" element={<Resources />} />
         <Route path="/stations" element={<Stations />} />
+        <Route path="/measuredValues" element={<MeasuredValues />} />
         <Route path="/workers" element={<Workers />} />
         <Route path="/plants" element={<Plants />} />
         <Route path="/profile" element={<Profile />} />

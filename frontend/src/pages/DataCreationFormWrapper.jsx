@@ -13,6 +13,7 @@ import CultivationTypeForm from "../components/dataCreation/forms/CultivationTyp
 import StageTypeForm from "../components/dataCreation/forms/StageTypeForm";
 import MeasureUnitForm from "../components/dataCreation/forms/MeasureUnitForm";
 import ControlForm from "../components/dataCreation/forms/ControlForm";
+import ReadingForm from "../components/dataCreation/forms/ReadingForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -52,6 +53,9 @@ function DataCreationFormWrapper() {
         break;
       case "control":
         setPageContent(<ControlForm />);
+        break;
+      case "reading":
+        setPageContent(<ReadingForm />);
         break;
       default:
         navigate("/");
