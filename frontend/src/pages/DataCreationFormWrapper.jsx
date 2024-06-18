@@ -8,6 +8,7 @@ import PlantForm from "../components/dataCreation/forms/PlantForm";
 import StageForm from "../components/dataCreation/forms/StageForm";
 import HarvestForm from "../components/dataCreation/forms/HarvestForm";
 import LoadingBar from "../components/general/LoadingBar";
+import PersonForm from "../components/dataCreation/forms/PersonForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -31,6 +32,9 @@ function DataCreationFormWrapper() {
         setPageContent(<StageForm />);
       case "harvest":
         setPageContent(<HarvestForm />);
+        break;
+      case "worker":
+        setPageContent(<PersonForm />);
         break;
       default:
         navigate("/");

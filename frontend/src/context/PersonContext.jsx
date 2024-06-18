@@ -68,7 +68,7 @@ export function PersonContextProvider({ children }) {
   };
   const getResponsibleWorkers = async (cultivationId) => {
     try {
-      const res = await api.get(`person/responsible/${cultivationId}`);
+      const res = await api.get(`/person/responsible/${cultivationId}`);
       if (res.data) {
         return res.data;
       }
@@ -81,8 +81,17 @@ export function PersonContextProvider({ children }) {
   const addPerson = async (personCreateRequest) => {
     if (!userData) return false;
     try {
-      const res = await api.put(`?userID=${userData.id}`, personCreateRequest);
-      if (res.data) {
+      const res = await api.put(
+        `/person?userID=${userData.id}`,
+        personCreateRequest,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res);
+      if (res) {
         return true;
       }
     } catch (err) {

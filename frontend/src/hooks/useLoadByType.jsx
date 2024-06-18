@@ -38,6 +38,9 @@ export const useLoadByType = (dataType) => {
         case "worker":
           loadingMethod = getPersons;
           break;
+        case "workertype":
+          loadingMethod = getPersons;
+          break;
         default:
           setIsPending(false);
           setData(undefined);

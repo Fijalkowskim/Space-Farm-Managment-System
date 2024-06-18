@@ -15,9 +15,11 @@ import { PlantRequest } from "../../models/requestmodels/PlantRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
 import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
+import { PersonCreateRequest } from "../../models/requestmodels/PersonCreateRequest";
 import { useStageContext } from "../StageContext";
 import { useStageTypeContext } from "../dictionaries/StageTypeContext";
 import { useHarvestContext } from "../HarvestContext";
+import { usePersonContext } from "../PersonContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -36,6 +38,7 @@ export function DataCreationContextProvider({ children }) {
   const { addStage } = useStageContext();
   const { addStageType } = useStageTypeContext();
   const { addHarvest } = useHarvestContext();
+  const { addPerson } = usePersonContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -127,6 +130,14 @@ export function DataCreationContextProvider({ children }) {
             ) ?? ""
           }`,
           "harvest",
+          argumentsFromParent
+        );
+      case "worker":
+        startCreatingObject(
+          new PersonCreateRequest(),
+          addPerson,
+          "/workers",
+          "worker",
           argumentsFromParent
         );
         break;
