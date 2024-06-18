@@ -37,7 +37,7 @@ export function ControlContextProvider({ children }) {
     try {
       const res = await api.get(`/control/stage/${id}`);
       if (res.data) {
-        return res.data;
+        return res.data.content;
       }
     } catch (err) {
       logError(err);

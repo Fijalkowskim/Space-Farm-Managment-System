@@ -17,6 +17,7 @@ import { CultivationTypeRequest } from "../../models/requestmodels/CultivationTy
 import { StageTypeRequest } from "../../models/requestmodels/StageTypeRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
+import { ControlRequest } from "../../models/requestmodels/ControlRequest";
 import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
 import { PersonCreateRequest } from "../../models/requestmodels/PersonCreateRequest";
 import { useStageContext } from "../StageContext";
@@ -25,6 +26,7 @@ import { useHarvestContext } from "../HarvestContext";
 import { usePersonContext } from "../PersonContext";
 import { useCultivationTypeContext } from "../dictionaries/CultivationTypeContext";
 import { useMeasureUnitContext } from "../dictionaries/MeasureUnitContext";
+import { useControlContext } from "../ControlContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -46,6 +48,7 @@ export function DataCreationContextProvider({ children }) {
   const { addPerson } = usePersonContext();
   const { addCultivationType } = useCultivationTypeContext();
   const { addMeasureUnit } = useMeasureUnitContext();
+  const { addControl } = useControlContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -174,6 +177,20 @@ export function DataCreationContextProvider({ children }) {
           addPerson,
           "/workers",
           "worker",
+          argumentsFromParent
+        );
+        break;
+      case "control":
+        startCreatingObject(
+          new ControlRequest(),
+          addControl,
+          `/stage/${
+            getObjectPropertyValueFromObjectArray(
+              argumentsFromParent,
+              "stageId"
+            ) ?? ""
+          }`,
+          "control",
           argumentsFromParent
         );
         break;

@@ -12,6 +12,7 @@ import PersonForm from "../components/dataCreation/forms/PersonForm";
 import CultivationTypeForm from "../components/dataCreation/forms/CultivationTypeForm";
 import StageTypeForm from "../components/dataCreation/forms/StageTypeForm";
 import MeasureUnitForm from "../components/dataCreation/forms/MeasureUnitForm";
+import ControlForm from "../components/dataCreation/forms/ControlForm";
 function DataCreationFormWrapper() {
   const { creationType } = useParams();
   const navigate = useNavigate();
@@ -48,6 +49,9 @@ function DataCreationFormWrapper() {
         break;
       case "worker":
         setPageContent(<PersonForm />);
+        break;
+      case "control":
+        setPageContent(<ControlForm />);
         break;
       default:
         navigate("/");
