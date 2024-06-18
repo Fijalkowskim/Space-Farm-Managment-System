@@ -42,6 +42,7 @@ function DataCreationFormWrapper() {
         break;
       case "stage":
         setPageContent(<StageForm />);
+        break;
       case "harvest":
         setPageContent(<HarvestForm />);
         break;

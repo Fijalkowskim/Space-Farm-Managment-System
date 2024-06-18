@@ -67,6 +67,18 @@ export function CultivationContextProvider({ children }) {
     }
     return undefined;
   };
+  const getByStation = async (id) => {
+    if (!userData) return undefined;
+    try {
+      const res = await api.get(`/cultivation/station/${id}`);
+      if (res.data) {
+        return res.data.map((res) => Cultivation.fromResponse(res));
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return undefined;
+  };
   //************ Put methods ************
   const addCultivaiton = async (cultivationRequest) => {
     if (!userData) return false;
@@ -165,6 +177,7 @@ export function CultivationContextProvider({ children }) {
         getFinishedCultivations,
         getCultivation,
         getAssignedCultivations,
+        getByStation,
         addCultivaiton,
         updateCultivation,
         updateCultivaitonStations,

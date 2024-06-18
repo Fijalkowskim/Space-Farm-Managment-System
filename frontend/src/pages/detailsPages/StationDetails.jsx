@@ -6,12 +6,19 @@ import { useStation } from "../../hooks/stations/useStation";
 import StationCultivationsDisplay from "../../components/stations/StationCultivationsDisplay";
 import { useFetchData } from "../../hooks/useFetchData";
 import { useStationContext } from "../../context/StationContext";
+import { useCultivationContext } from "../../context/cultivations/CultivationContext";
+import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import VerticalScrollableDisplay from "../../components/verticalScrollableDisplay/VerticalScrollableDisplay";
 
 function StationDetails() {
   const { id } = useParams();
   const { getStation } = useStationContext();
   const { data, isPending } = useFetchData(getStation, id);
   const [currentStation, setCurrentStation] = useState(undefined);
+
+  const { getByStation } = useCultivationContext();
+  const { data: cultivations, isPending: cultivationsPending } =
+    useFetchArrayData(getByStation, id);
 
   useEffect(() => {
     setCurrentStation(data);
@@ -31,7 +38,16 @@ function StationDetails() {
       ) : (
         <div className="w-full flex flex-col items-center justify-start gap-3 relative">
           <h1 className="text-4xl mt-2">Station {currentStation.id}</h1>
-          <StationCultivationsDisplay station={currentStation} />
+          <div className="w-full p-2 flex flex-col items-center justify-start bg-background-950/50 h-[30rem] max-w-4xl">
+            <VerticalScrollableDisplay
+              header={"Assigned cultivations"}
+              entries={cultivations}
+              isPending={cultivationsPending}
+              contentType={"cultivation"}
+              className={""}
+              detailsPageDisplay={true}
+            />
+          </div>
         </div>
       )}
     </PageWrapper>

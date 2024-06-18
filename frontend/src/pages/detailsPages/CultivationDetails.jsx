@@ -212,6 +212,7 @@ function CultivationDetails() {
             ]}
           />
           <VerticalScrollableDisplay
+            disableNavigation={true}
             entries={harvests}
             isPending={harvestsPending}
             header="Harvests"

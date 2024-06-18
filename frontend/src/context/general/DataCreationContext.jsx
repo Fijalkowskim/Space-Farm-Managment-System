@@ -153,6 +153,7 @@ export function DataCreationContextProvider({ children }) {
           "stage",
           argumentsFromParent
         );
+        break;
       case "harvest":
         startCreatingObject(
           new HarvestRequest(),
@@ -166,6 +167,7 @@ export function DataCreationContextProvider({ children }) {
           "harvest",
           argumentsFromParent
         );
+        break;
       case "worker":
         startCreatingObject(
           new PersonCreateRequest(),
@@ -269,7 +271,7 @@ export function DataCreationContextProvider({ children }) {
   //Method returning currently created object property
   const getCurrentObjectProperty = (property) => {
     return objectCreationQueue.length <= 0 ||
-      !objectCreationQueue[0].object.hasOwnProperty(property)
+      !objectCreationQueue[0].object?.hasOwnProperty(property)
       ? undefined
       : objectCreationQueue[0].object[property];
   };
