@@ -88,9 +88,9 @@ public class ControlServiceImpl implements ControlService {
         return controlDAORepository.save(newControl);
     }
 
-    public Page<Reading> getReadingsByControl(PageRequest pageRequest, long id) {
-        Optional<Control> control = controlDAORepository.findById(id);
-        if(control.isEmpty()) throw new CustomHTTPException("Control not found", HttpStatus.NOT_FOUND);
-        return readingDAORepository.findReadingByControl(control.get(), pageRequest);
+    public Page<Control> getControlsByStageId(PageRequest pageRequest, long id) {
+        Optional<Stage> stage = stageDAORepository.findById(id);
+        if(stage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
+        return controlDAORepository.findControlByStage(stage.get(), pageRequest);
     }
 }

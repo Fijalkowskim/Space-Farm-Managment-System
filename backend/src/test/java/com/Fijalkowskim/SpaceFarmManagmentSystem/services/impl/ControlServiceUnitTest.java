@@ -161,21 +161,4 @@ public class ControlServiceUnitTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
-    @Test
-    public void testGetReadingsByControl_ControlNotFound() {
-        // Mocking data
-        long controlId = 1L;
-        PageRequest pageRequest = PageRequest.of(0, 10);
-
-        // Mocking repository behavior
-        when(controlDAORepository.findById(controlId)).thenReturn(Optional.empty());
-
-        // Assertions
-        CustomHTTPException exception = assertThrows(CustomHTTPException.class,
-                () -> controlService.getReadingsByControl(pageRequest, controlId));
-        assertEquals("Control not found", exception.getMessage());
-        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
-    }
-
-
 }

@@ -41,4 +41,11 @@ public class ReadingController {
         readingService.deleteReading(id);
         return ResponseEntity.ok("Reading deleted successfully");
     }
+    @GetMapping("/control/{id}")
+    public Page<Reading> getReadingsByControlId(@RequestParam(name = "page", defaultValue = "0") int page,
+                                            @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
+                                            @PathVariable long id) throws CustomHTTPException {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return readingService.getReadingsByControl(pageRequest, id);
+    }
 }

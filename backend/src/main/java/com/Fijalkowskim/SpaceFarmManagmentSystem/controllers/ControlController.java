@@ -35,14 +35,6 @@ public class ControlController {
         return ResponseEntity.ok(controlService.getControlById(id));
     }
 
-    @GetMapping("/{id}/readings")
-    public Page<Reading> getControlReadings(@RequestParam(name = "page", defaultValue = "0") int page,
-                                            @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
-                                            @PathVariable long id) throws CustomHTTPException {
-        PageRequest pageRequest = PageRequest.of(page, pageSize);
-        return controlService.getReadingsByControl(pageRequest, id);
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteControl(@PathVariable long id) throws CustomHTTPException {
         controlService.deleteControl(id);
@@ -57,5 +49,13 @@ public class ControlController {
     @PostMapping("/{id}")
     public ResponseEntity<Control> updateControl(@PathVariable long id, @RequestBody ControlRequest controlRequest) throws CustomHTTPException{
         return ResponseEntity.status(HttpStatus.OK).body(controlService.updateControl(id,controlRequest));
+    }
+
+    @GetMapping("/stage/{id}")
+    public Page<Control> getControlsByStageId(@RequestParam(name = "page", defaultValue = "0") int page,
+                                                @RequestParam(name = "pageSize", defaultValue = "20") int pageSize,
+                                                @PathVariable long id) throws CustomHTTPException {
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        return controlService.getControlsByStageId(pageRequest, id);
     }
 }

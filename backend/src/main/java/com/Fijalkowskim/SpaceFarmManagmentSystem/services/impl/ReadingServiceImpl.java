@@ -81,4 +81,10 @@ public class ReadingServiceImpl implements ReadingService {
         if(reading.isEmpty()) throw new CustomHTTPException("Reading not found", HttpStatus.NOT_FOUND);
         readingDAORepository.delete(reading.get());
     }
+
+    public Page<Reading> getReadingsByControl(PageRequest pageRequest, long id) {
+        Optional<Control> control = controlDAORepository.findById(id);
+        if(control.isEmpty()) throw new CustomHTTPException("Control not found", HttpStatus.NOT_FOUND);
+        return readingDAORepository.findReadingByControl(control.get(), pageRequest);
+    }
 }
