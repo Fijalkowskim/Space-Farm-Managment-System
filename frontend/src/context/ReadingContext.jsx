@@ -23,8 +23,6 @@ export function ReadingContextProvider({ children }) {
     return undefined;
   };
   const getReading = async (id) => {
-    //return exampleReadings.find((Reading) => Reading.id === id);
-
     try {
       const res = await api.get(`/reading/${id}`);
       if (res.data) {

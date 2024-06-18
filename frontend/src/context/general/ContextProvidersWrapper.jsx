@@ -19,6 +19,7 @@ import { ObjectLoadingContextProvider } from "./ObjectLoadingContext";
 import { GlobalReloadContextProvider } from "./GlobalReloadContext";
 import { StageDetailContextProvider } from "../StageDetailsContext";
 import { ControlDetailContextProvider } from "../ControlDetailsContext";
+import { ReadingDetailContextProvider } from "../ReadingDetailsContext";
 function ContextProvidersWrapper({ children }) {
   return (
     <GlobalReloadContextProvider>
@@ -41,7 +42,9 @@ function ContextProvidersWrapper({ children }) {
                                       <ObjectLoadingContextProvider>
                                         <StageDetailContextProvider>
                                           <ControlDetailContextProvider>
-                                            {children}
+                                            <ReadingDetailContextProvider>
+                                              {children}
+                                            </ReadingDetailContextProvider>
                                           </ControlDetailContextProvider>
                                         </StageDetailContextProvider>
                                       </ObjectLoadingContextProvider>

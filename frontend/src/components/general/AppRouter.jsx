@@ -22,6 +22,7 @@ import CultivationTypeDetails from "../../pages/detailsPages/CultivationTypeDeta
 import StageDetails from "../../pages/detailsPages/StageDetails";
 import ControlDetails from "../../pages/detailsPages/ControlDetails";
 import MeasuredValues from "../../pages/MeasuredValues";
+import ReadingDetails from "../../pages/detailsPages/ReadingDetails";
 function AppRouter() {
   const { isLoggedIn } = usePersonContext();
   return (
@@ -53,6 +54,7 @@ function AppRouter() {
         <Route path="/station/:id" element={<StationDetails />} />
         <Route path="/control/:id" element={<ControlDetails />} />
         <Route path="/worker/:id" element={<WorkerDetails />} />
+        <Route path="/reading/:id" element={<ReadingDetails />} />
 
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>
