@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 @Transactional
 @Service
@@ -95,5 +96,9 @@ public class StageServiceImpl implements StageService {
         Optional<Stage> stage = stageDAORepository.findById(stageId);
         if(stage.isEmpty()) throw new CustomHTTPException("Stage not found", HttpStatus.NOT_FOUND);
         return controlDAORepository.findControlByStage(stage.get(), pageable);
+    }
+
+    public Set<Stage> getStagesByCultivationId(long cultivationId) {
+        return stageDAORepository.findAllByCultivationId(cultivationId);
     }
 }

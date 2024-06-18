@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Set;
+
 @RestController
 @RequestMapping( value = "/api/stage")
 @CrossOrigin("http://localhost:3000")
@@ -39,6 +41,11 @@ public class StageController {
                                           @PathVariable long id) throws CustomHTTPException {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         return stageService.getControlsByStage(pageRequest, id);
+    }
+    @GetMapping("/cultivation/{cultivationId}")
+    public ResponseEntity<Set<Stage>> getStagesByCultivationId(@PathVariable long cultivationId){
+        return ResponseEntity.ok(stageService.getStagesByCultivationId(cultivationId));
+
     }
     @PutMapping("")
     public ResponseEntity<Stage> addStage(@RequestBody StageRequest stageRequest){
