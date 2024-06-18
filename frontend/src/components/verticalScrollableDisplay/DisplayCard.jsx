@@ -7,6 +7,7 @@ import CustomButton from "../general/CustomButton";
 import { FaRegTrashAlt } from "react-icons/fa";
 import PlantCard from "./displayCards/PlantCard";
 import StageCard from "./displayCards/StageCard";
+import ControlCard from "./displayCards/ControlCard";
 import StageTypeCard from "./displayCards/StageTypeCard";
 import MeasureUnitCard from "./displayCards/MeasureUnitCard";
 import { IoIosRemoveCircleOutline } from "react-icons/io";
@@ -127,6 +128,8 @@ function DisplayCard({
           <MeasureUnitCard data={data} />
         ) : contentType === "cultivationType" ? (
           <CultivationTypeCard data={data} />
+        ) : contentType === "control" ? (
+          <ControlCard data={data} />
         ) : null}
       </div>
       <div className="w-10 flex-shrink-0 flex flex-col items-center justify-center gap-2">

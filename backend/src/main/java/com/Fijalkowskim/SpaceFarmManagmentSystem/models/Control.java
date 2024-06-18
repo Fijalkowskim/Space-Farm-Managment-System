@@ -1,5 +1,6 @@
 package com.Fijalkowskim.SpaceFarmManagmentSystem.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class Control {
     private int deadSeedlings;
 
     @OneToMany(mappedBy = "control")
+    @JsonIgnore
     private Set<Reading> readings;
 
     public Control() {}
