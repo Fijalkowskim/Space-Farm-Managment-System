@@ -8,8 +8,6 @@ export function useReadingContext() {
 }
 
 export function ReadingContextProvider({ children }) {
-  const [readings, setReadings] = useState([]);
-  const [reading, setReading] = useState(null);
   const { logError } = usePopupContext();
 
   //************ Get methods ************
@@ -17,11 +15,10 @@ export function ReadingContextProvider({ children }) {
     try {
       const res = await api.get("/reading");
       if (res.data) {
-        setReadings(res.data.content);
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return undefined;
   };
@@ -31,13 +28,23 @@ export function ReadingContextProvider({ children }) {
     try {
       const res = await api.get(`/reading/${id}`);
       if (res.data) {
-        setReading(res.data);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return undefined;
+  };
+  const getReadingsByControl = async (id) => {
+    try {
+      const res = await api.get(`/reading/control/${id}`);
+      if (res.data) {
+        return res.data.content;
+      }
+    } catch (err) {
+      logError(err);
+    }
+    return [];
   };
   //************ Put methods ************
   const addReading = async (readingRequest) => {
@@ -48,11 +55,10 @@ export function ReadingContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setReadings((prevReadings) => [...prevReadings, res.data]);
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -65,41 +71,32 @@ export function ReadingContextProvider({ children }) {
         },
       });
       if (res.data) {
-        setReadings((prevReadings) =>
-          prevReadings.map((reading) =>
-            reading.id === id ? res.data : reading
-          )
-        );
-        return res.data;
+        return true;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
-    return null;
+    return false;
   };
   //************ Delete methods ************
   const deleteReading = async (id) => {
     try {
       await api.delete(`/reading/${id}`);
-      setReadings((prevReadings) =>
-        prevReadings.filter((reading) => reading.id !== id)
-      );
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };
   return (
     <ReadingContext.Provider
       value={{
-        reading,
-        readings,
         getReadings,
         getReading,
         addReading,
         updateReading,
         deleteReading,
+        getReadingsByControl,
       }}
     >
       {children}
