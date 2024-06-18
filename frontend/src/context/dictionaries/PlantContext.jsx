@@ -1,5 +1,6 @@
 import { ReactNode, createContext, useContext, useState } from "react";
 import api from "../../api/api";
+import { usePopupContext } from "../general/PopupContext";
 
 const PlantContext = createContext();
 
@@ -8,6 +9,7 @@ export function usePlantContext() {
 }
 
 export function PlantContextProvider({ children }) {
+  const { logError } = usePopupContext();
   //************ Get methods ************
   const getPlants = async () => {
     try {
@@ -16,7 +18,7 @@ export function PlantContextProvider({ children }) {
         return res.data.content;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -27,7 +29,7 @@ export function PlantContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -43,7 +45,7 @@ export function PlantContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -59,7 +61,7 @@ export function PlantContextProvider({ children }) {
         return res.data;
       }
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return null;
   };
@@ -69,7 +71,7 @@ export function PlantContextProvider({ children }) {
       await api.delete(`/plant/${id}`);
       return true;
     } catch (err) {
-      console.log(err);
+      logError(err);
     }
     return false;
   };

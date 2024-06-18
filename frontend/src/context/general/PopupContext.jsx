@@ -36,6 +36,9 @@ export function PopupContextProvider({ children }) {
       else if (typeof data === "string" && data !== "")
         addMessage(data.message, "error", 3000);
     }
+    if (err?.message) {
+      if (typeof message === "string") addMessage(err.message, "error", 3000);
+    }
   };
   const removeMessage = (id) => {
     setMessages((prev) => prev.filter((m) => m.id !== id));
