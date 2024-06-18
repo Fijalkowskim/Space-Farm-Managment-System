@@ -202,6 +202,9 @@ function CultivationDetails() {
             header="Harvests"
             contentType="harvest"
             className="max-w-4xl items-start"
+            creationArgumentsFromParent={[
+              { property: "cultivationId", value: data.id },
+            ]}
           />
           {data && (
             <>

@@ -14,8 +14,10 @@ import { useCultivationContext } from "../cultivations/CultivationContext";
 import { PlantRequest } from "../../models/requestmodels/PlantRequest";
 import { usePlantContext } from "../dictionaries/PlantContext";
 import { StageRequest } from "../../models/requestmodels/StageRequest";
+import { HarvestRequest } from "../../models/requestmodels/HarvestRequest";
 import { useStageContext } from "../StageContext";
 import { useStageTypeContext } from "../dictionaries/StageTypeContext";
+import { useHarvestContext } from "../HarvestContext";
 const DataCreationContext = createContext();
 
 export function useDataCreationContext() {
@@ -33,6 +35,7 @@ export function DataCreationContextProvider({ children }) {
   const { addPlant } = usePlantContext();
   const { addStage } = useStageContext();
   const { addStageType } = useStageTypeContext();
+  const { addHarvest } = useHarvestContext();
 
   const cancelCreatingObject = () => {
     if (objectCreationQueue.length <= 0) return;
@@ -111,6 +114,19 @@ export function DataCreationContextProvider({ children }) {
             ) ?? ""
           }`,
           "stage",
+          argumentsFromParent
+        );
+      case "harvest":
+        startCreatingObject(
+          new HarvestRequest(),
+          addHarvest,
+          `/cultivation/${
+            getObjectPropertyValueFromObjectArray(
+              argumentsFromParent,
+              "cultivationId"
+            ) ?? ""
+          }`,
+          "harvest",
           argumentsFromParent
         );
         break;
