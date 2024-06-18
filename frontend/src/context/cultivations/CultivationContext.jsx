@@ -55,10 +55,10 @@ export function CultivationContextProvider({ children }) {
     }
     return undefined;
   };
-  const getAssignedCultivations = async () => {
+  const getAssignedCultivations = async (id) => {
     if (!userData) return undefined;
     try {
-      const res = await api.get(`/cultivation/person/${userData.id}`);
+      const res = await api.get(`/cultivation/person/${id}`);
       if (res.data) {
         return res.data.map((res) => Cultivation.fromResponse(res));
       }

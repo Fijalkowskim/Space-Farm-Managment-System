@@ -30,7 +30,7 @@ function WorkerDetails() {
       ) : (
         <div className="w-full max-w-4xl flex items-center justify-start flex-col gap-8 h-full">
           <ProfileSection worker={currentWorker} />
-          <AssignedCultivationsSection worker={currentWorker} />
+          <AssignedCultivationsSection personId={currentWorker?.id} />
         </div>
       )}
     </PageWrapper>

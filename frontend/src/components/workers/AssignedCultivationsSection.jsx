@@ -2,10 +2,14 @@ import React from "react";
 import VerticalScrollableDisplay from "../verticalScrollableDisplay/VerticalScrollableDisplay";
 import { useCultivationContext } from "../../context/cultivations/CultivationContext";
 import { useFetchArrayData } from "../../hooks/useFetchArrayData";
+import { usePersonContext } from "../../context/PersonContext";
 
-function AssignedCultivationsSection() {
+function AssignedCultivationsSection({ personId }) {
   const { getAssignedCultivations } = useCultivationContext();
-  const { data, isPending } = useFetchArrayData(getAssignedCultivations);
+  const { data, isPending } = useFetchArrayData(
+    getAssignedCultivations,
+    personId
+  );
   return (
     <VerticalScrollableDisplay
       className={
