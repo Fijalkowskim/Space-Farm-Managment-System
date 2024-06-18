@@ -33,8 +33,8 @@ public class HarvestController {
         return ResponseEntity.ok(harvestService.getHarvestById(id));
     }
     @GetMapping("/cultivation/{cultivationId}")
-    public ResponseEntity<Set<Harvest>> getStagesByCultivationId(@PathVariable long cultivationId){
-        return ResponseEntity.ok(harvestService.getStagesByCultivationId(cultivationId));
+    public ResponseEntity<Set<Harvest>> getHarvestsByCultivationId(@PathVariable long cultivationId){
+        return ResponseEntity.ok(harvestService.getHarvestsByCultivationId(cultivationId));
 
     }
     @PutMapping("")

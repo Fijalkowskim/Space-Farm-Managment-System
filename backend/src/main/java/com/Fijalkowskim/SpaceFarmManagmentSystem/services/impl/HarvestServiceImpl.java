@@ -77,7 +77,7 @@ public class HarvestServiceImpl implements HarvestService {
         harvestDAORepository.delete(harvest.get());
     }
 
-    public Set<Harvest> getStagesByCultivationId(long cultivationId) {
+    public Set<Harvest> getHarvestsByCultivationId(long cultivationId) {
         return harvestDAORepository.findAllByCultivationId(cultivationId);
     }
 }
