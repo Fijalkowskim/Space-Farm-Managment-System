@@ -89,12 +89,12 @@ export function ControlContextProvider({ children }) {
         },
       });
       if (res.data) {
-        return res.data;
+        return true;
       }
     } catch (err) {
       logError(err);
     }
-    return null;
+    return false;
   };
 
   return (
